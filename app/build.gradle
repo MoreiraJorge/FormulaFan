@@ -7,7 +7,7 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "com.example.formulafan"
+        applicationId "pt.ipp.estg.formulafan"
         minSdkVersion 23
         targetSdkVersion 30
         versionCode 1
