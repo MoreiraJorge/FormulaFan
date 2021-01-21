@@ -14,24 +14,19 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import pt.ipp.estg.formulafan.MainActivity;
 import pt.ipp.estg.formulafan.R;
 import pt.ipp.estg.formulafan.ViewModels.RaceViewModel;
 
 public class RaceFragment extends Fragment {
 
-    private MainActivity context;
+    private Context context;
     private RaceViewModel raceViewModel;
     private RaceRecyclerViewAdapter raceRecyclerViewAdapter;
-
-    public RaceFragment() {
-    }
-
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        this.context = (MainActivity) context;
+        this.context = context;
     }
 
     @Override
