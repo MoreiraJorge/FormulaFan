@@ -8,7 +8,7 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
-import pt.ipp.estg.formulafan.Databases.RaceRepository;
+import pt.ipp.estg.formulafan.Repositories.RaceRepository;
 import pt.ipp.estg.formulafan.Models.Race;
 
 public class RaceViewModel extends AndroidViewModel {

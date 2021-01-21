@@ -18,8 +18,6 @@ public class Race implements Serializable {
     @Embedded
     public Circuit circuit;
     public Date date;
-    //Completar Time
-    //public Time time;
 
     public Race(int season, int round, String raceName, Circuit circuit, Date date) {
         this.season = season;
