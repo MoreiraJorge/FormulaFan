@@ -2,8 +2,8 @@ package pt.ipp.estg.formulafan;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -14,13 +14,15 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import pt.ipp.estg.formulafan.Fragments.LoginFragment;
-import pt.ipp.estg.formulafan.Fragments.RaceFragment;
+import pt.ipp.estg.formulafan.Fragments.ProfileFragment;
+import pt.ipp.estg.formulafan.Fragments.RegisterFragment;
 import pt.ipp.estg.formulafan.Interfaces.ISessionListener;
 import pt.ipp.estg.formulafan.Utils.InternetUtil;
 
@@ -74,11 +76,10 @@ public class MainActivity extends AppCompatActivity implements ISessionListener 
                         if (task.isSuccessful()) {
                             Log.d(TAG, "signInWithEmail:success");
 
-                            RaceFragment raceFragment = new RaceFragment();
-                            raceFragment.setArguments(getIntent().getExtras());
+                            ProfileFragment profileFragment = new ProfileFragment();
                             FragmentTransaction fragmentTransaction = getSupportFragmentManager()
                                     .beginTransaction();
-                            fragmentTransaction.replace(R.id.fragmentContainer, raceFragment);
+                            fragmentTransaction.replace(R.id.fragmentContainer, profileFragment);
                             fragmentTransaction.addToBackStack(null);
                             fragmentTransaction.commit();
 
@@ -86,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements ISessionListener 
                                     Toast.LENGTH_SHORT).show();
                         } else {
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            Toast.makeText(context, "Authentication failed.",
+                            Toast.makeText(context, "Authentication failed!",
                                     Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -94,12 +95,67 @@ public class MainActivity extends AppCompatActivity implements ISessionListener 
     }
 
     @Override
-    public void register(String email, String password) {
-
+    public void logout() {
+        mAuth.signOut();
+        fragmentManager.popBackStack();
     }
 
     @Override
-    public void logout() {
+    public void register(String email, String password){
+        Log.d(TAG, "createAccount:" + email);
 
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "createUserWithEmail:success");
+                            fragmentManager.popBackStack();
+                            Toast.makeText(context, "Registration completed!",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d("Error do firebase", e.getMessage());
+                        Toast.makeText(context, e.getMessage(),
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    public boolean validateForm(EditText insertEmailField,
+                                EditText insertPassField){
+        boolean valid = true;
+
+        String email = insertEmailField.getText().toString();
+        if (TextUtils.isEmpty(email)) {
+            insertEmailField.setError("Required!");
+            valid = false;
+        } else {
+            insertEmailField.setError(null);
+        }
+
+        String password = insertPassField.getText().toString();
+        if (TextUtils.isEmpty(password)) {
+            insertPassField.setError("Required!");
+            valid = false;
+        } else {
+            insertPassField.setError(null);
+        }
+
+        return valid;
+    }
+
+    public void registerRedirect() {
+        RegisterFragment registerFragment = new RegisterFragment();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager()
+                .beginTransaction();
+        fragmentTransaction.replace(R.id.fragmentContainer, registerFragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
     }
 }
