@@ -41,7 +41,7 @@ public class InternetUtil extends LiveData<Boolean> {
     }
 
     private void registerBroadCastReceiver() {
-        if(broadcastReceiver == null) {
+        if (broadcastReceiver == null) {
             IntentFilter filter = new IntentFilter();
             filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
 
@@ -50,7 +50,7 @@ public class InternetUtil extends LiveData<Boolean> {
                 public void onReceive(Context context, Intent intent) {
                     Bundle extras = intent.getExtras();
                     NetworkInfo info = extras.getParcelable("networkInfo");
-                    setValue( info.getState() == NetworkInfo.State.CONNECTED);
+                    setValue(info.getState() == NetworkInfo.State.CONNECTED);
                 }
             };
 

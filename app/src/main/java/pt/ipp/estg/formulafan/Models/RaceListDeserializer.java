@@ -37,7 +37,7 @@ public class RaceListDeserializer implements JsonDeserializer<List<Race>> {
             //Setting Date
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
-            Date date  = null;
+            Date date = null;
 
             try {
                 date = dateFormat.parse(itemJsonObject.get("date").getAsString());
@@ -55,7 +55,7 @@ public class RaceListDeserializer implements JsonDeserializer<List<Race>> {
                 timeValue = null;
             }
 
-            if(timeValue != null) {
+            if (timeValue != null) {
                 date.setHours(timeValue.getHours());
                 date.setMinutes(timeValue.getMinutes());
             }
@@ -71,9 +71,9 @@ public class RaceListDeserializer implements JsonDeserializer<List<Race>> {
             final double lng = Double.parseDouble(locationJsonObject.get("long").getAsString());
             final String locality = locationJsonObject.get("locality").getAsString();
             final String country = locationJsonObject.get("country").getAsString();
-            
+
             Location tmpLocation = new Location(lat, lng, locality, country);
-            
+
             final Circuit tmpCircuit = new Circuit(circuitId, circuitName, tmpLocation);
 
             raceList.add(new Race(season, round, raceName, tmpCircuit, date));

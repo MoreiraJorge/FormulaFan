@@ -1,6 +1,4 @@
-package pt.ipp.estg.formulafan;
-
-import androidx.appcompat.app.AppCompatActivity;
+package pt.ipp.estg.formulafan.Activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,7 +6,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.firebase.auth.FirebaseAuth;
+
+import pt.ipp.estg.formulafan.R;
 
 public class FormulaFanMainActivity extends AppCompatActivity {
 

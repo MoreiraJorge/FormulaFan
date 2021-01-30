@@ -24,6 +24,6 @@ public interface RaceDAO {
     public LiveData<List<Race>> getRaces();
 
     @Delete
-    public void deleteRace(Race ... races);
+    public void deleteRace(Race... races);
 
 }

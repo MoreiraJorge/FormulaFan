@@ -1,9 +1,8 @@
-package pt.ipp.estg.formulafan;
+package pt.ipp.estg.formulafan.Activities;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.text.TextUtils;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -20,9 +19,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import pt.ipp.estg.formulafan.Activities.FormulaFanMainActivity;
 import pt.ipp.estg.formulafan.Fragments.LoginFragment;
 import pt.ipp.estg.formulafan.Fragments.RegisterFragment;
 import pt.ipp.estg.formulafan.Interfaces.ISessionListener;
+import pt.ipp.estg.formulafan.R;
 import pt.ipp.estg.formulafan.Utils.InternetUtil;
 
 public class MainActivity extends AppCompatActivity implements ISessionListener {
@@ -45,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements ISessionListener 
         internetUtil.observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean isConnected) {
-                if(!isConnected) {
+                if (!isConnected) {
                     Toast.makeText(context, "Dispositivo Offline!",
                             Toast.LENGTH_SHORT).show();
                 }
@@ -82,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements ISessionListener 
     }
 
     @Override
-    public void register(String email, String password){
+    public void register(String email, String password) {
         firebaseAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -105,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements ISessionListener 
     }
 
     public boolean validateForm(EditText insertEmailField,
-                                EditText insertPassField){
+                                EditText insertPassField) {
         boolean valid = true;
 
         String email = insertEmailField.getText().toString();

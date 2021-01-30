@@ -47,13 +47,14 @@ public class RaceFragment extends Fragment {
         raceRecyclerViewAdapter = new RaceRecyclerViewAdapter(context, raceViewModel);
         recyclerView.setAdapter(raceRecyclerViewAdapter);
 
-        raceViewModel.getAllRaces().observe(getViewLifecycleOwner() , (races) -> {
-            raceRecyclerViewAdapter.setRaceList(races);
-            raceRecyclerViewAdapter.notifyDataSetChanged();}
+        raceViewModel.getAllRaces().observe(getViewLifecycleOwner(), (races) -> {
+                    raceRecyclerViewAdapter.setRaceList(races);
+                    raceRecyclerViewAdapter.notifyDataSetChanged();
+                }
         );
 
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
-        RecyclerView.ItemDecoration itemDecoration= new DividerItemDecoration(context, DividerItemDecoration.VERTICAL);
+        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(context, DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(itemDecoration);
 
         return view;

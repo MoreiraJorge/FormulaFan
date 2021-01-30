@@ -3,20 +3,18 @@ package pt.ipp.estg.formulafan.Fragments;
 import android.app.Application;
 import android.content.Context;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import pt.ipp.estg.formulafan.MainActivity;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+
+import pt.ipp.estg.formulafan.Activities.MainActivity;
 import pt.ipp.estg.formulafan.R;
 import pt.ipp.estg.formulafan.Utils.InternetUtil;
 
@@ -56,7 +54,7 @@ public class RegisterFragment extends Fragment {
         internetUtil.observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean isConnected) {
-                if(isConnected) {
+                if (isConnected) {
                     registerButton.setEnabled(true);
                 } else {
                     registerButton.setEnabled(false);
@@ -67,12 +65,12 @@ public class RegisterFragment extends Fragment {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(((MainActivity) context).validateForm(registerMail, registerPass) == true){
+                if (((MainActivity) context).validateForm(registerMail, registerPass) == true) {
                     String email = registerMail.getText().toString();
                     String password = registerPass.getText().toString();
-                    ((MainActivity) context).register(email,password);
+                    ((MainActivity) context).register(email, password);
                 } else {
-                    Toast.makeText(context, "Input error!",
+                    Toast.makeText(context, "Preencha todos os dados!",
                             Toast.LENGTH_SHORT).show();
                 }
             }

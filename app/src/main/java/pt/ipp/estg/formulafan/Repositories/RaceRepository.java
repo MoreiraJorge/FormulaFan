@@ -31,15 +31,19 @@ public class RaceRepository {
     }
 
     public LiveData<List<Race>> getAllRaces() {
-        return  allRaces;
+        return allRaces;
     }
 
     public void insertRace(Race race) {
-        RaceDatabase.databaseWriteExecutor.execute(() -> {raceDAO.insertRace(race);});
+        RaceDatabase.databaseWriteExecutor.execute(() -> {
+            raceDAO.insertRace(race);
+        });
     }
 
-    public void deleteRace(Race race){
-        RaceDatabase.databaseWriteExecutor.execute(() -> {raceDAO.deleteRace(race);});
+    public void deleteRace(Race race) {
+        RaceDatabase.databaseWriteExecutor.execute(() -> {
+            raceDAO.deleteRace(race);
+        });
     }
 
     public void refreshCurrentRaces() {
@@ -47,8 +51,12 @@ public class RaceRepository {
             @Override
             public void onResponse(Call<List<Race>> call, Response<List<Race>> response) {
                 List<Race> raceList = response.body();
-                RaceDatabase.databaseWriteExecutor.execute(() -> {raceDAO.insertAllRaces(raceList);});
-                RaceDatabase.databaseWriteExecutor.execute(() -> {allRaces = raceDAO.getRaces();});
+                RaceDatabase.databaseWriteExecutor.execute(() -> {
+                    raceDAO.insertAllRaces(raceList);
+                });
+                RaceDatabase.databaseWriteExecutor.execute(() -> {
+                    allRaces = raceDAO.getRaces();
+                });
             }
 
             @Override
