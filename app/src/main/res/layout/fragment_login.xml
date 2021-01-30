@@ -6,6 +6,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:layout_marginLeft="@dimen/fragment_horizontal_margin"
+    android:layout_marginTop="@dimen/fragment_vertical_margin"
+    android:layout_marginRight="@dimen/fragment_horizontal_margin"
+    android:layout_marginBottom="@dimen/fragment_vertical_margin"
     android:background="@color/white"
     tools:context=".Fragments.LoginFragment">
 
@@ -19,10 +23,10 @@
         />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/registTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
+        android:layout_gravity="center_horizontal"
         android:layout_marginBottom="50dp"
         android:fontFamily="@font/aldrich"
         android:text="@string/bem_vindo"
@@ -31,57 +35,75 @@
         android:textSize="24sp"
         android:textStyle="bold" />
 
-    <EditText
-        android:id="@+id/editTextTextEmailAddress"
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginBottom="15dp"
-        android:ems="15"
-        android:hint="@string/email"
-        android:importantForAutofill="no"
-        android:inputType="textEmailAddress" />
+        android:layout_gravity="center|center_horizontal"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        card_view:cardElevation="15dp"
+        card_view:cardCornerRadius="15dp"
+        android:focusable="true">
 
-    <EditText
-        android:id="@+id/editTextTextPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginBottom="40dp"
-        android:ems="15"
-        android:hint="@string/password"
-        android:importantForAutofill="no"
-        android:inputType="textPassword" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="20dp"
+            android:gravity="center|center_horizontal"
+            android:orientation="vertical">
 
-    <Button
-        android:id="@+id/logInButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginBottom="10dp"
-        android:text="@string/iniciar_sess_o"
-        app:cornerRadius="@dimen/fragment_horizontal_margin" />
+            <EditText
+                android:id="@+id/editTextTextEmailAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:ems="15"
+                android:hint="@string/email"
+                android:importantForAutofill="no"
+                android:inputType="textEmailAddress" />
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="10dp"
-        android:fontFamily="@font/aldrich"
-        android:text="@string/ou"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        android:textColor="@color/black"
-        android:textSize="24sp"
-        android:textStyle="bold" />
+            <EditText
+                android:id="@+id/editTextTextPassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="40dp"
+                android:ems="15"
+                android:hint="@string/password"
+                android:importantForAutofill="no"
+                android:inputType="textPassword" />
 
-    <Button
-        android:id="@+id/buttonRegister"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="@string/registar"
-        app:cornerRadius="@dimen/fragment_horizontal_margin" />
+            <Button
+                android:id="@+id/logInButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="10dp"
+                android:text="@string/iniciar_sess_o"
+                app:cornerRadius="@dimen/fragment_horizontal_margin" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="@font/aldrich"
+                android:text="@string/ou"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                android:textColor="@color/black"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/buttonRegister"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/registar"
+                app:cornerRadius="@dimen/fragment_horizontal_margin" />
+
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
 
 </LinearLayout>
 

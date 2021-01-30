@@ -18,4 +18,10 @@
     <string name="bem_vindo">Bem Vindo !</string>
     <string name="ou">ou</string>
     <string name="registar">Registar</string>
+    <string name="registo_formulafan">Registo FormulaFan</string>
+    <string name="o_seu_email">O seu Email</string>
+    <string name="a_sua_password">A sua password</string>
+    <string name="verificar_password">Verificar password</string>
+    <string name="nome_de_utilizador">Nome de utilizador</string>
+    <string name="nome">Nome</string>
 </resources>
