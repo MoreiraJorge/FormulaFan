@@ -19,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="202dp"
         android:contentDescription="@string/formulafanlogo"
-        android:src="@drawable/webp_net_resizeimage"
+        android:src="@drawable/imageonline_co_whitebackgroundremoved"
         />
 
     <TextView
