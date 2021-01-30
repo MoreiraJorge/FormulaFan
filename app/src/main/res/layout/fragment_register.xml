@@ -14,7 +14,7 @@
     tools:context=".Fragments.RegisterFragment">
 
     <TextView
-        android:id="@+id/registTextView"
+        android:id="@+id/RegistView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"

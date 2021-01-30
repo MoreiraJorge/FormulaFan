@@ -2,12 +2,16 @@ package pt.ipp.estg.formulafan.Fragments;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.res.Configuration;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -24,6 +28,7 @@ public class RegisterFragment extends Fragment {
     private EditText registerMail;
     private EditText registerPass;
     private EditText verifyPass;
+    private TextView registView;
     private Button registerButton;
 
     public RegisterFragment() {
@@ -47,6 +52,7 @@ public class RegisterFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_register, container, false);
 
+        registView = view.findViewById(R.id.RegistView);
         registerMail = view.findViewById(R.id.registerEmail);
         registerPass = view.findViewById(R.id.registerPassword);
         verifyPass = view.findViewById(R.id.insertVerifyPass);
@@ -85,7 +91,22 @@ public class RegisterFragment extends Fragment {
             }
         });
 
+        checkDarkMode();
+
         return view;
     }
 
+    private void checkDarkMode() {
+        Configuration config = getResources().getConfiguration();
+
+        int currentNightMode = config.uiMode & Configuration.UI_MODE_NIGHT_MASK;
+        switch (currentNightMode) {
+            case Configuration.UI_MODE_NIGHT_NO:
+                registView.setTextColor(Color.BLACK);
+                break;
+            case Configuration.UI_MODE_NIGHT_YES:
+                registView.setTextColor(Color.WHITE);
+                break;
+        }
+    }
 }

@@ -2,6 +2,7 @@ package pt.ipp.estg.formulafan.Activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.EditText;
