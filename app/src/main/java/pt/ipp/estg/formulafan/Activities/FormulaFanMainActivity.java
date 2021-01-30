@@ -50,11 +50,10 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        if(item.getItemId() == R.id.profile) {
+        if (item.getItemId() == R.id.profile) {
             changeToProfileFragment();
             return true;
-        }
-        else if(item.getItemId() == R.id.races) {
+        } else if (item.getItemId() == R.id.races) {
             changeToRaceFragment();
             return true;
         } else {

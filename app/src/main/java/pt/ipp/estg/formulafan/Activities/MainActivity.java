@@ -19,7 +19,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-import pt.ipp.estg.formulafan.Activities.FormulaFanMainActivity;
 import pt.ipp.estg.formulafan.Fragments.LoginFragment;
 import pt.ipp.estg.formulafan.Fragments.RegisterFragment;
 import pt.ipp.estg.formulafan.Interfaces.ISessionListener;

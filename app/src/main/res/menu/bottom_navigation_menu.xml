@@ -4,16 +4,16 @@
         android:id="@+id/profile"
         android:enabled="true"
         android:icon="@drawable/ic_account_circle_24px"
-        android:title="@string/bottom_bar_item_1"/>
+        android:title="@string/bottom_bar_item_1" />
     <item
         android:id="@+id/races"
         android:enabled="true"
         android:icon="@drawable/ic_sports_motorsports_24px"
-        android:title="@string/bottom_bar_item_2"/>
+        android:title="@string/bottom_bar_item_2" />
     <item
         android:id="@+id/leaderboard"
         android:enabled="true"
         android:icon="@drawable/ic_emoji_events_24px"
-        android:title="@string/bottom_bar_item_3"/>
+        android:title="@string/bottom_bar_item_3" />
 
 </menu>
