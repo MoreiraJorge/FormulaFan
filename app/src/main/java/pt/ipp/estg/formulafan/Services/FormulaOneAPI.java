@@ -5,8 +5,8 @@ import com.google.gson.reflect.TypeToken;
 
 import java.util.List;
 
-import pt.ipp.estg.formulafan.Models.RaceListDeserializer;
 import pt.ipp.estg.formulafan.Models.Race;
+import pt.ipp.estg.formulafan.Models.RaceListDeserializer;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 

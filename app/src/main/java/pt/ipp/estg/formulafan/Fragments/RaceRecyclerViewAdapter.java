@@ -1,19 +1,19 @@
 package pt.ipp.estg.formulafan.Fragments;
 
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import pt.ipp.estg.formulafan.Models.Race;
-import pt.ipp.estg.formulafan.R;
-import pt.ipp.estg.formulafan.ViewModels.RaceViewModel;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import pt.ipp.estg.formulafan.Models.Race;
+import pt.ipp.estg.formulafan.R;
+import pt.ipp.estg.formulafan.ViewModels.RaceViewModel;
 
 public class RaceRecyclerViewAdapter extends RecyclerView.Adapter<RaceRecyclerViewAdapter.ViewHolder> {
 
@@ -45,7 +45,9 @@ public class RaceRecyclerViewAdapter extends RecyclerView.Adapter<RaceRecyclerVi
         return raceList.size();
     }
 
-    public void setRaceList(List<Race> raceList) {this.raceList = raceList;}
+    public void setRaceList(List<Race> raceList) {
+        this.raceList = raceList;
+    }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View view;

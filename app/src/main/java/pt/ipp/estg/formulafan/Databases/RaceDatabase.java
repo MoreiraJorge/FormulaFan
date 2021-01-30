@@ -16,7 +16,7 @@ import pt.ipp.estg.formulafan.Models.Race;
 @Database(entities = {Race.class}, version = 1, exportSchema = false)
 public abstract class RaceDatabase extends RoomDatabase {
 
-    private static final int NUMBER_OF_THREADS=4;
+    private static final int NUMBER_OF_THREADS = 4;
     private static volatile RaceDatabase INSTANCE;
     public static final ExecutorService databaseWriteExecutor =
             Executors.newFixedThreadPool(NUMBER_OF_THREADS);
