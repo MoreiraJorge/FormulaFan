@@ -13,4 +13,7 @@
     <string name="choose_your_email">Choose your email</string>
     <string name="enter_a_password">Enter a password</string>
     <string name="register_account">Register Account</string>
+    <string name="bottom_bar_item_1">Perfil</string>
+    <string name="bottom_bar_item_2">Corridas</string>
+    <string name="bottom_bar_item_3">Resultados</string>
 </resources>
