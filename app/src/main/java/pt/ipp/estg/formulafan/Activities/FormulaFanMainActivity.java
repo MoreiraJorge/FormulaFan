@@ -6,6 +6,7 @@ import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -21,6 +22,7 @@ import pt.ipp.estg.formulafan.R;
 public class FormulaFanMainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, IProfileListener {
 
     private FragmentManager fragmentManager;
+    private Toolbar toolbar;
     private FirebaseAuth firebaseAuth;
     private RaceFragment raceFragment;
     private BottomNavigationView bottomNavigationView;
@@ -29,6 +31,9 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_formula_fan_main);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle(R.string.app_name);
+        setSupportActionBar(toolbar);
         firebaseAuth = FirebaseAuth.getInstance();
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
