@@ -1,9 +1,10 @@
 package pt.ipp.estg.formulafan;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.text.TextUtils;
-import android.util.Log;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -18,14 +19,11 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import pt.ipp.estg.formulafan.Fragments.LoginFragment;
-import pt.ipp.estg.formulafan.Fragments.ProfileFragment;
 import pt.ipp.estg.formulafan.Fragments.RegisterFragment;
 import pt.ipp.estg.formulafan.Interfaces.ISessionListener;
 import pt.ipp.estg.formulafan.Utils.InternetUtil;
-
 
 public class MainActivity extends AppCompatActivity implements ISessionListener {
 
@@ -33,7 +31,8 @@ public class MainActivity extends AppCompatActivity implements ISessionListener 
 
     private Context context;
     private FragmentManager fragmentManager;
-    private FirebaseAuth mAuth;
+    private FirebaseAuth firebaseAuth;
+    private InternetUtil internetUtil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,21 +41,18 @@ public class MainActivity extends AppCompatActivity implements ISessionListener 
 
         this.context = getApplicationContext();
 
-        InternetUtil internetUtil = new InternetUtil(getApplication());
+        internetUtil = new InternetUtil(getApplication());
         internetUtil.observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean isConnected) {
-                if(isConnected) {
-                    Toast.makeText(context, "Dispositivo Online!",
-                            Toast.LENGTH_SHORT).show();
-                } else {
+                if(!isConnected) {
                     Toast.makeText(context, "Dispositivo Offline!",
                             Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
-        mAuth = FirebaseAuth.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
 
         LoginFragment loginFragment = new LoginFragment();
         fragmentManager = getSupportFragmentManager();
@@ -67,26 +63,17 @@ public class MainActivity extends AppCompatActivity implements ISessionListener 
 
     @Override
     public void signIn(String email, String password) {
-        Log.d(TAG, "signIn:" + email);
-
-        mAuth.signInWithEmailAndPassword(email, password)
+        firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            Log.d(TAG, "signInWithEmail:success");
-
-                            ProfileFragment profileFragment = new ProfileFragment();
-                            FragmentTransaction fragmentTransaction = getSupportFragmentManager()
-                                    .beginTransaction();
-                            fragmentTransaction.replace(R.id.fragmentContainer, profileFragment);
-                            fragmentTransaction.addToBackStack(null);
-                            fragmentTransaction.commit();
-
+                            Intent intent = new Intent(context, FormulaFanMainActivity.class);
+                            startActivity(intent);
                             Toast.makeText(context, "Login Success!",
                                     Toast.LENGTH_SHORT).show();
+                            finish();
                         } else {
-                            Log.w(TAG, "signInWithEmail:failure", task.getException());
                             Toast.makeText(context, "Authentication failed!",
                                     Toast.LENGTH_SHORT).show();
                         }
@@ -95,22 +82,13 @@ public class MainActivity extends AppCompatActivity implements ISessionListener 
     }
 
     @Override
-    public void logout() {
-        mAuth.signOut();
-        fragmentManager.popBackStack();
-    }
-
-    @Override
     public void register(String email, String password){
-        Log.d(TAG, "createAccount:" + email);
-
-        mAuth.createUserWithEmailAndPassword(email, password)
+        firebaseAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "createUserWithEmail:success");
                             fragmentManager.popBackStack();
                             Toast.makeText(context, "Registration completed!",
                                     Toast.LENGTH_SHORT).show();
@@ -120,7 +98,6 @@ public class MainActivity extends AppCompatActivity implements ISessionListener 
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.d("Error do firebase", e.getMessage());
                         Toast.makeText(context, e.getMessage(),
                                 Toast.LENGTH_SHORT).show();
                     }

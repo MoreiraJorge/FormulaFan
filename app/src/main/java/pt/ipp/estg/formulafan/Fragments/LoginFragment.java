@@ -1,10 +1,12 @@
 package pt.ipp.estg.formulafan.Fragments;
 
+import android.app.Application;
 import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -16,6 +18,7 @@ import android.widget.Toast;
 
 import pt.ipp.estg.formulafan.MainActivity;
 import pt.ipp.estg.formulafan.R;
+import pt.ipp.estg.formulafan.Utils.InternetUtil;
 
 public class LoginFragment extends Fragment {
 
@@ -50,6 +53,20 @@ public class LoginFragment extends Fragment {
         insertPassField = view.findViewById(R.id.editTextTextPassword);
         signInButton = view.findViewById(R.id.logInButton);
         registerButton = view.findViewById(R.id.buttonRegister);
+
+        InternetUtil internetUtil = new InternetUtil((Application) context.getApplicationContext());
+        internetUtil.observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isConnected) {
+                if(isConnected) {
+                    signInButton.setEnabled(true);
+                    registerButton.setEnabled(true);
+                } else {
+                    signInButton.setEnabled(false);
+                    registerButton.setEnabled(false);
+                }
+            }
+        });
 
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override

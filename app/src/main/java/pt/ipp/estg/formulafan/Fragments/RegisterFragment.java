@@ -1,10 +1,12 @@
 package pt.ipp.estg.formulafan.Fragments;
 
+import android.app.Application;
 import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +18,7 @@ import android.widget.Toast;
 
 import pt.ipp.estg.formulafan.MainActivity;
 import pt.ipp.estg.formulafan.R;
+import pt.ipp.estg.formulafan.Utils.InternetUtil;
 
 public class RegisterFragment extends Fragment {
     private Context context;
@@ -48,6 +51,18 @@ public class RegisterFragment extends Fragment {
         registerMail = view.findViewById(R.id.registerEmail);
         registerPass = view.findViewById(R.id.registerPassword);
         registerButton = view.findViewById(R.id.buttonAccountRegister);
+
+        InternetUtil internetUtil = new InternetUtil((Application) context.getApplicationContext());
+        internetUtil.observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isConnected) {
+                if(isConnected) {
+                    registerButton.setEnabled(true);
+                } else {
+                    registerButton.setEnabled(false);
+                }
+            }
+        });
 
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
