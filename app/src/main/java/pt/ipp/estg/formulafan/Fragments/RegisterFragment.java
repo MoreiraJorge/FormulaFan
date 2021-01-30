@@ -23,6 +23,7 @@ public class RegisterFragment extends Fragment {
 
     private EditText registerMail;
     private EditText registerPass;
+    private EditText verifyPass;
     private Button registerButton;
 
     public RegisterFragment() {
@@ -48,6 +49,8 @@ public class RegisterFragment extends Fragment {
 
         registerMail = view.findViewById(R.id.registerEmail);
         registerPass = view.findViewById(R.id.registerPassword);
+        verifyPass = view.findViewById(R.id.insertVerifyPass);
+
         registerButton = view.findViewById(R.id.buttonAccountRegister);
 
         InternetUtil internetUtil = new InternetUtil((Application) context.getApplicationContext());
@@ -66,11 +69,17 @@ public class RegisterFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (((MainActivity) context).validateForm(registerMail, registerPass) == true) {
-                    String email = registerMail.getText().toString();
                     String password = registerPass.getText().toString();
-                    ((MainActivity) context).register(email, password);
+                    String passVerify = verifyPass.getText().toString();
+                    if(passVerify.equals(password) == true){
+                        ((MainActivity) context).register(registerMail, registerPass);
+                    } else {
+                        verifyPass.setError("As passwords não coincidem!");
+                        Toast.makeText(context, "As passwords não coincidem!",
+                                Toast.LENGTH_SHORT).show();
+                    }
                 } else {
-                    Toast.makeText(context, "Preencha todos os dados!",
+                    Toast.makeText(context, "Preencha todos os dados obrigatórios!",
                             Toast.LENGTH_SHORT).show();
                 }
             }
@@ -78,4 +87,5 @@ public class RegisterFragment extends Fragment {
 
         return view;
     }
+
 }

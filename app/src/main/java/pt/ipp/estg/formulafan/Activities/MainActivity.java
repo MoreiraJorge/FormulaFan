@@ -18,6 +18,11 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthEmailException;
+import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 
 import pt.ipp.estg.formulafan.Activities.FormulaFanMainActivity;
 import pt.ipp.estg.formulafan.Fragments.LoginFragment;
@@ -68,39 +73,78 @@ public class MainActivity extends AppCompatActivity implements ISessionListener 
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
+                        if (!task.isSuccessful()) {
+                            String errorCode = ((FirebaseAuthException) task.getException())
+                                    .getErrorCode();
+
+                            switch(errorCode){
+                                case "ERROR_WRONG_PASSWORD":
+                                    Toast.makeText(context, "A password inválida!",
+                                            Toast.LENGTH_SHORT).show();
+                                    break;
+                                case "ERROR_USER_NOT_FOUND":
+                                    Toast.makeText(context, "O utilizador nao existe ou foi apagado!",
+                                            Toast.LENGTH_SHORT).show();
+                                    break;
+                                case "ERROR_USER_DISABLED":
+                                    Toast.makeText(context, "Esta conta foi desativada!",
+                                            Toast.LENGTH_SHORT).show();
+                                    break;
+                                default:
+                                    Toast.makeText(context, "Erro de login!",
+                                            Toast.LENGTH_SHORT).show();
+                                    break;
+                            }
+                        } else {
                             Intent intent = new Intent(context, FormulaFanMainActivity.class);
                             startActivity(intent);
-                            Toast.makeText(context, "Login Success!",
+                            Toast.makeText(context, "Login efetuado!",
                                     Toast.LENGTH_SHORT).show();
                             finish();
-                        } else {
-                            Toast.makeText(context, "Authentication failed!",
-                                    Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
     }
 
     @Override
-    public void register(String email, String password) {
-        firebaseAuth.createUserWithEmailAndPassword(email, password)
+    public void register(EditText email, EditText password) {
+        firebaseAuth.createUserWithEmailAndPassword(email.getText().toString(),
+                password.getText().toString())
+
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
+                        if (!task.isSuccessful()) {
+                            String errorCode = ((FirebaseAuthException) task.getException())
+                                    .getErrorCode();
+
+                            switch(errorCode){
+                                case "ERROR_EMAIL_ALREADY_IN_USE":
+                                    email.setError("Email em uso!");
+                                    Toast.makeText(context, "Este email já está em uso!",
+                                            Toast.LENGTH_SHORT).show();
+                                    break;
+                                case "ERROR_INVALID_EMAIL":
+                                    email.setError("Email Inválido!");
+                                    Toast.makeText(context, "Email mal formatado!",
+                                            Toast.LENGTH_SHORT).show();
+                                    break;
+                                case "ERROR_WEAK_PASSWORD":
+                                    password.setError("Password Fraca!");
+                                    Toast.makeText(context, "Password fraca! Minimo 6 caracteres.",
+                                            Toast.LENGTH_SHORT).show();
+                                    break;
+                                default:
+                                    Toast.makeText(context, "Erro de registo!",
+                                            Toast.LENGTH_SHORT).show();
+                                    break;
+                            }
+
+                        } else {
                             fragmentManager.popBackStack();
-                            Toast.makeText(context, "Registration completed!",
+                            Toast.makeText(context, "Registo completo!",
                                     Toast.LENGTH_SHORT).show();
                         }
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(context, e.getMessage(),
-                                Toast.LENGTH_SHORT).show();
                     }
                 });
     }
@@ -111,7 +155,7 @@ public class MainActivity extends AppCompatActivity implements ISessionListener 
 
         String email = insertEmailField.getText().toString();
         if (TextUtils.isEmpty(email)) {
-            insertEmailField.setError("Required!");
+            insertEmailField.setError("Campo obrigatório!");
             valid = false;
         } else {
             insertEmailField.setError(null);
@@ -119,7 +163,7 @@ public class MainActivity extends AppCompatActivity implements ISessionListener 
 
         String password = insertPassField.getText().toString();
         if (TextUtils.isEmpty(password)) {
-            insertPassField.setError("Required!");
+            insertPassField.setError("Campo obrigatório!");
             valid = false;
         } else {
             insertPassField.setError(null);
