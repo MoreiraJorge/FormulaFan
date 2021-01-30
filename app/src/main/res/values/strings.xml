@@ -13,4 +13,9 @@
     <string name="choose_your_email">Choose your email</string>
     <string name="enter_a_password">Enter a password</string>
     <string name="register_account">Register Account</string>
+    <string name="formulafanlogo">FormulaFanLogo</string>
+    <string name="iniciar_sess_o">Iniciar Sessão</string>
+    <string name="bem_vindo">Bem Vindo !</string>
+    <string name="ou">ou</string>
+    <string name="registar">Registar</string>
 </resources>
