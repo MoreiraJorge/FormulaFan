@@ -19,9 +19,12 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="50dp"
-        android:layout_weight="1"
+        android:layout_weight="9"
+        android:elegantTextHeight="false"
         android:fontFamily="@font/aldrich"
+        android:gravity="center_horizontal|center_vertical"
         android:text="@string/registo_formulafan"
+        android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         android:textColor="@color/black"
         android:textSize="24sp"
@@ -29,25 +32,26 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/registerCard"
-        android:layout_width="wrap_content"
+        android:layout_width="511dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center|center_vertical"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="50dp"
-        android:layout_weight="9"
+        android:layout_weight="5"
         android:focusable="true"
         card_view:cardCornerRadius="15dp"
         card_view:cardElevation="15dp">
 
         <LinearLayout
-            android:id="@+id/center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal|center_vertical"
-            android:layout_margin="20dp"
-            android:gravity="center|center_vertical"
-            android:orientation="vertical">
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:gravity="center|center_horizontal"
+            android:orientation="vertical"
+            android:weightSum="9">
 
             <TextView
                 android:id="@+id/insertUserNameView"
@@ -132,9 +136,10 @@
 
     <Button
         android:id="@+id/buttonAccountRegister"
-        android:layout_width="wrap_content"
+        android:layout_width="204dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginBottom="20dp"
         android:layout_weight="1"
         android:gravity="center|center_vertical"
         android:text="@string/registar"
