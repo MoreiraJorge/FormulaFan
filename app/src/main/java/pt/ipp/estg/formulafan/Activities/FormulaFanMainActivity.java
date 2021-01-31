@@ -1,15 +1,12 @@
 package pt.ipp.estg.formulafan.Activities;
 
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -58,7 +55,7 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
         fragmentTransaction.commit();
 
         detailsFragment = new RaceDetailsFragment();
-        if(TabletDetectionUtil.isTablet(this)) {
+        if (TabletDetectionUtil.isTablet(this)) {
             fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.add(R.id.fragmentContainerMainUIDetails, detailsFragment);
             fragmentTransaction.commit();
@@ -118,7 +115,7 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
 
     @Override
     public void showRaceDetailsView(Race race) {
-        if(TabletDetectionUtil.isTablet(this)) {
+        if (TabletDetectionUtil.isTablet(this)) {
             detailsFragment.updateRace(race);
         } else {
             Bundle args = new Bundle();
