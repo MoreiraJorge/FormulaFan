@@ -19,4 +19,5 @@
     <string name="proximas_corridas">Próximas Corridas</string>
     <string name="corridas_anteriores">Corridas Anteriores</string>
     <string name="race">Race</string>
+    <string name="seleciona_uma_corrida_para_ver_os_detalhes">Seleciona uma corrida para ver os detalhes!</string>
 </resources>
