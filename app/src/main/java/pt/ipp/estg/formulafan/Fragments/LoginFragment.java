@@ -62,8 +62,8 @@ public class LoginFragment extends Fragment {
         card = view.findViewById(R.id.materialCardView);
         welcomeView = view.findViewById(R.id.welcomeView);
         orView = view.findViewById(R.id.orView);
-        insertEmailField = view.findViewById(R.id.editTextTextEmailAddress);
-        insertPassField = view.findViewById(R.id.editTextTextPassword);
+        insertEmailField = view.findViewById(R.id.editTextEmailAddress);
+        insertPassField = view.findViewById(R.id.editTextPassword);
         signInButton = view.findViewById(R.id.logInButton);
         registerButton = view.findViewById(R.id.buttonRegister);
 
