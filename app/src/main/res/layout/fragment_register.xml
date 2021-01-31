@@ -19,6 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="50dp"
+        android:layout_weight="1"
         android:fontFamily="@font/aldrich"
         android:text="@string/registo_formulafan"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
@@ -27,10 +28,14 @@
         android:textStyle="bold" />
 
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/registerCard"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center|center_vertical"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:layout_marginBottom="50dp"
+        android:layout_weight="9"
         android:focusable="true"
         card_view:cardCornerRadius="15dp"
         card_view:cardElevation="15dp">
@@ -48,6 +53,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
+                android:layout_weight="1"
                 android:text="@string/nome_de_utilizador"
                 android:textSize="18sp" />
 
@@ -56,16 +62,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
+                android:layout_weight="3"
                 android:ems="15"
                 android:hint="@string/nome"
-                android:inputType="textPersonName"
-                android:importantForAutofill="no" />
+                android:importantForAutofill="no"
+                android:inputType="textPersonName" />
 
             <TextView
                 android:id="@+id/insertEmailView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
+                android:layout_weight="1"
                 android:text="@string/o_seu_email"
                 android:textSize="18sp" />
 
@@ -74,6 +82,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
+                android:layout_weight="3"
                 android:ems="15"
                 android:hint="@string/email"
                 android:importantForAutofill="no"
@@ -84,6 +93,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
+                android:layout_weight="1"
                 android:text="@string/a_sua_password"
                 android:textSize="18sp" />
 
@@ -92,6 +102,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
+                android:layout_weight="3"
                 android:ems="15"
                 android:hint="@string/password"
                 android:importantForAutofill="no"
@@ -102,6 +113,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
+                android:layout_weight="1"
                 android:text="@string/verificar_password"
                 android:textSize="18sp" />
 
@@ -109,10 +121,11 @@
                 android:id="@+id/insertVerifyPass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="3"
                 android:ems="15"
                 android:hint="@string/password"
-                android:inputType="textPassword"
-                android:importantForAutofill="no" />
+                android:importantForAutofill="no"
+                android:inputType="textPassword" />
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
@@ -121,6 +134,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_weight="1"
         android:gravity="center|center_vertical"
         android:text="@string/registar"
         app:cornerRadius="@dimen/fragment_horizontal_margin" />

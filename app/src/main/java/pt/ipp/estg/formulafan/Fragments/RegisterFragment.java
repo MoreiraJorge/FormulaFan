@@ -18,6 +18,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 
+import com.google.android.material.card.MaterialCardView;
+
 import pt.ipp.estg.formulafan.Activities.MainActivity;
 import pt.ipp.estg.formulafan.R;
 import pt.ipp.estg.formulafan.Utils.InternetUtil;
@@ -30,6 +32,7 @@ public class RegisterFragment extends Fragment {
     private EditText verifyPass;
     private TextView registView;
     private Button registerButton;
+    private MaterialCardView card;
 
     public RegisterFragment() {
         // Required empty public constructor
@@ -56,6 +59,7 @@ public class RegisterFragment extends Fragment {
         registerMail = view.findViewById(R.id.registerEmail);
         registerPass = view.findViewById(R.id.registerPassword);
         verifyPass = view.findViewById(R.id.insertVerifyPass);
+        card = view.findViewById(R.id.registerCard);
 
         registerButton = view.findViewById(R.id.buttonAccountRegister);
 
@@ -103,8 +107,10 @@ public class RegisterFragment extends Fragment {
         switch (currentNightMode) {
             case Configuration.UI_MODE_NIGHT_NO:
                 registView.setTextColor(Color.BLACK);
+                card.setCardBackgroundColor(Color.WHITE);
                 break;
             case Configuration.UI_MODE_NIGHT_YES:
+                card.setCardBackgroundColor(Color.DKGRAY);
                 registView.setTextColor(Color.WHITE);
                 break;
         }

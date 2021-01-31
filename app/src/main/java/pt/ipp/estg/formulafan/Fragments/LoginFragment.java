@@ -19,6 +19,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 
+import com.google.android.material.card.MaterialCardView;
+
 import pt.ipp.estg.formulafan.Activities.MainActivity;
 import pt.ipp.estg.formulafan.R;
 import pt.ipp.estg.formulafan.Utils.InternetUtil;
@@ -34,6 +36,7 @@ public class LoginFragment extends Fragment {
     private ImageView logo;
     private Button signInButton;
     private Button registerButton;
+    private MaterialCardView card;
 
     public LoginFragment() {
     }
@@ -56,6 +59,7 @@ public class LoginFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_login, container, false);
 
         logo = view.findViewById(R.id.imageView);
+        card = view.findViewById(R.id.materialCardView);
         welcomeView = view.findViewById(R.id.welcomeView);
         orView = view.findViewById(R.id.orView);
         insertEmailField = view.findViewById(R.id.editTextTextEmailAddress);
@@ -112,6 +116,7 @@ public class LoginFragment extends Fragment {
             case Configuration.UI_MODE_NIGHT_NO:
                 new_image= getResources().getDrawable(R.drawable.imageonline_co_whitebackgroundremoved,
                         context.getTheme());
+                card.setCardBackgroundColor(Color.WHITE);
                 logo.setBackground(new_image);
                 break;
             case Configuration.UI_MODE_NIGHT_YES:
@@ -119,6 +124,7 @@ public class LoginFragment extends Fragment {
                         context.getTheme());
                 logo.setBackground(new_image);
                 welcomeView.setTextColor(Color.WHITE);
+                card.setCardBackgroundColor(Color.DKGRAY);
                 orView.setTextColor(Color.WHITE);
                 break;
         }
