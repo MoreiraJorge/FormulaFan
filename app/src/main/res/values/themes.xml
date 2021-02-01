@@ -15,4 +15,9 @@
         <item name="colorSurface">@color/red</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="MyCustomToolbarTheme" parent="Theme.MaterialComponents.DayNight">
+        <item name="android:textColorSecondary">@color/white</item>
+    </style>
+
 </resources>
