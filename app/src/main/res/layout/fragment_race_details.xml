@@ -114,8 +114,7 @@
             android:layout_margin="16dp"
             android:layout_weight="24">
 
-            <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
+            <fragment
                 android:id="@+id/mapLocation"
                 android:name="com.google.android.gms.maps.SupportMapFragment"
                 android:layout_width="match_parent"
