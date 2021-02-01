@@ -14,26 +14,35 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
 import pt.ipp.estg.formulafan.Fragments.ProfileFragment;
+import pt.ipp.estg.formulafan.Fragments.RaceDetailsFragment;
 import pt.ipp.estg.formulafan.Fragments.RaceFragment;
 import pt.ipp.estg.formulafan.Fragments.ResultFragment;
 import pt.ipp.estg.formulafan.Interfaces.IProfileListener;
+import pt.ipp.estg.formulafan.Interfaces.IRaceDetailsListener;
+import pt.ipp.estg.formulafan.Models.Race;
 import pt.ipp.estg.formulafan.R;
+import pt.ipp.estg.formulafan.Utils.TabletDetectionUtil;
 
-public class FormulaFanMainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, IProfileListener {
+public class FormulaFanMainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, IProfileListener, IRaceDetailsListener {
+
+    public static final String SELECTED_RACE = "pt.ipp.pt.estg.cmu.selectedRace";
 
     private FragmentManager fragmentManager;
     private Toolbar toolbar;
     private FirebaseAuth firebaseAuth;
     private RaceFragment raceFragment;
+    private RaceDetailsFragment detailsFragment;
     private BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_formula_fan_main);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.app_name);
         setSupportActionBar(toolbar);
+
         firebaseAuth = FirebaseAuth.getInstance();
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
@@ -44,6 +53,13 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.fragmentContainerMainUI, raceFragment);
         fragmentTransaction.commit();
+
+        detailsFragment = new RaceDetailsFragment();
+        if (TabletDetectionUtil.isTablet(this)) {
+            fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.add(R.id.fragmentContainerMainUIDetails, detailsFragment);
+            fragmentTransaction.commit();
+        }
 
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
     }
@@ -89,12 +105,27 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
         fragmentTransaction.commit();
     }
 
-
     @Override
     public void logOut() {
         firebaseAuth.signOut();
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    public void showRaceDetailsView(Race race) {
+        if (TabletDetectionUtil.isTablet(this)) {
+            detailsFragment.updateRace(race);
+        } else {
+            Bundle args = new Bundle();
+            args.putSerializable(SELECTED_RACE, race);
+            detailsFragment.setArguments(args);
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager()
+                    .beginTransaction();
+            fragmentTransaction.replace(R.id.fragmentContainerMainUI, detailsFragment);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+        }
     }
 }

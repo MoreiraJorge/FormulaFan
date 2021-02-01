@@ -11,19 +11,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
+import pt.ipp.estg.formulafan.Interfaces.IRaceDetailsListener;
 import pt.ipp.estg.formulafan.Models.Race;
 import pt.ipp.estg.formulafan.R;
 import pt.ipp.estg.formulafan.ViewModels.RaceViewModel;
 
 public class RaceRecyclerViewAdapter extends RecyclerView.Adapter<RaceRecyclerViewAdapter.ViewHolder> {
 
-    private Context context;
+    private IRaceDetailsListener raceDetailsListener;
     private List<Race> raceList;
     private RaceViewModel raceViewModel;
 
     public RaceRecyclerViewAdapter(Context context, RaceViewModel raceViewModel) {
         this.raceList = new ArrayList<>();
-        this.context = context;
+        this.raceDetailsListener = (IRaceDetailsListener) context;
         this.raceViewModel = raceViewModel;
     }
 
@@ -38,6 +39,12 @@ public class RaceRecyclerViewAdapter extends RecyclerView.Adapter<RaceRecyclerVi
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.race = raceList.get(position);
         holder.textView.setText(raceList.get(position).raceName);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                raceDetailsListener.showRaceDetailsView(raceList.get(position));
+            }
+        });
     }
 
     @Override
@@ -57,7 +64,7 @@ public class RaceRecyclerViewAdapter extends RecyclerView.Adapter<RaceRecyclerVi
         public ViewHolder(View view) {
             super(view);
             this.view = view;
-            textView = (TextView) view.findViewById(R.id.content);
+            textView = view.findViewById(R.id.content);
         }
     }
 }
