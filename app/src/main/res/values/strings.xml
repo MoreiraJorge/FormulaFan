@@ -21,4 +21,8 @@
     <string name="race">Race</string>
     <string name="seleciona_uma_corrida_para_ver_os_detalhes">Seleciona uma corrida para ver os detalhes!</string>
     <string name="detalhes_corrida">Detalhes da Corrida</string>
+    <string name="temporada">Temporada : </string>
+    <string name="ronda">Ronda :</string>
+    <string name="data">Data da Corrida :</string>
+    <string name="circuito">Circuito :</string>
 </resources>
