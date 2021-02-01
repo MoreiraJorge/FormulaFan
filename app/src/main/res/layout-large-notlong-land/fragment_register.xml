@@ -18,7 +18,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="10dp"
         android:layout_weight="1"
         android:fontFamily="@font/aldrich"
         android:text="@string/registo_formulafan"
@@ -29,24 +29,23 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/registerCard"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="515dp"
+        android:layout_height="344dp"
         android:layout_gravity="center|center_vertical"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="10dp"
         android:layout_weight="9"
         android:focusable="true"
         card_view:cardCornerRadius="15dp"
         card_view:cardElevation="15dp">
 
         <LinearLayout
-            android:id="@+id/center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal|center_vertical"
+            android:layout_gravity="center_horizontal"
             android:layout_margin="20dp"
-            android:gravity="center|center_vertical"
+            android:gravity="center|center_horizontal"
             android:orientation="vertical">
 
             <TextView
@@ -132,9 +131,10 @@
 
     <Button
         android:id="@+id/buttonAccountRegister"
-        android:layout_width="wrap_content"
+        android:layout_width="132dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginBottom="20dp"
         android:layout_weight="1"
         android:gravity="center|center_vertical"
         android:text="@string/registar"

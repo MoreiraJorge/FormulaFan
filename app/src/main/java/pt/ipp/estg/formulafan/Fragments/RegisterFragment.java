@@ -2,17 +2,23 @@ package pt.ipp.estg.formulafan.Fragments;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.res.Configuration;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
+
+import com.google.android.material.card.MaterialCardView;
 
 import pt.ipp.estg.formulafan.Activities.MainActivity;
 import pt.ipp.estg.formulafan.R;
@@ -23,7 +29,10 @@ public class RegisterFragment extends Fragment {
 
     private EditText registerMail;
     private EditText registerPass;
+    private EditText verifyPass;
+    private TextView registView;
     private Button registerButton;
+    private MaterialCardView card;
 
     public RegisterFragment() {
         // Required empty public constructor
@@ -46,8 +55,12 @@ public class RegisterFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_register, container, false);
 
+        registView = view.findViewById(R.id.RegistView);
         registerMail = view.findViewById(R.id.registerEmail);
         registerPass = view.findViewById(R.id.registerPassword);
+        verifyPass = view.findViewById(R.id.insertVerifyPass);
+        card = view.findViewById(R.id.registerCard);
+
         registerButton = view.findViewById(R.id.buttonAccountRegister);
 
         InternetUtil internetUtil = new InternetUtil((Application) context.getApplicationContext());
@@ -66,16 +79,40 @@ public class RegisterFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (((MainActivity) context).validateForm(registerMail, registerPass) == true) {
-                    String email = registerMail.getText().toString();
                     String password = registerPass.getText().toString();
-                    ((MainActivity) context).register(email, password);
+                    String passVerify = verifyPass.getText().toString();
+                    if(passVerify.equals(password) == true){
+                        ((MainActivity) context).register(registerMail, registerPass);
+                    } else {
+                        verifyPass.setError("As passwords não coincidem!");
+                        Toast.makeText(context, "As passwords não coincidem!",
+                                Toast.LENGTH_SHORT).show();
+                    }
                 } else {
-                    Toast.makeText(context, "Preencha todos os dados!",
+                    Toast.makeText(context, "Preencha todos os dados obrigatórios!",
                             Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
+        checkDarkMode();
+
         return view;
+    }
+
+    private void checkDarkMode() {
+        Configuration config = getResources().getConfiguration();
+
+        int currentNightMode = config.uiMode & Configuration.UI_MODE_NIGHT_MASK;
+        switch (currentNightMode) {
+            case Configuration.UI_MODE_NIGHT_NO:
+                registView.setTextColor(Color.BLACK);
+                card.setCardBackgroundColor(Color.WHITE);
+                break;
+            case Configuration.UI_MODE_NIGHT_YES:
+                card.setCardBackgroundColor(Color.DKGRAY);
+                registView.setTextColor(Color.WHITE);
+                break;
+        }
     }
 }
