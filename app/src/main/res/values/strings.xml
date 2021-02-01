@@ -34,4 +34,5 @@
     <string name="ronda">Ronda :</string>
     <string name="data">Data da Corrida :</string>
     <string name="circuito">Circuito :</string>
+    <string name="toolBarLogOut">Sair</string>
 </resources>
