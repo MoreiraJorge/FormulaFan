@@ -3,6 +3,10 @@ plugins {
     id 'com.google.gms.google-services'
 }
 
+repositories {
+    maven { url 'https://jitpack.io' }
+}
+
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
@@ -53,4 +57,6 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:26.3.0')
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+    implementation 'com.synnapps:carouselview:0.1.4'
 }

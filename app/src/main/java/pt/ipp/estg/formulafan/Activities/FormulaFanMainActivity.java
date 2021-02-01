@@ -18,12 +18,14 @@ import pt.ipp.estg.formulafan.Fragments.ProfileFragment;
 import pt.ipp.estg.formulafan.Fragments.RaceDetailsFragment;
 import pt.ipp.estg.formulafan.Fragments.RaceFragment;
 import pt.ipp.estg.formulafan.Fragments.ResultFragment;
+import pt.ipp.estg.formulafan.Fragments.StaticticFragment;
 import pt.ipp.estg.formulafan.Interfaces.IRaceDetailsListener;
+import pt.ipp.estg.formulafan.Interfaces.IStatisticsListener;
 import pt.ipp.estg.formulafan.Models.Race;
 import pt.ipp.estg.formulafan.R;
 import pt.ipp.estg.formulafan.Utils.TabletDetectionUtil;
 
-public class FormulaFanMainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, IRaceDetailsListener {
+public class FormulaFanMainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, IRaceDetailsListener, IStatisticsListener {
 
     public static final String SELECTED_RACE = "pt.ipp.pt.estg.cmu.selectedRace";
 
@@ -144,5 +146,15 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
         }
+    }
+
+    @Override
+    public void changeToStatistics() {
+        StaticticFragment statFragment = new StaticticFragment();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager()
+                .beginTransaction();
+        fragmentTransaction.replace(R.id.fragmentContainerMainUI, statFragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
     }
 }

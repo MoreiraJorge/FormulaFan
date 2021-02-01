@@ -5,15 +5,18 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import pt.ipp.estg.formulafan.Activities.FormulaFanMainActivity;
 import pt.ipp.estg.formulafan.R;
 
 public class ProfileFragment extends Fragment {
 
     private Context context;
+    private Button statButton;
 
     public ProfileFragment() {
     }
@@ -33,7 +36,16 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
+        statButton = view.findViewById(R.id.statsButton);
+
+        statButton.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((FormulaFanMainActivity) context).changeToStatistics();
+            }
+        });
 
         return view;
     }
+
 }
