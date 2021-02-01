@@ -35,4 +35,10 @@
     <string name="data">Data da Corrida :</string>
     <string name="circuito">Circuito :</string>
     <string name="toolBarLogOut">Sair</string>
+    <string name="username">UserName</string>
+    <string name="qi">QI</string>
+    <string name="defaultemail_email_com">defaultEmail@email.com</string>
+    <string name="_000">000</string>
+    <string name="estat_sticas">Estatísticas</string>
+    <string name="todo">TODO</string>
 </resources>
