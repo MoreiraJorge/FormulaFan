@@ -1,5 +1,6 @@
 package pt.ipp.estg.formulafan.Fragments;
 
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -55,7 +56,19 @@ public class PieChartFragment extends Fragment {
 
         PieData pieData = new PieData(pieDataSet);
 
-        Legend l = pie.getLegend();
+        pie.setData(pieData);
+        pie.getDescription().setEnabled(false);
+        pie.setCenterText("Respostas");
+        pie.setRotationEnabled(false);
+
+        checkChartDarkMode();
+
+        pie.invalidate();
+    }
+
+    private void checkChartDarkMode() {
+
+        Legend l = pieChart.getLegend();
         l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
         l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
         l.setOrientation(Legend.LegendOrientation.VERTICAL);
@@ -64,12 +77,20 @@ public class PieChartFragment extends Fragment {
         l.setYEntrySpace(0f);
         l.setYOffset(0f);
 
-        pie.setData(pieData);
-        pie.getDescription().setEnabled(false);
-        pie.setCenterText("Respostas");
-        pie.setRotationEnabled(false);
+        pieChart.setHoleColor(Color.TRANSPARENT);
 
-        pie.invalidate();
+        Configuration config = getResources().getConfiguration();
+        int currentNightMode = config.uiMode & Configuration.UI_MODE_NIGHT_MASK;
+        switch (currentNightMode) {
+            case Configuration.UI_MODE_NIGHT_NO:
+                l.setTextColor(Color.BLACK);
+                pieChart.setCenterTextColor(Color.BLACK);
+                break;
+            case Configuration.UI_MODE_NIGHT_YES:
+                l.setTextColor(Color.WHITE);
+                pieChart.setCenterTextColor(Color.WHITE);
+                break;
+        }
+
     }
-
 }

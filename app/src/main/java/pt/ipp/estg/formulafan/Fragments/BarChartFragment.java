@@ -1,6 +1,7 @@
 package pt.ipp.estg.formulafan.Fragments;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,6 +13,8 @@ import androidx.fragment.app.Fragment;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
@@ -24,7 +27,6 @@ import pt.ipp.estg.formulafan.R;
 public class BarChartFragment extends Fragment {
 
     private BarChart barChart;
-    private Context context;
 
     public BarChartFragment() {
     }
@@ -37,7 +39,6 @@ public class BarChartFragment extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        this.context = context;
     }
 
     @Override
@@ -78,10 +79,26 @@ public class BarChartFragment extends Fragment {
         barChart.setData(data);
         barChart.setFitBars(true);
         barChart.getDescription().setEnabled(false);
-
+        barChart.setDrawValueAboveBar(false);
         barChart.setTouchEnabled(true);
         barChart.setPinchZoom(false);
         barChart.setDoubleTapToZoomEnabled(false);
+
+        barChart.getXAxis().setDrawGridLines(false);
+
+        XAxis xAxis = barChart.getXAxis();
+        xAxis.setDrawLabels(false);
+
+        YAxis rightYAxis = barChart.getAxisRight();
+        rightYAxis.setEnabled(false);
+        rightYAxis.setDrawGridLines(false);
+
+        checkChartDarkMode();
+
+        barChart.invalidate();
+    }
+
+    private void checkChartDarkMode() {
 
         Legend l = barChart.getLegend();
         l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
@@ -92,6 +109,17 @@ public class BarChartFragment extends Fragment {
         l.setYEntrySpace(0f);
         l.setYOffset(0f);
 
-        barChart.invalidate();
+        Configuration config = getResources().getConfiguration();
+        int currentNightMode = config.uiMode & Configuration.UI_MODE_NIGHT_MASK;
+        switch (currentNightMode) {
+            case Configuration.UI_MODE_NIGHT_NO:
+                l.setTextColor(Color.BLACK);
+                barChart.getAxisLeft().setTextColor(Color.BLACK);
+                break;
+            case Configuration.UI_MODE_NIGHT_YES:
+                l.setTextColor(Color.WHITE);
+                barChart.getAxisLeft().setTextColor(Color.WHITE);
+                break;
+        }
     }
 }
