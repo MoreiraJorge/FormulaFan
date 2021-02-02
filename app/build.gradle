@@ -58,5 +58,4 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
-    implementation 'com.synnapps:carouselview:0.1.4'
 }
