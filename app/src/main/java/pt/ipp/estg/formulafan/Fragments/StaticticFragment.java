@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,9 +49,13 @@ public class StaticticFragment extends Fragment {
 
         TabLayout tabLayout = view.findViewById(R.id.tab_layout);
         new TabLayoutMediator(tabLayout, pager,
-                (tab, position) -> tab.setText("OBJECT " + (position + 1))
+                (tab, position) -> tab.setText(tabTitle(position))
         ).attach();
 
         return view;
+    }
+
+    private String tabTitle(int pos){
+        return (pos == 0) ? "Repostas" : "Quizzes";
     }
 }

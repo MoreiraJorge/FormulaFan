@@ -41,14 +41,13 @@ public class PieChartFragment extends Fragment {
         return view;
     }
 
-
     private void generatePie(float correct, float wrong, PieChart pie){
 
         ArrayList<PieEntry> answers = new ArrayList<>();
         answers.add(new PieEntry(correct, "Corretas"));
         answers.add(new PieEntry(wrong, "Erradas"));
 
-        PieDataSet pieDataSet = new PieDataSet(answers,"Respostas");
+        PieDataSet pieDataSet = new PieDataSet(answers,"");
         pieDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
         pieDataSet.setValueTextColor(Color.BLACK);
         pieDataSet.setValueTextSize(16f);
@@ -70,6 +69,8 @@ public class PieChartFragment extends Fragment {
         pie.getDescription().setEnabled(false);
         pie.setCenterText("Respostas");
         pie.setRotationEnabled(false);
+
+        pie.invalidate();
     }
 
 }
