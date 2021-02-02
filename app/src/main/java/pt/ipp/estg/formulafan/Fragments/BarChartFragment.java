@@ -22,9 +22,10 @@ import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 
 import java.util.ArrayList;
 
+import pt.ipp.estg.formulafan.Interfaces.IThemeListener;
 import pt.ipp.estg.formulafan.R;
 
-public class BarChartFragment extends Fragment {
+public class BarChartFragment extends Fragment implements IThemeListener {
 
     private BarChart barChart;
 
@@ -93,13 +94,13 @@ public class BarChartFragment extends Fragment {
         rightYAxis.setEnabled(false);
         rightYAxis.setDrawGridLines(false);
 
-        checkChartDarkMode();
+        checkDarkMode();
 
         barChart.invalidate();
     }
 
-    private void checkChartDarkMode() {
-
+    @Override
+    public void checkDarkMode() {
         Legend l = barChart.getLegend();
         l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
         l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);

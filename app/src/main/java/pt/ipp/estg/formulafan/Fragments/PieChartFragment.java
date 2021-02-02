@@ -18,9 +18,10 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 
+import pt.ipp.estg.formulafan.Interfaces.IThemeListener;
 import pt.ipp.estg.formulafan.R;
 
-public class PieChartFragment extends Fragment {
+public class PieChartFragment extends Fragment implements IThemeListener {
     private PieChart pieChart;
 
     public PieChartFragment() {
@@ -61,13 +62,13 @@ public class PieChartFragment extends Fragment {
         pie.setCenterText("Respostas");
         pie.setRotationEnabled(false);
 
-        checkChartDarkMode();
+        checkDarkMode();
 
         pie.invalidate();
     }
 
-    private void checkChartDarkMode() {
-
+    @Override
+    public void checkDarkMode() {
         Legend l = pieChart.getLegend();
         l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
         l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
@@ -91,6 +92,5 @@ public class PieChartFragment extends Fragment {
                 pieChart.setCenterTextColor(Color.WHITE);
                 break;
         }
-
     }
 }
