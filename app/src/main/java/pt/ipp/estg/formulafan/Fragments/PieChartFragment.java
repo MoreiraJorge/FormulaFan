@@ -18,7 +18,6 @@ import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
-import java.util.Formatter;
 
 import pt.ipp.estg.formulafan.Interfaces.IThemeListener;
 import pt.ipp.estg.formulafan.R;
@@ -58,7 +57,7 @@ public class PieChartFragment extends Fragment implements IThemeListener {
         ValueFormatter vf = new ValueFormatter() {
             @Override
             public String getFormattedValue(float value) {
-                return ""+(int)value;
+                return "" + (int) value;
             }
         };
 
