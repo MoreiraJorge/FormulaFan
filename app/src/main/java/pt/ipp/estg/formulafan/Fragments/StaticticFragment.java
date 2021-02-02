@@ -2,14 +2,12 @@ package pt.ipp.estg.formulafan.Fragments;
 
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.viewpager2.widget.ViewPager2;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.fragment.app.Fragment;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -55,7 +53,7 @@ public class StaticticFragment extends Fragment {
         return view;
     }
 
-    private String tabTitle(int pos){
+    private String tabTitle(int pos) {
         return (pos == 0) ? "Repostas" : "Quizzes";
     }
 }

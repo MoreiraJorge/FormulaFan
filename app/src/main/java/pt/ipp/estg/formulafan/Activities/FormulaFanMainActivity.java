@@ -89,7 +89,7 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch(item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.logoutButton:
                 logOut();
                 return true;

@@ -2,12 +2,11 @@ package pt.ipp.estg.formulafan.Fragments;
 
 import android.graphics.Color;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.fragment.app.Fragment;
 
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
@@ -37,17 +36,17 @@ public class PieChartFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_pie_chart, container, false);
         pieChart = view.findViewById(R.id.pieChart);
-        generatePie(5,4,pieChart);
+        generatePie(5, 4, pieChart);
         return view;
     }
 
-    private void generatePie(float correct, float wrong, PieChart pie){
+    private void generatePie(float correct, float wrong, PieChart pie) {
 
         ArrayList<PieEntry> answers = new ArrayList<>();
         answers.add(new PieEntry(correct, "Corretas"));
         answers.add(new PieEntry(wrong, "Erradas"));
 
-        PieDataSet pieDataSet = new PieDataSet(answers,"");
+        PieDataSet pieDataSet = new PieDataSet(answers, "");
         pieDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
         pieDataSet.setValueTextColor(Color.BLACK);
         pieDataSet.setValueTextSize(16f);

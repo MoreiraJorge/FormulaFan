@@ -3,14 +3,12 @@ package pt.ipp.estg.formulafan.Fragments;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Legend;
@@ -18,7 +16,6 @@ import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
-import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 
@@ -52,15 +49,15 @@ public class BarChartFragment extends Fragment {
         return view;
     }
 
-    private void setData(){
+    private void setData() {
         int quizDone = 10;
         int quizMiss = 2;
 
         ArrayList<BarEntry> values1 = new ArrayList<>();
-        values1.add(new BarEntry(1,quizDone));
+        values1.add(new BarEntry(1, quizDone));
 
         ArrayList<BarEntry> values2 = new ArrayList<>();
-        values2.add(new BarEntry(2,quizMiss));
+        values2.add(new BarEntry(2, quizMiss));
 
         BarDataSet set1;
         set1 = new BarDataSet(values1, "Quizzes feitos");

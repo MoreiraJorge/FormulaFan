@@ -22,7 +22,7 @@
     </style>
 
     <style name="Theme.FormulaFan.MaterialCard">
-       <item name="backgroundColor">@color/white</item>
+        <item name="backgroundColor">@color/white</item>
         <item name="colorOnPrimary">@color/black</item>
     </style>
 
