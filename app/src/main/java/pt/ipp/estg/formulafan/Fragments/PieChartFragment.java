@@ -14,6 +14,7 @@ import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
@@ -38,11 +39,11 @@ public class PieChartFragment extends Fragment implements IThemeListener {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_pie_chart, container, false);
         pieChart = view.findViewById(R.id.pieChart);
-        generatePie(5, 4, pieChart);
+        generatePie(5, 4);
         return view;
     }
 
-    private void generatePie(float correct, float wrong, PieChart pie) {
+    private void generatePie(float correct, float wrong) {
 
         ArrayList<PieEntry> answers = new ArrayList<>();
         answers.add(new PieEntry(correct, "Corretas"));
@@ -51,20 +52,28 @@ public class PieChartFragment extends Fragment implements IThemeListener {
         PieDataSet pieDataSet = new PieDataSet(answers, "");
         pieDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
         pieDataSet.setValueTextColor(Color.BLACK);
-        pieDataSet.setValueTextSize(16f);
+        pieDataSet.setValueTextSize(18f);
 
-        pie.setUsePercentValues(false);
+        ValueFormatter vf = new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                return "" + (int) value;
+            }
+        };
 
+        pieDataSet.setValueFormatter(vf);
         PieData pieData = new PieData(pieDataSet);
 
-        pie.setData(pieData);
-        pie.getDescription().setEnabled(false);
-        pie.setCenterText("Respostas");
-        pie.setRotationEnabled(false);
+        pieChart.setUsePercentValues(false);
+        pieChart.setData(pieData);
+        pieChart.getDescription().setEnabled(false);
+        pieChart.setCenterText("Respostas");
+        pieChart.setCenterTextSize(18f);
+        pieChart.setRotationEnabled(false);
 
         checkDarkMode();
 
-        pie.invalidate();
+        pieChart.invalidate();
     }
 
     @Override
@@ -77,6 +86,7 @@ public class PieChartFragment extends Fragment implements IThemeListener {
         l.setXEntrySpace(7f);
         l.setYEntrySpace(0f);
         l.setYOffset(0f);
+        l.setTextSize(18f);
 
         pieChart.setHoleColor(Color.TRANSPARENT);
 

@@ -22,6 +22,8 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.text.SimpleDateFormat;
+
 import pt.ipp.estg.formulafan.Activities.FormulaFanMainActivity;
 import pt.ipp.estg.formulafan.Models.Circuit;
 import pt.ipp.estg.formulafan.Models.Race;
@@ -40,6 +42,7 @@ public class RaceDetailsFragment extends Fragment implements OnMapReadyCallback 
     private TextView circuitView;
     private Toolbar toolbar;
     private Race currentRace;
+    private static SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy hh:mm aaa");
 
     public RaceDetailsFragment() {
     }
@@ -83,7 +86,7 @@ public class RaceDetailsFragment extends Fragment implements OnMapReadyCallback 
             toolbar.setTitle(currentRace.raceName + " - Detalhes");
             seasonView.setText(" " + currentRace.season);
             roundView.setText(" " + currentRace.round);
-            dateView.setText(" " + currentRace.date.toLocaleString());
+            dateView.setText(" " + dateFormat.format(currentRace.date));
             circuitView.setText(" " + currentRace.circuit.circuitName);
         }
 

@@ -38,12 +38,16 @@ public class ProfileFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         statButton = view.findViewById(R.id.statsButton);
 
-        statButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                statisticsListener.changeToStatistics();
-            }
-        });
+        if (statButton != null) {
+
+            statButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    statisticsListener.changeToStatistics();
+                }
+            });
+
+        }
 
         return view;
     }

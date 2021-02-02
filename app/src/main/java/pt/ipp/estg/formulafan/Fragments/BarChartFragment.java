@@ -18,6 +18,7 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 
 import java.util.ArrayList;
@@ -52,8 +53,8 @@ public class BarChartFragment extends Fragment implements IThemeListener {
     }
 
     private void setData() {
-        int quizDone = 10;
-        int quizMiss = 2;
+        int quizDone = 100;
+        int quizMiss = 25;
 
         ArrayList<BarEntry> values1 = new ArrayList<>();
         values1.add(new BarEntry(1, quizDone));
@@ -61,15 +62,26 @@ public class BarChartFragment extends Fragment implements IThemeListener {
         ArrayList<BarEntry> values2 = new ArrayList<>();
         values2.add(new BarEntry(2, quizMiss));
 
+        ValueFormatter vf = new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                return "" + (int) value;
+            }
+        };
+
         BarDataSet set1;
         set1 = new BarDataSet(values1, "Quizzes feitos");
         set1.setDrawIcons(false);
         set1.setColors(Color.rgb(0, 204, 102));
+        set1.setValueTextSize(16f);
+        set1.setValueFormatter(vf);
 
         BarDataSet set2;
         set2 = new BarDataSet(values2, "Quizzes por fazer");
         set2.setDrawIcons(false);
         set2.setColors(Color.rgb(255, 214, 51));
+        set2.setValueTextSize(16f);
+        set2.setValueFormatter(vf);
 
         ArrayList<IBarDataSet> dataSets = new ArrayList<>();
         dataSets.add(set1);
@@ -84,11 +96,15 @@ public class BarChartFragment extends Fragment implements IThemeListener {
         barChart.setTouchEnabled(true);
         barChart.setPinchZoom(false);
         barChart.setDoubleTapToZoomEnabled(false);
-
         barChart.getXAxis().setDrawGridLines(false);
 
         XAxis xAxis = barChart.getXAxis();
         xAxis.setDrawLabels(false);
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+
+        YAxis leftYAxix = barChart.getAxisLeft();
+        leftYAxix.setTextSize(14f);
+        leftYAxix.setAxisMinimum(0);
 
         YAxis rightYAxis = barChart.getAxisRight();
         rightYAxis.setEnabled(false);
@@ -109,6 +125,7 @@ public class BarChartFragment extends Fragment implements IThemeListener {
         l.setXEntrySpace(7f);
         l.setYEntrySpace(0f);
         l.setYOffset(0f);
+        l.setTextSize(14f);
 
         Configuration config = getResources().getConfiguration();
         int currentNightMode = config.uiMode & Configuration.UI_MODE_NIGHT_MASK;
