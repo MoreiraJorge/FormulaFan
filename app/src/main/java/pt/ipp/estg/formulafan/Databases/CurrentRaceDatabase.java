@@ -14,19 +14,19 @@ import java.util.concurrent.Executors;
 import pt.ipp.estg.formulafan.Models.Race;
 
 @Database(entities = {Race.class}, version = 1, exportSchema = false)
-public abstract class RaceDatabase extends RoomDatabase {
+public abstract class CurrentRaceDatabase extends RoomDatabase {
 
     private static final int NUMBER_OF_THREADS = 4;
-    private static volatile RaceDatabase INSTANCE;
+    private static volatile CurrentRaceDatabase INSTANCE;
     public static final ExecutorService databaseWriteExecutor =
             Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
-    public static RaceDatabase getDatabase(final Context context) {
+    public static CurrentRaceDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {
-            synchronized (RaceDatabase.class) {
+            synchronized (CurrentRaceDatabase.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            RaceDatabase.class, "race_database") //.addCallback(sRoomDatabaseCallBack)
+                            CurrentRaceDatabase.class, "race_database") //.addCallback(sRoomDatabaseCallBack)
                             .build();
                 }
             }

@@ -2,7 +2,6 @@ package pt.ipp.estg.formulafan.Activities;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.EditText;
@@ -15,15 +14,10 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthEmailException;
 import com.google.firebase.auth.FirebaseAuthException;
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
-import com.google.firebase.auth.FirebaseAuthInvalidUserException;
-import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 
 import pt.ipp.estg.formulafan.Fragments.LoginFragment;
 import pt.ipp.estg.formulafan.Fragments.RegisterFragment;
@@ -77,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements ISessionListener 
                             String errorCode = ((FirebaseAuthException) task.getException())
                                     .getErrorCode();
 
-                            switch(errorCode){
+                            switch (errorCode) {
                                 case "ERROR_WRONG_PASSWORD":
                                     Toast.makeText(context, "A password inválida!",
                                             Toast.LENGTH_SHORT).show();
@@ -118,7 +112,7 @@ public class MainActivity extends AppCompatActivity implements ISessionListener 
                             String errorCode = ((FirebaseAuthException) task.getException())
                                     .getErrorCode();
 
-                            switch(errorCode){
+                            switch (errorCode) {
                                 case "ERROR_EMAIL_ALREADY_IN_USE":
                                     email.setError("Email em uso!");
                                     Toast.makeText(context, "Este email já está em uso!",

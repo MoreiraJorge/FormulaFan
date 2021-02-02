@@ -4,7 +4,6 @@ import android.app.Application;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -81,7 +80,7 @@ public class RegisterFragment extends Fragment {
                 if (((MainActivity) context).validateForm(registerMail, registerPass) == true) {
                     String password = registerPass.getText().toString();
                     String passVerify = verifyPass.getText().toString();
-                    if(passVerify.equals(password) == true){
+                    if (passVerify.equals(password) == true) {
                         ((MainActivity) context).register(registerMail, registerPass);
                     } else {
                         verifyPass.setError("As passwords não coincidem!");

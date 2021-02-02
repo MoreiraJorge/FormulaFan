@@ -107,20 +107,20 @@ public class LoginFragment extends Fragment {
         return view;
     }
 
-    private void checkDarkMode(){
+    private void checkDarkMode() {
         Configuration config = getResources().getConfiguration();
         Drawable new_image;
 
         int currentNightMode = config.uiMode & Configuration.UI_MODE_NIGHT_MASK;
         switch (currentNightMode) {
             case Configuration.UI_MODE_NIGHT_NO:
-                new_image= getResources().getDrawable(R.drawable.imageonline_co_whitebackgroundremoved,
+                new_image = getResources().getDrawable(R.drawable.imageonline_co_whitebackgroundremoved,
                         context.getTheme());
                 card.setCardBackgroundColor(Color.WHITE);
                 logo.setBackground(new_image);
                 break;
             case Configuration.UI_MODE_NIGHT_YES:
-                new_image= getResources().getDrawable(R.drawable.output_onlinepngtools__1_,
+                new_image = getResources().getDrawable(R.drawable.output_onlinepngtools__1_,
                         context.getTheme());
                 logo.setBackground(new_image);
                 welcomeView.setTextColor(Color.WHITE);
