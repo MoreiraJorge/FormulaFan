@@ -22,10 +22,11 @@ import androidx.lifecycle.Observer;
 import com.google.android.material.card.MaterialCardView;
 
 import pt.ipp.estg.formulafan.Activities.MainActivity;
+import pt.ipp.estg.formulafan.Interfaces.IThemeListener;
 import pt.ipp.estg.formulafan.R;
 import pt.ipp.estg.formulafan.Utils.InternetUtil;
 
-public class LoginFragment extends Fragment {
+public class LoginFragment extends Fragment implements IThemeListener {
 
     private Context context;
 
@@ -107,7 +108,8 @@ public class LoginFragment extends Fragment {
         return view;
     }
 
-    private void checkDarkMode() {
+    @Override
+    public void checkDarkMode() {
         Configuration config = getResources().getConfiguration();
         Drawable new_image;
 

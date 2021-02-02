@@ -20,10 +20,11 @@ import androidx.lifecycle.Observer;
 import com.google.android.material.card.MaterialCardView;
 
 import pt.ipp.estg.formulafan.Activities.MainActivity;
+import pt.ipp.estg.formulafan.Interfaces.IThemeListener;
 import pt.ipp.estg.formulafan.R;
 import pt.ipp.estg.formulafan.Utils.InternetUtil;
 
-public class RegisterFragment extends Fragment {
+public class RegisterFragment extends Fragment implements IThemeListener {
     private Context context;
 
     private EditText registerMail;
@@ -99,7 +100,8 @@ public class RegisterFragment extends Fragment {
         return view;
     }
 
-    private void checkDarkMode() {
+    @Override
+    public void checkDarkMode() {
         Configuration config = getResources().getConfiguration();
 
         int currentNightMode = config.uiMode & Configuration.UI_MODE_NIGHT_MASK;

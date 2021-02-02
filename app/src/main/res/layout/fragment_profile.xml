@@ -1,25 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_weight="0"
+    android:orientation="vertical"
+    android:weightSum="10"
     tools:context=".Fragments.ProfileFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/profile_image"
+        android:layout_width="150dp"
+        android:layout_height="137dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_weight="1"
+        android:src="@drawable/default_profile"
+        app:civ_border_color="#FF000000"
+        app:civ_border_width="2dp" />
+
+    <TextView
+        android:id="@+id/usaerNameView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_weight="1"
+        android:fontFamily="@font/aldrich"
+        android:text="@string/username"
+        android:textAlignment="center"
+        android:textSize="30sp" />
 
-        <Button
-            android:id="@+id/logoutButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/logout"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <androidx.cardview.widget.CardView
+        android:layout_width="332dp"
+        android:layout_height="172dp"
+        android:layout_gravity="center|center_vertical"
+        android:layout_marginTop="20dp"
+        android:layout_weight="1"
+        app:cardElevation="5dp"
+        app:cardMaxElevation="10dp"
+        app:theme="@style/Theme.FormulaFan.MaterialCard">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:orientation="vertical"
+            android:weightSum="9">
 
-</FrameLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="4"
+                android:orientation="horizontal"
+                android:weightSum="10">
+
+                <TextView
+                    android:id="@+id/qiTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5"
+                    android:fontFamily="@font/aldrich"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:text="@string/qi"
+                    android:textSize="36sp" />
+
+                <FrameLayout
+                    android:id="@+id/EmailFrame"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5">
+
+                    <ImageView
+                        android:id="@+id/imageView2"
+                        android:layout_width="119dp"
+                        android:layout_height="49dp"
+                        android:layout_gravity="center_horizontal|center_vertical"
+                        android:contentDescription="@string/todo"
+                        android:src="@drawable/ic_baseline_email_24" />
+                </FrameLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="6"
+                android:orientation="horizontal"
+                android:weightSum="10">
+
+                <TextView
+                    android:id="@+id/qiPointsView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5"
+                    android:fontFamily="@font/aldrich"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:text="@string/_000"
+                    android:textSize="36sp" />
+
+                <TextView
+                    android:id="@+id/emailViewProfile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5"
+                    android:fontFamily="@font/aldrich"
+                    android:gravity="center_vertical"
+                    android:text="@string/defaultemail_email_com"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <Button
+        android:id="@+id/statsButton"
+        android:layout_width="332dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_weight="1"
+        android:drawableLeft="@drawable/ic_baseline_insert_chart_outlined_28"
+        android:elevation="10dp"
+        android:text="@string/estat_sticas"
+        android:textAlignment="center"
+        app:theme="@style/Theme.FormulaFan.Button" />
+
+
+</LinearLayout>

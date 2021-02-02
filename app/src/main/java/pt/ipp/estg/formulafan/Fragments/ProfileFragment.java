@@ -10,13 +10,13 @@ import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import pt.ipp.estg.formulafan.Interfaces.IProfileListener;
+import pt.ipp.estg.formulafan.Interfaces.IStatisticsListener;
 import pt.ipp.estg.formulafan.R;
 
 public class ProfileFragment extends Fragment {
 
-    private IProfileListener profileListener;
-    private Button logoutButton;
+    private IStatisticsListener statisticsListener;
+    private Button statButton;
 
     public ProfileFragment() {
     }
@@ -24,7 +24,7 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        this.profileListener = (IProfileListener) context;
+        this.statisticsListener = (IStatisticsListener) context;
     }
 
     @Override
@@ -36,13 +36,16 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
-        logoutButton = view.findViewById(R.id.logoutButton);
-        logoutButton.setOnClickListener(new View.OnClickListener() {
+        statButton = view.findViewById(R.id.statsButton);
+
+        statButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                profileListener.logOut();
+                statisticsListener.changeToStatistics();
             }
         });
+
         return view;
     }
+
 }

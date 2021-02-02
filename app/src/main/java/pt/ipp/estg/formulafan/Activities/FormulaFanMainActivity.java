@@ -2,6 +2,7 @@ package pt.ipp.estg.formulafan.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
@@ -17,13 +18,14 @@ import pt.ipp.estg.formulafan.Fragments.ProfileFragment;
 import pt.ipp.estg.formulafan.Fragments.RaceDetailsFragment;
 import pt.ipp.estg.formulafan.Fragments.RaceFragment;
 import pt.ipp.estg.formulafan.Fragments.ResultFragment;
-import pt.ipp.estg.formulafan.Interfaces.IProfileListener;
+import pt.ipp.estg.formulafan.Fragments.StaticticFragment;
 import pt.ipp.estg.formulafan.Interfaces.IRaceDetailsListener;
+import pt.ipp.estg.formulafan.Interfaces.IStatisticsListener;
 import pt.ipp.estg.formulafan.Models.Race;
 import pt.ipp.estg.formulafan.R;
 import pt.ipp.estg.formulafan.Utils.TabletDetectionUtil;
 
-public class FormulaFanMainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, IProfileListener, IRaceDetailsListener {
+public class FormulaFanMainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, IRaceDetailsListener, IStatisticsListener {
 
     public static final String SELECTED_RACE = "pt.ipp.pt.estg.cmu.selectedRace";
 
@@ -65,6 +67,13 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.toolbar_menu, menu);
+        return true;
+    }
+
+    @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.profile) {
             changeToProfileFragment();
@@ -75,6 +84,17 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
         } else {
             changeToResultFragment();
             return true;
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.logoutButton:
+                logOut();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 
@@ -105,8 +125,7 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
         fragmentTransaction.commit();
     }
 
-    @Override
-    public void logOut() {
+    private void logOut() {
         firebaseAuth.signOut();
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
@@ -126,5 +145,15 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
         }
+    }
+
+    @Override
+    public void changeToStatistics() {
+        StaticticFragment statFragment = new StaticticFragment();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager()
+                .beginTransaction();
+        fragmentTransaction.replace(R.id.fragmentContainerMainUI, statFragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
     }
 }

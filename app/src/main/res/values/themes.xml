@@ -15,4 +15,22 @@
         <item name="colorSurface">@color/red</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="MyCustomToolbarTheme" parent="Theme.MaterialComponents.DayNight">
+        <item name="android:textColorSecondary">@color/white</item>
+        <item name="android:fontFamily">@font/aldrich</item>
+    </style>
+
+    <style name="Theme.FormulaFan.MaterialCard">
+        <item name="backgroundColor">@color/white</item>
+        <item name="colorOnPrimary">@color/black</item>
+    </style>
+
+    <style name="Theme.FormulaFan.Button" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:backgroundTint">@color/white</item>
+        <item name="colorOnPrimary">@color/black</item>
+        <item name="android:textColorSecondary">@color/black</item>
+        <item name="android:fontFamily">@font/aldrich</item>
+    </style>
+
 </resources>

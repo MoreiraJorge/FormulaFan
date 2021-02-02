@@ -15,4 +15,12 @@
         <item name="colorSurface">@color/red</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="Theme.FormulaFan.Button" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:backgroundTint">@color/grey_light</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="android:textColorSecondary">@color/white</item>
+        <item name="android:fontFamily">@font/aldrich</item>
+    </style>
+
 </resources>
