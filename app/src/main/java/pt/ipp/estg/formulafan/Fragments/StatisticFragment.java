@@ -16,10 +16,10 @@ import java.util.ArrayList;
 
 import pt.ipp.estg.formulafan.R;
 
-public class StaticticFragment extends Fragment {
+public class StatisticFragment extends Fragment {
     private ViewPager2 pager;
 
-    public StaticticFragment() {
+    public StatisticFragment() {
         // Required empty public constructor
     }
 
@@ -31,7 +31,7 @@ public class StaticticFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_statictic, container, false);
+        View view = inflater.inflate(R.layout.fragment_statistic, container, false);
         pager = view.findViewById(R.id.pager);
 
         ArrayList<Fragment> listOfFragments = new ArrayList<>();

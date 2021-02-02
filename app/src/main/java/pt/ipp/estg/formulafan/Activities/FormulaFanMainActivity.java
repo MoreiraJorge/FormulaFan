@@ -18,7 +18,7 @@ import pt.ipp.estg.formulafan.Fragments.ProfileFragment;
 import pt.ipp.estg.formulafan.Fragments.RaceDetailsFragment;
 import pt.ipp.estg.formulafan.Fragments.RaceFragment;
 import pt.ipp.estg.formulafan.Fragments.ResultFragment;
-import pt.ipp.estg.formulafan.Fragments.StaticticFragment;
+import pt.ipp.estg.formulafan.Fragments.StatisticFragment;
 import pt.ipp.estg.formulafan.Interfaces.IRaceDetailsListener;
 import pt.ipp.estg.formulafan.Interfaces.IStatisticsListener;
 import pt.ipp.estg.formulafan.Models.Race;
@@ -99,12 +99,22 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
     }
 
     private void changeToProfileFragment() {
+
         ProfileFragment profileFragment = new ProfileFragment();
-        FragmentTransaction fragmentTransaction = fragmentManager
-                .beginTransaction();
+        StatisticFragment statisticFragment = new StatisticFragment();
+        FragmentTransaction fragmentTransaction;
+        fragmentTransaction = fragmentManager.beginTransaction();
+
         fragmentTransaction.replace(R.id.fragmentContainerMainUI, profileFragment);
         fragmentTransaction.addToBackStack(null);
+
+        if (TabletDetectionUtil.isTablet(this)) {
+            fragmentTransaction.replace(R.id.fragmentContainerMainUIDetails, statisticFragment);
+            fragmentTransaction.addToBackStack(null);
+        }
+
         fragmentTransaction.commit();
+
     }
 
     private void changeToRaceFragment() {
@@ -113,6 +123,12 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
                 .beginTransaction();
         fragmentTransaction.replace(R.id.fragmentContainerMainUI, raceFragment);
         fragmentTransaction.addToBackStack(null);
+
+        if (TabletDetectionUtil.isTablet(this)) {
+            fragmentTransaction.replace(R.id.fragmentContainerMainUIDetails, detailsFragment);
+            fragmentTransaction.addToBackStack(null);
+        }
+
         fragmentTransaction.commit();
     }
 
@@ -149,7 +165,7 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
 
     @Override
     public void changeToStatistics() {
-        StaticticFragment statFragment = new StaticticFragment();
+        StatisticFragment statFragment = new StatisticFragment();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager()
                 .beginTransaction();
         fragmentTransaction.replace(R.id.fragmentContainerMainUI, statFragment);

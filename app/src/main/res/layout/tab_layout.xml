@@ -10,7 +10,7 @@
         android:layout_height="?attr/actionBarSize"
         app:tabIndicatorColor="@color/white"
         app:tabSelectedTextColor="@color/white"
-        app:tabTextColor="#BDBCBC"
+        app:tabTextColor="@color/white"
         app:tabMaxWidth="0dp"
         app:tabGravity="fill"
         app:tabMode="fixed" />
