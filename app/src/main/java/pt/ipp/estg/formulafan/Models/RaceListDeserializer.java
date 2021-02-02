@@ -45,19 +45,21 @@ public class RaceListDeserializer implements JsonDeserializer<List<Race>> {
                 date = Calendar.getInstance().getTime();
             }
 
-            //Setting Time
-            SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm");
-            Time timeValue = null;
+            if (itemJsonObject.get("time") != null) {
+                //Setting Time
+                SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm");
+                Time timeValue = null;
 
-            try {
-                timeValue = new Time(timeFormat.parse(itemJsonObject.get("time").getAsString()).getTime());
-            } catch (ParseException e) {
-                timeValue = null;
-            }
+                try {
+                    timeValue = new Time(timeFormat.parse(itemJsonObject.get("time").getAsString()).getTime());
+                } catch (ParseException e) {
+                    timeValue = null;
+                }
 
-            if (timeValue != null) {
-                date.setHours(timeValue.getHours());
-                date.setMinutes(timeValue.getMinutes());
+                if (timeValue != null) {
+                    date.setHours(timeValue.getHours());
+                    date.setMinutes(timeValue.getMinutes());
+                }
             }
 
             //Setting Circuit

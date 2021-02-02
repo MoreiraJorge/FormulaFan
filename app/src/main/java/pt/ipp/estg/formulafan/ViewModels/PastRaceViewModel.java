@@ -9,17 +9,17 @@ import androidx.lifecycle.LiveData;
 import java.util.List;
 
 import pt.ipp.estg.formulafan.Models.Race;
-import pt.ipp.estg.formulafan.Repositories.RaceRepository;
+import pt.ipp.estg.formulafan.Repositories.PastRaceRepository;
 
-public class RaceViewModel extends AndroidViewModel {
+public class PastRaceViewModel extends AndroidViewModel {
 
     private final LiveData<List<Race>> races;
-    private RaceRepository raceRepository;
+    private final PastRaceRepository pastRaceRepository;
 
-    public RaceViewModel(@NonNull Application application) {
+    public PastRaceViewModel(@NonNull Application application) {
         super(application);
-        raceRepository = new RaceRepository(application);
-        races = raceRepository.getAllRaces();
+        pastRaceRepository = new PastRaceRepository(application);
+        races = pastRaceRepository.getAllRaces();
     }
 
     public LiveData<List<Race>> getAllRaces() {
@@ -27,10 +27,10 @@ public class RaceViewModel extends AndroidViewModel {
     }
 
     public void insertRace(Race race) {
-        raceRepository.insertRace(race);
+        pastRaceRepository.insertRace(race);
     }
 
     public void deleteRace(Race race) {
-        raceRepository.deleteRace(race);
+        pastRaceRepository.deleteRace(race);
     }
 }

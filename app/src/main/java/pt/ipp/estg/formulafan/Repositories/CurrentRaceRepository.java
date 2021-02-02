@@ -6,25 +6,27 @@ import android.widget.Toast;
 
 import androidx.lifecycle.LiveData;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 
+import pt.ipp.estg.formulafan.Databases.CurrentRaceDatabase;
 import pt.ipp.estg.formulafan.Databases.RaceDAO;
-import pt.ipp.estg.formulafan.Databases.RaceDatabase;
 import pt.ipp.estg.formulafan.Models.Race;
-import pt.ipp.estg.formulafan.Services.FormulaOneAPI;
+import pt.ipp.estg.formulafan.Services.RaceDetailsAPI;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class RaceRepository {
+public class CurrentRaceRepository {
 
-    private RaceDAO raceDAO;
+    private final RaceDAO raceDAO;
     private LiveData<List<Race>> allRaces;
-    private Context toastContext;
+    private final Context toastContext;
 
-    public RaceRepository(Application application) {
+    public CurrentRaceRepository(Application application) {
         toastContext = application.getApplicationContext();
-        RaceDatabase db = RaceDatabase.getDatabase(application);
+        CurrentRaceDatabase db = CurrentRaceDatabase.getDatabase(application);
         raceDAO = db.getRaceDAO();
         allRaces = raceDAO.getRaces();
         refreshCurrentRaces();
@@ -35,32 +37,32 @@ public class RaceRepository {
     }
 
     public void insertRace(Race race) {
-        RaceDatabase.databaseWriteExecutor.execute(() -> {
+        CurrentRaceDatabase.databaseWriteExecutor.execute(() -> {
             raceDAO.insertRace(race);
         });
     }
 
     public void deleteRace(Race race) {
-        RaceDatabase.databaseWriteExecutor.execute(() -> {
+        CurrentRaceDatabase.databaseWriteExecutor.execute(() -> {
             raceDAO.deleteRace(race);
         });
     }
 
     public void refreshCurrentRaces() {
-        FormulaOneAPI.formulaOneAPI.getListOfCurrentRaces().enqueue(new Callback<List<Race>>() {
+        RaceDetailsAPI.raceDetailsAPI.getListOfCurrentRaces().enqueue(new Callback<List<Race>>() {
             @Override
-            public void onResponse(Call<List<Race>> call, Response<List<Race>> response) {
+            public void onResponse(@NotNull Call<List<Race>> call, @NotNull Response<List<Race>> response) {
                 List<Race> raceList = response.body();
-                RaceDatabase.databaseWriteExecutor.execute(() -> {
+                CurrentRaceDatabase.databaseWriteExecutor.execute(() -> {
                     raceDAO.insertAllRaces(raceList);
                 });
-                RaceDatabase.databaseWriteExecutor.execute(() -> {
+                CurrentRaceDatabase.databaseWriteExecutor.execute(() -> {
                     allRaces = raceDAO.getRaces();
                 });
             }
 
             @Override
-            public void onFailure(Call<List<Race>> call, Throwable t) {
+            public void onFailure(@NotNull Call<List<Race>> call, @NotNull Throwable t) {
                 Toast.makeText(toastContext, "Erro ao processar Pedido!",
                         Toast.LENGTH_SHORT).show();
             }

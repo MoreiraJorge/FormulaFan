@@ -10,10 +10,10 @@ import pt.ipp.estg.formulafan.Models.RaceListDeserializer;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class FormulaOneAPI {
+public class RaceDetailsAPI {
 
-    public static IFormulaOneAPI formulaOneAPI = new Retrofit.Builder().baseUrl(IFormulaOneAPI.url)
+    public static IRaceDetailsAPI raceDetailsAPI = new Retrofit.Builder().baseUrl(IRaceDetailsAPI.url)
             .addConverterFactory(GsonConverterFactory.create(new GsonBuilder().setLenient().registerTypeAdapter(new TypeToken<List<Race>>() {
-            }.getType(), new RaceListDeserializer()).create())).build().create(IFormulaOneAPI.class);
+            }.getType(), new RaceListDeserializer()).create())).build().create(IRaceDetailsAPI.class);
 
 }
