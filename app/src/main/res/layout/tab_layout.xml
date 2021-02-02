@@ -13,6 +13,6 @@
         app:tabTextColor="#BDBCBC"
         app:tabMaxWidth="0dp"
         app:tabGravity="fill"
-        app:tabMode="fixed"/>
+        app:tabMode="fixed" />
 
 </com.google.android.material.appbar.AppBarLayout>
