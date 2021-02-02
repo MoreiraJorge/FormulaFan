@@ -15,6 +15,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import pt.ipp.estg.formulafan.Fragments.ProfileFragment;
 import pt.ipp.estg.formulafan.Fragments.RaceDetailsFragment;
+import pt.ipp.estg.formulafan.Fragments.CurrentRaceFragment;
 import pt.ipp.estg.formulafan.Fragments.RaceFragment;
 import pt.ipp.estg.formulafan.Fragments.ResultFragment;
 import pt.ipp.estg.formulafan.Interfaces.IProfileListener;
@@ -80,7 +81,7 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
 
     private void changeToProfileFragment() {
         ProfileFragment profileFragment = new ProfileFragment();
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager()
+        FragmentTransaction fragmentTransaction = fragmentManager
                 .beginTransaction();
         fragmentTransaction.replace(R.id.fragmentContainerMainUI, profileFragment);
         fragmentTransaction.addToBackStack(null);
@@ -89,7 +90,7 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
 
     private void changeToRaceFragment() {
         raceFragment = new RaceFragment();
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager()
+        FragmentTransaction fragmentTransaction = fragmentManager
                 .beginTransaction();
         fragmentTransaction.replace(R.id.fragmentContainerMainUI, raceFragment);
         fragmentTransaction.addToBackStack(null);
@@ -98,7 +99,7 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
 
     private void changeToResultFragment() {
         ResultFragment resultFragment = new ResultFragment();
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager()
+        FragmentTransaction fragmentTransaction = fragmentManager
                 .beginTransaction();
         fragmentTransaction.replace(R.id.fragmentContainerMainUI, resultFragment);
         fragmentTransaction.addToBackStack(null);
@@ -121,8 +122,7 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
             Bundle args = new Bundle();
             args.putSerializable(SELECTED_RACE, race);
             detailsFragment.setArguments(args);
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager()
-                    .beginTransaction();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.fragmentContainerMainUI, detailsFragment);
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();

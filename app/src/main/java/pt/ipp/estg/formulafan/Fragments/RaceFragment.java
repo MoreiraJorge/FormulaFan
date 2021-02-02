@@ -1,6 +1,5 @@
 package pt.ipp.estg.formulafan.Fragments;
 
-import android.app.Application;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,22 +9,26 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.tabs.TabLayout;
 
 import pt.ipp.estg.formulafan.R;
-import pt.ipp.estg.formulafan.ViewModels.RaceViewModel;
 
 public class RaceFragment extends Fragment {
 
+    private FragmentManager fragmentManager;
+    private CurrentRaceFragment currentRaceFragment;
+    private PastRaceFragment pastRaceFragment;
+    private TabLayout.Tab currentTab;
     private Context context;
-    private RaceViewModel raceViewModel;
-    private TabLayout tabLayout;
-    private RaceRecyclerViewAdapter raceRecyclerViewAdapter;
+
+    public RaceFragment() {
+        currentRaceFragment = new CurrentRaceFragment();
+        pastRaceFragment = new PastRaceFragment();
+        currentTab = null;
+    }
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -41,44 +44,54 @@ public class RaceFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_item_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_race, container, false);
 
-        Context context = view.getContext();
-        tabLayout = view.findViewById(R.id.tabLayout);
+        if (!currentRaceFragment.isAdded() && !pastRaceFragment.isAdded()) {
+            fragmentManager = getChildFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.add(R.id.raceFragmentContainer, currentRaceFragment);
+            fragmentTransaction.commit();
+        }
+
+        TabLayout tabLayout = view.findViewById(R.id.tabLayout);
+
+        if(currentTab != null) {
+            tabLayout.selectTab(currentTab);
+        }
+
         tabLayout.addOnTabSelectedListener(
                 new TabLayout.OnTabSelectedListener() {
                     @Override
                     public void onTabSelected(TabLayout.Tab tab) {
-                        Log.d("Test", "Mudou de tab!");
+                        currentTab = tab;
+                        if (tab.getText() == context.getString(R.string.corridas_anteriores)) {
+                            showPastRaceFragment();
+                        } else {
+                            showCurrentRaceFragment();
+                        }
                     }
 
                     @Override
                     public void onTabUnselected(TabLayout.Tab tab) {
-                        Log.d("Test", "Mudou de tab!");
                     }
 
                     @Override
                     public void onTabReselected(TabLayout.Tab tab) {
-                        Log.d("Test", "Selecionou a mesma tab!");
                     }
                 }
         );
-
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.list);
-        raceViewModel = new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory((Application) context.getApplicationContext())).get(RaceViewModel.class);
-        raceRecyclerViewAdapter = new RaceRecyclerViewAdapter(context, raceViewModel);
-        recyclerView.setAdapter(raceRecyclerViewAdapter);
-
-        raceViewModel.getAllRaces().observe(getViewLifecycleOwner(), (races) -> {
-                    raceRecyclerViewAdapter.setRaceList(races);
-                    raceRecyclerViewAdapter.notifyDataSetChanged();
-                }
-        );
-
-        recyclerView.setLayoutManager(new LinearLayoutManager(context));
-        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(context, DividerItemDecoration.VERTICAL);
-        recyclerView.addItemDecoration(itemDecoration);
-
         return view;
+    }
+
+    private void showCurrentRaceFragment() {
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.raceFragmentContainer, currentRaceFragment);
+        fragmentTransaction.commit();
+    }
+
+    private void showPastRaceFragment() {
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.raceFragmentContainer, pastRaceFragment);
+        fragmentTransaction.commit();
     }
 }
