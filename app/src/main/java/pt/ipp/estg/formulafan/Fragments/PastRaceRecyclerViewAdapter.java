@@ -1,22 +1,21 @@
 package pt.ipp.estg.formulafan.Fragments;
 
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import pt.ipp.estg.formulafan.Interfaces.IRaceDetailsListener;
 import pt.ipp.estg.formulafan.Models.Race;
 import pt.ipp.estg.formulafan.R;
-import pt.ipp.estg.formulafan.ViewModels.PastRaceViewModel;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class PastRaceRecyclerViewAdapter extends RecyclerView.Adapter<PastRaceRecyclerViewAdapter.ViewHolder> {
 

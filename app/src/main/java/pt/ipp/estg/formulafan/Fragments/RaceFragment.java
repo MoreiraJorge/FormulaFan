@@ -2,7 +2,6 @@ package pt.ipp.estg.formulafan.Fragments;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,7 +54,7 @@ public class RaceFragment extends Fragment {
 
         TabLayout tabLayout = view.findViewById(R.id.tabLayout);
 
-        if(currentTab != null) {
+        if (currentTab != null) {
             tabLayout.selectTab(currentTab);
         }
 

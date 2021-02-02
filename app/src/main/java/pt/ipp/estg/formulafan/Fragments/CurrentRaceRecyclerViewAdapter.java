@@ -16,7 +16,6 @@ import java.util.List;
 import pt.ipp.estg.formulafan.Interfaces.IRaceDetailsListener;
 import pt.ipp.estg.formulafan.Models.Race;
 import pt.ipp.estg.formulafan.R;
-import pt.ipp.estg.formulafan.ViewModels.CurrentRaceViewModel;
 
 public class CurrentRaceRecyclerViewAdapter extends RecyclerView.Adapter<CurrentRaceRecyclerViewAdapter.ViewHolder> {
 

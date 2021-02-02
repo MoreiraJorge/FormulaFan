@@ -23,7 +23,7 @@
 
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyAoHAX0YPqTCUiHFJSBMbepjBLy9knDkEI"/>
+            android:value="AIzaSyAoHAX0YPqTCUiHFJSBMbepjBLy9knDkEI" />
 
         <meta-data
             android:name="preloaded_fonts"

@@ -15,7 +15,6 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import pt.ipp.estg.formulafan.Fragments.ProfileFragment;
 import pt.ipp.estg.formulafan.Fragments.RaceDetailsFragment;
-import pt.ipp.estg.formulafan.Fragments.CurrentRaceFragment;
 import pt.ipp.estg.formulafan.Fragments.RaceFragment;
 import pt.ipp.estg.formulafan.Fragments.ResultFragment;
 import pt.ipp.estg.formulafan.Interfaces.IProfileListener;
