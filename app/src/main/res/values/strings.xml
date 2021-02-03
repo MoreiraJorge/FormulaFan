@@ -41,4 +41,8 @@
     <string name="_000">000</string>
     <string name="estat_sticas">Estatísticas</string>
     <string name="todo">TODO</string>
+    <string name="resultados">Resultados</string>
+    <string name="pilotos">Pilotos</string>
+    <string name="equipas">Equipas</string>
+    <string name="posicao">Posição</string>
 </resources>

@@ -72,7 +72,7 @@ public class RaceDetailsFragment extends Fragment implements OnMapReadyCallback 
 
         messageView = view.findViewById(R.id.messageView);
         seasonView = view.findViewById(R.id.seasonView);
-        detailsView = view.findViewById(R.id.detailsView);
+        detailsView = view.findViewById(R.id.raceDetailsView);
         roundView = view.findViewById(R.id.roundView);
         dateView = view.findViewById(R.id.dateView);
         circuitView = view.findViewById(R.id.circuitView);

@@ -17,15 +17,18 @@ import com.google.firebase.auth.FirebaseAuth;
 import pt.ipp.estg.formulafan.Fragments.ProfileFragment;
 import pt.ipp.estg.formulafan.Fragments.RaceDetailsFragment;
 import pt.ipp.estg.formulafan.Fragments.RaceFragment;
-import pt.ipp.estg.formulafan.Fragments.ResultFragment;
+import pt.ipp.estg.formulafan.Fragments.RaceResultDetailsFragment;
+import pt.ipp.estg.formulafan.Fragments.ResultsFragment;
 import pt.ipp.estg.formulafan.Fragments.StatisticFragment;
 import pt.ipp.estg.formulafan.Interfaces.IRaceDetailsListener;
+import pt.ipp.estg.formulafan.Interfaces.IRaceResultDetailListener;
 import pt.ipp.estg.formulafan.Interfaces.IStatisticsListener;
 import pt.ipp.estg.formulafan.Models.Race;
+import pt.ipp.estg.formulafan.Models.RaceResult;
 import pt.ipp.estg.formulafan.R;
 import pt.ipp.estg.formulafan.Utils.TabletDetectionUtil;
 
-public class FormulaFanMainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, IRaceDetailsListener, IStatisticsListener {
+public class FormulaFanMainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, IRaceDetailsListener, IStatisticsListener, IRaceResultDetailListener {
 
     public static final String SELECTED_RACE = "pt.ipp.pt.estg.cmu.selectedRace";
 
@@ -35,6 +38,7 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
     private RaceFragment raceFragment;
     private RaceDetailsFragment detailsFragment;
     private BottomNavigationView bottomNavigationView;
+    private RaceResultDetailsFragment raceResultDetailsFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -133,11 +137,18 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
     }
 
     private void changeToResultFragment() {
-        ResultFragment resultFragment = new ResultFragment();
+        ResultsFragment resultFragment = new ResultsFragment();
+        raceResultDetailsFragment = new RaceResultDetailsFragment();
         FragmentTransaction fragmentTransaction = fragmentManager
                 .beginTransaction();
         fragmentTransaction.replace(R.id.fragmentContainerMainUI, resultFragment);
         fragmentTransaction.addToBackStack(null);
+
+        if (TabletDetectionUtil.isTablet(this)) {
+            fragmentTransaction.replace(R.id.fragmentContainerMainUIDetails, raceResultDetailsFragment);
+            fragmentTransaction.addToBackStack(null);
+        }
+
         fragmentTransaction.commit();
     }
 
@@ -171,5 +182,20 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
         fragmentTransaction.replace(R.id.fragmentContainerMainUI, statFragment);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
+    }
+
+    @Override
+    public void showRaceResultDetailsView(RaceResult raceResult) {
+        if (TabletDetectionUtil.isTablet(this)) {
+            raceResultDetailsFragment.showResults(raceResult);
+        } else {
+            Bundle args = new Bundle();
+            args.putSerializable(SELECTED_RACE, raceResult);
+            raceResultDetailsFragment.setArguments(args);
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.fragmentContainerMainUI, raceResultDetailsFragment);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+        }
     }
 }
