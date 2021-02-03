@@ -10,13 +10,16 @@ import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import pt.ipp.estg.formulafan.Interfaces.IQuizHistoryListener;
 import pt.ipp.estg.formulafan.Interfaces.IStatisticsListener;
 import pt.ipp.estg.formulafan.R;
 
 public class ProfileFragment extends Fragment {
 
     private IStatisticsListener statisticsListener;
+    private IQuizHistoryListener quizHistoryListener;
     private Button statButton;
+    private Button quizzHistoryButton;
 
     public ProfileFragment() {
     }
@@ -25,6 +28,7 @@ public class ProfileFragment extends Fragment {
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         this.statisticsListener = (IStatisticsListener) context;
+        this.quizHistoryListener = (IQuizHistoryListener) context;
     }
 
     @Override
@@ -37,17 +41,23 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         statButton = view.findViewById(R.id.statsButton);
+        quizzHistoryButton = view.findViewById(R.id.quizzHistoryButton);
 
         if (statButton != null) {
-
             statButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     statisticsListener.changeToStatistics();
                 }
             });
-
         }
+
+        quizzHistoryButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                quizHistoryListener.changeToQuizHistory();
+            }
+        });
 
         return view;
     }

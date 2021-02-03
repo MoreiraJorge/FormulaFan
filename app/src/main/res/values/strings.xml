@@ -41,4 +41,8 @@
     <string name="_000">000</string>
     <string name="estat_sticas">Estatísticas</string>
     <string name="todo">TODO</string>
+    <string name="meus_quizzes">Meus Quizzes</string>
+    <string name="quiz">quiz</string>
+    <string name="quiz_title">Quiz title</string>
+    <string name="pontos">Pontos</string>
 </resources>
