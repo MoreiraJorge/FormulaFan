@@ -10,20 +10,21 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 
+import pt.ipp.estg.formulafan.Interfaces.IQuizHistoryListener;
 import pt.ipp.estg.formulafan.Models.QuizDone;
 import pt.ipp.estg.formulafan.R;
 
 public class QuizzHistoryRecyclerViewAdapter extends RecyclerView.Adapter<QuizzHistoryRecyclerViewAdapter.ViewHolder>{
 
     private List<QuizDone> quizzesDone;
+    private IQuizHistoryListener quizHistoryListener;
 
-    public QuizzHistoryRecyclerViewAdapter() {
+    public QuizzHistoryRecyclerViewAdapter(Context context) {
         this.quizzesDone = temporaryQuizes(50);
+        this.quizHistoryListener = (IQuizHistoryListener) context;
     }
 
     @NonNull
@@ -46,6 +47,7 @@ public class QuizzHistoryRecyclerViewAdapter extends RecyclerView.Adapter<QuizzH
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                quizHistoryListener.showDoneQuizDetails(quizDone);
             }
         });
     }

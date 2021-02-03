@@ -14,6 +14,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
+import pt.ipp.estg.formulafan.Fragments.AnsweredQuizDetailsFragment;
 import pt.ipp.estg.formulafan.Fragments.ProfileFragment;
 import pt.ipp.estg.formulafan.Fragments.QuizzHistoryFragment;
 import pt.ipp.estg.formulafan.Fragments.RaceDetailsFragment;
@@ -23,6 +24,7 @@ import pt.ipp.estg.formulafan.Fragments.StatisticFragment;
 import pt.ipp.estg.formulafan.Interfaces.IQuizHistoryListener;
 import pt.ipp.estg.formulafan.Interfaces.IRaceDetailsListener;
 import pt.ipp.estg.formulafan.Interfaces.IStatisticsListener;
+import pt.ipp.estg.formulafan.Models.QuizDone;
 import pt.ipp.estg.formulafan.Models.Race;
 import pt.ipp.estg.formulafan.R;
 import pt.ipp.estg.formulafan.Utils.TabletDetectionUtil;
@@ -33,6 +35,7 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
         IQuizHistoryListener {
 
     public static final String SELECTED_RACE = "pt.ipp.pt.estg.cmu.selectedRace";
+    public static final String SELECTED_QUIZ_DONE = "pt.ipp.pt.estg.cmu.selectedQuizDone";
 
     private FragmentManager fragmentManager;
     private Toolbar toolbar;
@@ -40,11 +43,13 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
     private RaceFragment raceFragment;
     private RaceDetailsFragment detailsFragment;
     private BottomNavigationView bottomNavigationView;
+    AnsweredQuizDetailsFragment answeredQuizDetailsFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_formula_fan_main);
+        answeredQuizDetailsFragment = new AnsweredQuizDetailsFragment();
 
         toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.app_name);
@@ -180,11 +185,33 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
 
     @Override
     public void changeToQuizHistory() {
+
         QuizzHistoryFragment quizzHistoryFragment = new QuizzHistoryFragment();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager()
                 .beginTransaction();
         fragmentTransaction.replace(R.id.fragmentContainerMainUI, quizzHistoryFragment);
         fragmentTransaction.addToBackStack(null);
+
+        if (TabletDetectionUtil.isTablet(this)) {
+            fragmentTransaction.replace(R.id.fragmentContainerMainUIDetails, answeredQuizDetailsFragment);
+            fragmentTransaction.addToBackStack(null);
+        }
+
         fragmentTransaction.commit();
+    }
+
+    @Override
+    public void showDoneQuizDetails(QuizDone quiz) {
+        if (TabletDetectionUtil.isTablet(this)) {
+            answeredQuizDetailsFragment.updateQuiz(quiz);
+        } else {
+            Bundle args = new Bundle();
+            args.putSerializable(SELECTED_QUIZ_DONE, quiz);
+            answeredQuizDetailsFragment.setArguments(args);
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.fragmentContainerMainUI, answeredQuizDetailsFragment);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+        }
     }
 }

@@ -48,7 +48,7 @@ public class QuizzHistoryFragment extends Fragment {
 
         recyclerView = view.findViewById(R.id.quizzHistoryList);
         quizzHistoryRecyclerViewAdapter =
-                new QuizzHistoryRecyclerViewAdapter();
+                new QuizzHistoryRecyclerViewAdapter(context);
 
         recyclerView.setAdapter(quizzHistoryRecyclerViewAdapter);
 
