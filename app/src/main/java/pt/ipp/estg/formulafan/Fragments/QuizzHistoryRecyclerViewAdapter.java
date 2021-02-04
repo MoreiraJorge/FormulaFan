@@ -9,12 +9,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import pt.ipp.estg.formulafan.Interfaces.IQuizHistoryListener;
-import pt.ipp.estg.formulafan.Models.QuestionAnswered;
 import pt.ipp.estg.formulafan.Models.QuizDone;
 import pt.ipp.estg.formulafan.R;
 
