@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import pt.ipp.estg.formulafan.Interfaces.ITeamDetailsListener;
 import pt.ipp.estg.formulafan.Models.TeamPosition;
 import pt.ipp.estg.formulafan.R;
 
@@ -17,9 +18,11 @@ import java.util.List;
 public class TeamPositionRecyclerViewAdapter extends RecyclerView.Adapter<TeamPositionRecyclerViewAdapter.ViewHolder> {
 
     private List<TeamPosition> teamPositionList;
+    private ITeamDetailsListener teamDetailsListener;
 
     public TeamPositionRecyclerViewAdapter(Context context) {
         this.teamPositionList = new ArrayList<>();
+        this.teamDetailsListener = (ITeamDetailsListener) context;
     }
 
     @Override
@@ -35,6 +38,12 @@ public class TeamPositionRecyclerViewAdapter extends RecyclerView.Adapter<TeamPo
         String team = "" + holder.teamPosition.position + " - " + holder.teamPosition.team.name
                 + " - " + holder.teamPosition.points + " Pts" ;
         holder.textView.setText(team);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                teamDetailsListener.showTeamDetailsView(holder.teamPosition);
+            }
+        });
     }
 
     @Override
