@@ -13,12 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-
-import pt.ipp.estg.formulafan.Models.QuizDone;
 import pt.ipp.estg.formulafan.R;
 
 public class QuizzHistoryFragment extends Fragment {
@@ -49,7 +43,6 @@ public class QuizzHistoryFragment extends Fragment {
         recyclerView = view.findViewById(R.id.quizzHistoryList);
         quizzHistoryRecyclerViewAdapter =
                 new QuizzHistoryRecyclerViewAdapter(context);
-
         recyclerView.setAdapter(quizzHistoryRecyclerViewAdapter);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(context));

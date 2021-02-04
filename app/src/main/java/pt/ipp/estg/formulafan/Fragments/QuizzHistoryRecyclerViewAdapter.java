@@ -14,10 +14,11 @@ import java.util.List;
 import java.util.Random;
 
 import pt.ipp.estg.formulafan.Interfaces.IQuizHistoryListener;
+import pt.ipp.estg.formulafan.Models.QuestionAnswered;
 import pt.ipp.estg.formulafan.Models.QuizDone;
 import pt.ipp.estg.formulafan.R;
 
-public class QuizzHistoryRecyclerViewAdapter extends RecyclerView.Adapter<QuizzHistoryRecyclerViewAdapter.ViewHolder>{
+public class QuizzHistoryRecyclerViewAdapter extends RecyclerView.Adapter<QuizzHistoryRecyclerViewAdapter.ViewHolder> {
 
     private List<QuizDone> quizzesDone;
     private IQuizHistoryListener quizHistoryListener;
@@ -30,9 +31,7 @@ public class QuizzHistoryRecyclerViewAdapter extends RecyclerView.Adapter<QuizzH
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        Context context = parent.getContext();
-        LayoutInflater inflater = LayoutInflater.from(context);
-
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View quizzHistoryView = inflater
                 .inflate(R.layout.fragment_quizz_history_item, parent, false);
 
@@ -44,6 +43,7 @@ public class QuizzHistoryRecyclerViewAdapter extends RecyclerView.Adapter<QuizzH
         QuizDone quizDone = quizzesDone.get(position);
         holder.quizTitle.setText(quizDone.title);
         holder.quizPoints.setText(String.valueOf(quizDone.score));
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,23 +64,43 @@ public class QuizzHistoryRecyclerViewAdapter extends RecyclerView.Adapter<QuizzH
 
         public ViewHolder(View view) {
             super(view);
-            quizTitle = view.findViewById(R.id.quizTitleView);
-            quizPoints = view.findViewById(R.id.quizPointsView);
+            quizTitle = view.findViewById(R.id.questionTitle);
+            quizPoints = view.findViewById(R.id.correctWrongView);
         }
     }
 
     /**
      * Objetos Quiz para testar a UI
      * (Apagar mais tarde)
+     *
      * @param numOfQuizes
      * @return
      */
-    private List<QuizDone> temporaryQuizes(int numOfQuizes){
+    private List<QuizDone> temporaryQuizes(int numOfQuizes) {
         List<QuizDone> temporaryList = new ArrayList<>();
         Random rd = new Random();
 
-        for(int i = 0; i<numOfQuizes; i++){
-            temporaryList.add(new QuizDone("Quiz" + i,rd.nextInt(1000)));
+        for (int i = 0; i < numOfQuizes; i++) {
+            temporaryList.add(new QuizDone("Quiz" + i, rd.nextInt(1000),
+                    temporaryQuestions(10)));
+        }
+
+        return temporaryList;
+    }
+
+    /**
+     * Objetos QuestionAnswered temporario
+     * para testar UI
+     *
+     * @param numOfQuestions
+     * @return
+     */
+    private List<QuestionAnswered> temporaryQuestions(int numOfQuestions) {
+        List<QuestionAnswered> temporaryList = new ArrayList<>();
+        Random rd = new Random();
+        for (int i = 0; i < numOfQuestions; i++) {
+            temporaryList.add(new QuestionAnswered("Questao" + i, "Minha resposta",
+                    rd.nextBoolean()));
         }
 
         return temporaryList;

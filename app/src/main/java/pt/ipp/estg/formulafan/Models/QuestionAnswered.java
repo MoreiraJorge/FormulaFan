@@ -1,6 +1,8 @@
 package pt.ipp.estg.formulafan.Models;
 
-public class QuestionAnswered {
+import java.io.Serializable;
+
+public class QuestionAnswered implements Serializable {
 
     public String title;
     public String answer;
@@ -12,7 +14,7 @@ public class QuestionAnswered {
         setCorrect(isCorrect);
     }
 
-    public void setCorrect(boolean isCorrect){
+    public void setCorrect(boolean isCorrect) {
         correct = (isCorrect) ? "Correto!" : "Errado!";
     }
 }

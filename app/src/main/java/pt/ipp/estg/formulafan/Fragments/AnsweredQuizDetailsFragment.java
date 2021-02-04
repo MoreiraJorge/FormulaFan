@@ -1,29 +1,38 @@
 package pt.ipp.estg.formulafan.Fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import pt.ipp.estg.formulafan.Activities.FormulaFanMainActivity;
 import pt.ipp.estg.formulafan.Models.QuizDone;
-import pt.ipp.estg.formulafan.Models.Race;
 import pt.ipp.estg.formulafan.R;
 
 public class AnsweredQuizDetailsFragment extends Fragment {
 
+    private Context context;
     private QuizDone quizDone;
     private ConstraintLayout messageView;
     private RecyclerView recyclerView;
+    private AnsweredQuizDetailsFragmentAdapter answeredQuizDetailsFragmentAdapter;
 
     public AnsweredQuizDetailsFragment() {
-        // Required empty public constructor
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        this.context = context;
     }
 
     @Override
@@ -32,6 +41,7 @@ public class AnsweredQuizDetailsFragment extends Fragment {
         Bundle quizBundle = this.getArguments();
         if (quizBundle != null) {
             quizDone = (QuizDone) quizBundle.getSerializable(FormulaFanMainActivity.SELECTED_QUIZ_DONE);
+            System.out.println("");
         }
     }
 
@@ -47,12 +57,28 @@ public class AnsweredQuizDetailsFragment extends Fragment {
         if (quizDone != null) {
             messageView.setVisibility(View.GONE);
             recyclerView.setVisibility(View.VISIBLE);
+            answeredQuizDetailsFragmentAdapter =
+                    new AnsweredQuizDetailsFragmentAdapter(quizDone.answeredQuestions);
+            recyclerView.setAdapter(answeredQuizDetailsFragmentAdapter);
+
+            recyclerView.setLayoutManager(new LinearLayoutManager(context));
+            RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(context, DividerItemDecoration.VERTICAL);
+            recyclerView.addItemDecoration(itemDecoration);
         }
 
         return view;
     }
 
     public void updateQuiz(QuizDone quiz) {
+        this.quizDone = quiz;
+        messageView.setVisibility(View.GONE);
+        recyclerView.setVisibility(View.VISIBLE);
+        answeredQuizDetailsFragmentAdapter =
+                new AnsweredQuizDetailsFragmentAdapter(quizDone.answeredQuestions);
+        recyclerView.setAdapter(answeredQuizDetailsFragmentAdapter);
 
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(context, DividerItemDecoration.VERTICAL);
+        recyclerView.addItemDecoration(itemDecoration);
     }
 }

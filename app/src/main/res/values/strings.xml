@@ -46,4 +46,9 @@
     <string name="quiz_title">Quiz title</string>
     <string name="pontos">Pontos</string>
     <string name="selecione_um_quiz_para_ver_as_suas_respostas">Selecione um quiz para ver as suas respostas</string>
+    <string name="correto_errado">Correto/Errado</string>
+    <string name="resposta">Resposta</string>
+    <string name="textview">TextView</string>
+    <string name="questao">Questao</string>
+    <string name="respostaView">Resposta:</string>
 </resources>

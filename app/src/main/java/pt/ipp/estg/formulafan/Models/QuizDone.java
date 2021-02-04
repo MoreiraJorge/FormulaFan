@@ -1,26 +1,17 @@
 package pt.ipp.estg.formulafan.Models;
 
 import java.io.Serializable;
+import java.util.List;
 
-public class QuizDone implements Serializable, Comparable<QuizDone> {
+public class QuizDone implements Serializable {
+
     public String title;
     public int score;
+    public List<QuestionAnswered> answeredQuestions;
 
-    public QuizDone(String title, int score) {
+    public QuizDone(String title, int score, List<QuestionAnswered> answeredQuestions) {
         this.title = title;
         this.score = score;
-    }
-
-    public int getScore() {
-        return score;
-    }
-
-    @Override
-    public int compareTo(QuizDone o) {
-        if(o.getScore() > this.score){
-            return 1;
-        } else {
-            return 0;
-        }
+        this.answeredQuestions = answeredQuestions;
     }
 }
