@@ -30,7 +30,7 @@ public class QuizzHistoryRecyclerViewAdapter extends RecyclerView.Adapter<QuizzH
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View quizzHistoryView = inflater
-                .inflate(R.layout.fragment_quizz_history_item, parent, false);
+                .inflate(R.layout.fragment_quiz_history_item, parent, false);
 
         return new ViewHolder(quizzHistoryView);
     }
@@ -61,8 +61,8 @@ public class QuizzHistoryRecyclerViewAdapter extends RecyclerView.Adapter<QuizzH
 
         public ViewHolder(View view) {
             super(view);
-            quizTitle = view.findViewById(R.id.questionTitle);
-            quizPoints = view.findViewById(R.id.correctWrongView);
+            quizTitle = view.findViewById(R.id.leaderName);
+            quizPoints = view.findViewById(R.id.leaderPoints);
         }
     }
 }

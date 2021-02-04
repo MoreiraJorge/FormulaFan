@@ -55,9 +55,9 @@ public class AnsweredQuizDetailsFragmentAdapter extends RecyclerView.Adapter<Ans
 
         public ViewHolder(View view) {
             super(view);
-            questionTitle = view.findViewById(R.id.questionTitle);
-            questionAnswer = view.findViewById(R.id.answerTextView);
-            correctOrWrong = view.findViewById(R.id.correctWrongView);
+            questionTitle = view.findViewById(R.id.leaderName);
+            questionAnswer = view.findViewById(R.id.leaderPointsiew);
+            correctOrWrong = view.findViewById(R.id.leaderPoints);
         }
     }
 }

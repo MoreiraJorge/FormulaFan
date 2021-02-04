@@ -22,7 +22,7 @@
             android:weightSum="20">
 
             <TextView
-                android:id="@+id/questionTitle"
+                android:id="@+id/leaderName"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="8"
@@ -54,7 +54,7 @@
                         android:text="@string/respostaView" />
 
                     <TextView
-                        android:id="@+id/answerTextView"
+                        android:id="@+id/leaderPointsiew"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="3"
@@ -63,7 +63,7 @@
                 </LinearLayout>
 
                 <TextView
-                    android:id="@+id/correctWrongView"
+                    android:id="@+id/leaderPoints"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="5"

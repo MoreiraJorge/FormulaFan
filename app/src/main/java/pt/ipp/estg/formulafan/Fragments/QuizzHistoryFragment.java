@@ -44,7 +44,7 @@ public class QuizzHistoryFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_quizz_history, container, false);
+        View view = inflater.inflate(R.layout.fragment_quiz_history, container, false);
 
         recyclerView = view.findViewById(R.id.quizzHistoryList);
         quizzHistoryRecyclerViewAdapter =
