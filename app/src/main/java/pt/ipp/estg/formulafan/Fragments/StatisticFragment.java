@@ -39,7 +39,7 @@ public class StatisticFragment extends Fragment {
         listOfFragments.add(new BarChartFragment());
 
         StatisticPagerAdapter adapter =
-                new StatisticPagerAdapter(requireActivity().getSupportFragmentManager(),
+                new StatisticPagerAdapter(getChildFragmentManager(),
                         getLifecycle(),
                         listOfFragments);
 
