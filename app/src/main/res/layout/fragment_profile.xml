@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:layout_gravity="center|center_horizontal"
     android:layout_weight="0"
+    android:elevation="10dp"
     android:orientation="vertical"
     android:weightSum="10"
     tools:context=".Fragments.ProfileFragment">
@@ -14,11 +15,11 @@
         android:id="@+id/toolBarDetailsQuiz"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_gravity="center"
         android:layout_weight="1"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
-        android:layout_gravity="center"
         app:title="@string/perfil"
         app:titleTextColor="@color/white" />
 
@@ -37,7 +38,7 @@
         android:id="@+id/usaerNameView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_weight="1"
         android:fontFamily="@font/aldrich"
         android:text="@string/username"
@@ -66,7 +67,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="4"
                 android:orientation="horizontal"
-                android:weightSum="10">
+                android:weightSum="10"
+                android:baselineAligned="false">
 
                 <TextView
                     android:id="@+id/qiTextView"
@@ -134,10 +136,11 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"
         android:layout_weight="1"
-        android:drawableLeft="@drawable/ic_baseline_insert_chart_outlined_28"
+        android:drawableStart="@drawable/ic_baseline_insert_chart_outlined_28"
         android:elevation="10dp"
         android:text="@string/estat_sticas"
         android:textAlignment="center"
+        app:iconGravity="start|end"
         app:theme="@style/Theme.FormulaFan.Button" />
 
     <Button
@@ -146,10 +149,24 @@
         android:layout_height="0dp"
         android:layout_gravity="center_horizontal"
         android:layout_weight="1"
-        android:drawableLeft="@drawable/ic_baseline_psychology_28"
+        android:drawableStart="@drawable/ic_baseline_psychology_28"
         android:elevation="10dp"
         android:text="@string/meus_quizzes"
         android:textAlignment="center"
+        app:iconGravity="start|end"
+        app:theme="@style/Theme.FormulaFan.Button" />
+
+    <Button
+        android:id="@+id/quizzLeadersButton"
+        android:layout_width="332dp"
+        android:layout_height="0dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="1"
+        android:drawableStart="@drawable/ic_baseline_emoji_events_28"
+        android:elevation="10dp"
+        android:text="@string/quizz_leaders"
+        android:textAlignment="center"
+        app:iconGravity="start|end"
         app:theme="@style/Theme.FormulaFan.Button" />
 
 
