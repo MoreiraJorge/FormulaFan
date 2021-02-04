@@ -176,7 +176,7 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
     @Override
     public void changeToStatistics() {
         StatisticFragment statFragment = new StatisticFragment();
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager()
+        FragmentTransaction fragmentTransaction = fragmentManager
                 .beginTransaction();
         fragmentTransaction.replace(R.id.fragmentContainerMainUI, statFragment);
         fragmentTransaction.addToBackStack(null);
@@ -187,8 +187,7 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
     public void changeToQuizHistory() {
 
         QuizzHistoryFragment quizzHistoryFragment = new QuizzHistoryFragment();
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager()
-                .beginTransaction();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragmentContainerMainUI, quizzHistoryFragment);
         fragmentTransaction.addToBackStack(null);
 

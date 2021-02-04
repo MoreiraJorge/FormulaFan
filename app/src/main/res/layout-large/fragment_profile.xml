@@ -9,6 +9,18 @@
     android:weightSum="10"
     tools:context=".Fragments.ProfileFragment">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolBarDetailsQuiz"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        android:layout_gravity="center"
+        app:title="@string/perfil"
+        app:titleTextColor="@color/white" />
+
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_image"
         android:layout_width="280dp"

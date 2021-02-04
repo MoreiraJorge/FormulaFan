@@ -51,4 +51,5 @@
     <string name="textview">TextView</string>
     <string name="questao">Questao</string>
     <string name="respostaView">Resposta:</string>
+    <string name="perfil">Perfil</string>
 </resources>

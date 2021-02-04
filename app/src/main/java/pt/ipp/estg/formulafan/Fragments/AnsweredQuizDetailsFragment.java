@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 
@@ -28,6 +29,7 @@ public class AnsweredQuizDetailsFragment extends Fragment {
     private ConstraintLayout messageView;
     private RecyclerView recyclerView;
     private AnsweredQuizDetailsFragmentAdapter answeredQuizDetailsFragmentAdapter;
+    private LinearLayout viewAnswers;
 
     public AnsweredQuizDetailsFragment() {
     }
@@ -56,6 +58,8 @@ public class AnsweredQuizDetailsFragment extends Fragment {
 
         messageView = view.findViewById(R.id.messageViewQuizDetail);
         recyclerView = (RecyclerView) view.findViewById(R.id.quizAnswers);
+        viewAnswers = view.findViewById(R.id.quizAnswersView);
+
         answeredQuizDetailsFragmentAdapter =
                 new AnsweredQuizDetailsFragmentAdapter(new ArrayList<QuestionAnswered>());
         recyclerView.setAdapter(answeredQuizDetailsFragmentAdapter);
@@ -64,9 +68,10 @@ public class AnsweredQuizDetailsFragment extends Fragment {
         RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(context, DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(itemDecoration);
 
+
         if (quizDone != null) {
             messageView.setVisibility(View.GONE);
-            recyclerView.setVisibility(View.VISIBLE);
+            viewAnswers.setVisibility(View.VISIBLE);
             answeredQuizDetailsFragmentAdapter.setAnsweredQuestions(quizDone.answeredQuestions);
             answeredQuizDetailsFragmentAdapter.notifyDataSetChanged();
         }
@@ -77,7 +82,7 @@ public class AnsweredQuizDetailsFragment extends Fragment {
     public void updateQuiz(QuizDone quiz) {
         this.quizDone = quiz;
         messageView.setVisibility(View.GONE);
-        recyclerView.setVisibility(View.VISIBLE);
+        viewAnswers.setVisibility(View.VISIBLE);
         answeredQuizDetailsFragmentAdapter.setAnsweredQuestions(quizDone.answeredQuestions);
         answeredQuizDetailsFragmentAdapter.notifyDataSetChanged();
     }
