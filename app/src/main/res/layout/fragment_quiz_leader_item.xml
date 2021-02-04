@@ -4,6 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+    <ImageView
+        android:id="@+id/quizzImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/text_margin"
+        android:contentDescription="@string/quiz"
+        app:srcCompat="@drawable/ic_baseline_emoji_events_28" />
+
     <TextView
         android:id="@+id/leaderName"
         android:layout_width="wrap_content"
@@ -24,7 +32,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:gravity="center_horizontal|center_vertical"
-            android:text="@string/pontos" />
+            android:text="@string/qi" />
 
         <TextView
             android:id="@+id/leaderPoints"
