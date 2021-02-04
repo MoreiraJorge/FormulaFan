@@ -1,19 +1,19 @@
 package pt.ipp.estg.formulafan.Fragments;
 
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import pt.ipp.estg.formulafan.Interfaces.ITeamDetailsListener;
-import pt.ipp.estg.formulafan.Models.TeamPosition;
-import pt.ipp.estg.formulafan.R;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import pt.ipp.estg.formulafan.Interfaces.ITeamDetailsListener;
+import pt.ipp.estg.formulafan.Models.TeamPosition;
+import pt.ipp.estg.formulafan.R;
 
 public class TeamPositionRecyclerViewAdapter extends RecyclerView.Adapter<TeamPositionRecyclerViewAdapter.ViewHolder> {
 
@@ -36,7 +36,7 @@ public class TeamPositionRecyclerViewAdapter extends RecyclerView.Adapter<TeamPo
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.teamPosition = teamPositionList.get(position);
         String team = "" + holder.teamPosition.position + " - " + holder.teamPosition.team.name
-                + " - " + holder.teamPosition.points + " Pts" ;
+                + " - " + holder.teamPosition.points + " Pts";
         holder.textView.setText(team);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
