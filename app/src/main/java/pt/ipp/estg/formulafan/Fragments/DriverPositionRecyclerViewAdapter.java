@@ -1,7 +1,6 @@
 package pt.ipp.estg.formulafan.Fragments;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,15 +11,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
+import pt.ipp.estg.formulafan.Interfaces.IDriverDetailsListener;
 import pt.ipp.estg.formulafan.Models.DriverPosition;
 import pt.ipp.estg.formulafan.R;
 
 public class DriverPositionRecyclerViewAdapter extends RecyclerView.Adapter<DriverPositionRecyclerViewAdapter.ViewHolder> {
 
     private List<DriverPosition> driverPositions;
+    private IDriverDetailsListener driverDetailsListener;
 
     public DriverPositionRecyclerViewAdapter(Context context) {
         this.driverPositions = new ArrayList<>();
+        this.driverDetailsListener = (IDriverDetailsListener) context;
     }
 
     @Override
@@ -39,7 +41,7 @@ public class DriverPositionRecyclerViewAdapter extends RecyclerView.Adapter<Driv
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("Test", "Olá!");
+                driverDetailsListener.showDriverDetailsView(holder.driverPosition);
             }
         });
     }

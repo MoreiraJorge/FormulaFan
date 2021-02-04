@@ -2,6 +2,7 @@ package pt.ipp.estg.formulafan.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -22,16 +23,18 @@ import pt.ipp.estg.formulafan.Fragments.RaceFragment;
 import pt.ipp.estg.formulafan.Fragments.RaceResultDetailsFragment;
 import pt.ipp.estg.formulafan.Fragments.ResultsFragment;
 import pt.ipp.estg.formulafan.Fragments.StatisticFragment;
+import pt.ipp.estg.formulafan.Interfaces.IDriverDetailsListener;
 import pt.ipp.estg.formulafan.Interfaces.IRaceDetailsListener;
-import pt.ipp.estg.formulafan.Interfaces.IRaceResultDetailListener;
+import pt.ipp.estg.formulafan.Interfaces.IRaceResultDetailsListener;
 import pt.ipp.estg.formulafan.Interfaces.IStatisticsListener;
+import pt.ipp.estg.formulafan.Models.DriverPosition;
 import pt.ipp.estg.formulafan.Models.Race;
 import pt.ipp.estg.formulafan.Models.RaceResult;
 import pt.ipp.estg.formulafan.R;
 import pt.ipp.estg.formulafan.Utils.InternetUtil;
 import pt.ipp.estg.formulafan.Utils.TabletDetectionUtil;
 
-public class FormulaFanMainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, IRaceDetailsListener, IStatisticsListener, IRaceResultDetailListener {
+public class FormulaFanMainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, IRaceDetailsListener, IStatisticsListener, IRaceResultDetailsListener, IDriverDetailsListener {
 
     public static final String SELECTED_RACE = "pt.ipp.pt.estg.cmu.selectedRace";
 
@@ -213,5 +216,10 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
         }
+    }
+
+    @Override
+    public void showDriverDetailsView(DriverPosition driverPosition) {
+        Log.d("Test", "Olá!");
     }
 }

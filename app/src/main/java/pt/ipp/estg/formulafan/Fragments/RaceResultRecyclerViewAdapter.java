@@ -13,18 +13,18 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-import pt.ipp.estg.formulafan.Interfaces.IRaceResultDetailListener;
+import pt.ipp.estg.formulafan.Interfaces.IRaceResultDetailsListener;
 import pt.ipp.estg.formulafan.Models.RaceResult;
 import pt.ipp.estg.formulafan.R;
 
 public class RaceResultRecyclerViewAdapter extends RecyclerView.Adapter<RaceResultRecyclerViewAdapter.ViewHolder> {
 
     private List<RaceResult> raceResultList;
-    private final IRaceResultDetailListener raceResultDetailListener;
+    private final IRaceResultDetailsListener raceResultDetailListener;
 
     public RaceResultRecyclerViewAdapter(Context context) {
         this.raceResultList = new ArrayList<>();
-        this.raceResultDetailListener = (IRaceResultDetailListener) context;
+        this.raceResultDetailListener = (IRaceResultDetailsListener) context;
     }
 
     @NotNull
