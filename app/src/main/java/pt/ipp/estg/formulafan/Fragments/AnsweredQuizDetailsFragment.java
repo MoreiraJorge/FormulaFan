@@ -14,7 +14,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+
 import pt.ipp.estg.formulafan.Activities.FormulaFanMainActivity;
+import pt.ipp.estg.formulafan.Models.QuestionAnswered;
 import pt.ipp.estg.formulafan.Models.QuizDone;
 import pt.ipp.estg.formulafan.R;
 
@@ -52,18 +55,20 @@ public class AnsweredQuizDetailsFragment extends Fragment {
                 .inflate(R.layout.fragment_answered_quiz_details, container, false);
 
         messageView = view.findViewById(R.id.messageViewQuizDetail);
-        recyclerView = view.findViewById(R.id.quizAnswers);
+        recyclerView = (RecyclerView) view.findViewById(R.id.quizAnswers);
+        answeredQuizDetailsFragmentAdapter =
+                new AnsweredQuizDetailsFragmentAdapter(new ArrayList<QuestionAnswered>());
+        recyclerView.setAdapter(answeredQuizDetailsFragmentAdapter);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(context, DividerItemDecoration.VERTICAL);
+        recyclerView.addItemDecoration(itemDecoration);
 
         if (quizDone != null) {
             messageView.setVisibility(View.GONE);
             recyclerView.setVisibility(View.VISIBLE);
-            answeredQuizDetailsFragmentAdapter =
-                    new AnsweredQuizDetailsFragmentAdapter(quizDone.answeredQuestions);
-            recyclerView.setAdapter(answeredQuizDetailsFragmentAdapter);
-
-            recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(context, DividerItemDecoration.VERTICAL);
-            recyclerView.addItemDecoration(itemDecoration);
+            answeredQuizDetailsFragmentAdapter.setAnsweredQuestions(quizDone.answeredQuestions);
+            answeredQuizDetailsFragmentAdapter.notifyDataSetChanged();
         }
 
         return view;
@@ -73,12 +78,7 @@ public class AnsweredQuizDetailsFragment extends Fragment {
         this.quizDone = quiz;
         messageView.setVisibility(View.GONE);
         recyclerView.setVisibility(View.VISIBLE);
-        answeredQuizDetailsFragmentAdapter =
-                new AnsweredQuizDetailsFragmentAdapter(quizDone.answeredQuestions);
-        recyclerView.setAdapter(answeredQuizDetailsFragmentAdapter);
-
-        recyclerView.setLayoutManager(new LinearLayoutManager(context));
-        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(context, DividerItemDecoration.VERTICAL);
-        recyclerView.addItemDecoration(itemDecoration);
+        answeredQuizDetailsFragmentAdapter.setAnsweredQuestions(quizDone.answeredQuestions);
+        answeredQuizDetailsFragmentAdapter.notifyDataSetChanged();
     }
 }

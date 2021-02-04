@@ -39,6 +39,10 @@ public class AnsweredQuizDetailsFragmentAdapter extends RecyclerView.Adapter<Ans
         holder.correctOrWrong.setText(questionAnswered.correct);
     }
 
+    public void setAnsweredQuestions(List<QuestionAnswered> answeredQuestions) {
+        this.answeredQuestions = answeredQuestions;
+    }
+
     @Override
     public int getItemCount() {
         return this.answeredQuestions.size();
