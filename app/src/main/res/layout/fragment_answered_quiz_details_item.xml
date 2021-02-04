@@ -58,9 +58,8 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="3"
-                        android:gravity="center_horizontal|center_vertical"
                         android:hint="@string/resposta"
-                        android:textAlignment="viewStart" />
+                        android:textAlignment="gravity" />
                 </LinearLayout>
 
                 <TextView
@@ -68,9 +67,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="5"
-                    android:gravity="center_horizontal|center_vertical"
                     android:hint="@string/correto_errado"
-                    android:textAlignment="viewStart" />
+                    android:textAlignment="gravity" />
             </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
