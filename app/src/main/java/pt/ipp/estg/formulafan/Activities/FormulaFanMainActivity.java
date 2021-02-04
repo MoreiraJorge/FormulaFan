@@ -16,12 +16,14 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import pt.ipp.estg.formulafan.Fragments.AnsweredQuizDetailsFragment;
 import pt.ipp.estg.formulafan.Fragments.ProfileFragment;
+import pt.ipp.estg.formulafan.Fragments.QuizLeaderFragment;
 import pt.ipp.estg.formulafan.Fragments.QuizzHistoryFragment;
 import pt.ipp.estg.formulafan.Fragments.RaceDetailsFragment;
 import pt.ipp.estg.formulafan.Fragments.RaceFragment;
 import pt.ipp.estg.formulafan.Fragments.ResultFragment;
 import pt.ipp.estg.formulafan.Fragments.StatisticFragment;
 import pt.ipp.estg.formulafan.Interfaces.IQuizHistoryListener;
+import pt.ipp.estg.formulafan.Interfaces.IQuizLeaderListener;
 import pt.ipp.estg.formulafan.Interfaces.IRaceDetailsListener;
 import pt.ipp.estg.formulafan.Interfaces.IStatisticsListener;
 import pt.ipp.estg.formulafan.Models.QuizDone;
@@ -32,7 +34,8 @@ import pt.ipp.estg.formulafan.Utils.TabletDetectionUtil;
 public class FormulaFanMainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener,
         IRaceDetailsListener,
         IStatisticsListener,
-        IQuizHistoryListener {
+        IQuizHistoryListener,
+        IQuizLeaderListener {
 
     public static final String SELECTED_RACE = "pt.ipp.pt.estg.cmu.selectedRace";
     public static final String SELECTED_QUIZ_DONE = "pt.ipp.pt.estg.cmu.selectedQuizDone";
@@ -212,5 +215,20 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
         }
+    }
+
+    @Override
+    public void changeToQuizLeaderBoard() {
+        QuizLeaderFragment quizLeaderFragment = new QuizLeaderFragment();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+        if (TabletDetectionUtil.isTablet(this)) {
+            fragmentTransaction.replace(R.id.fragmentContainerMainUIDetails, quizLeaderFragment);
+        } else {
+            fragmentTransaction.replace(R.id.fragmentContainerMainUI, quizLeaderFragment);
+        }
+
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
     }
 }
