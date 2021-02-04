@@ -15,8 +15,11 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+
 import pt.ipp.estg.formulafan.Activities.FormulaFanMainActivity;
 import pt.ipp.estg.formulafan.Models.RaceResult;
+import pt.ipp.estg.formulafan.Models.Result;
 import pt.ipp.estg.formulafan.R;
 
 public class RaceResultDetailsFragment extends Fragment {
@@ -56,18 +59,22 @@ public class RaceResultDetailsFragment extends Fragment {
         toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         messageView = view.findViewById(R.id.messageView);
         resultDetailsView = view.findViewById(R.id.resultDetailsView);
+
         recyclerView = (RecyclerView) view.findViewById(R.id.listRaceResultDetails);
+        resultRecyclerViewAdapter = new RaceResultDetailsRecyclerViewAdapter(new ArrayList<Result>());
+        recyclerView.setAdapter(resultRecyclerViewAdapter);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(context, DividerItemDecoration.VERTICAL);
+        recyclerView.addItemDecoration(itemDecoration);
 
         if (raceResult != null) {
             messageView.setVisibility(View.GONE);
             resultDetailsView.setVisibility(View.VISIBLE);
             toolbar.setTitle(raceResult.raceName + " - Resultados da Corrida");
-            resultRecyclerViewAdapter = new RaceResultDetailsRecyclerViewAdapter(this.raceResult.results);
-            recyclerView.setAdapter(resultRecyclerViewAdapter);
+            resultRecyclerViewAdapter.setResultList(raceResult.results);
+            resultRecyclerViewAdapter.notifyDataSetChanged();
 
-            recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(context, DividerItemDecoration.VERTICAL);
-            recyclerView.addItemDecoration(itemDecoration);
         }
 
         return view;
@@ -78,11 +85,7 @@ public class RaceResultDetailsFragment extends Fragment {
         messageView.setVisibility(View.GONE);
         resultDetailsView.setVisibility(View.VISIBLE);
         toolbar.setTitle(raceResult.raceName + " - Resultados da Corrida");
-        resultRecyclerViewAdapter = new RaceResultDetailsRecyclerViewAdapter(this.raceResult.results);
-        recyclerView.setAdapter(resultRecyclerViewAdapter);
-
-        recyclerView.setLayoutManager(new LinearLayoutManager(context));
-        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(context, DividerItemDecoration.VERTICAL);
-        recyclerView.addItemDecoration(itemDecoration);
+        resultRecyclerViewAdapter.setResultList(raceResult.results);
+        resultRecyclerViewAdapter.notifyDataSetChanged();
     }
 }

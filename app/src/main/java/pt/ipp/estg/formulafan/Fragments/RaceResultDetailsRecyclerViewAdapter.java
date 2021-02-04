@@ -16,7 +16,7 @@ import pt.ipp.estg.formulafan.R;
 
 public class RaceResultDetailsRecyclerViewAdapter extends RecyclerView.Adapter<RaceResultDetailsRecyclerViewAdapter.ViewHolder> {
 
-    private final List<Result> results;
+    private List<Result> results;
 
     public RaceResultDetailsRecyclerViewAdapter(List<Result> results) {
         this.results = results;
@@ -40,6 +40,10 @@ public class RaceResultDetailsRecyclerViewAdapter extends RecyclerView.Adapter<R
     @Override
     public int getItemCount() {
         return results.size();
+    }
+
+    public void setResultList(List<Result> resultList) {
+        this.results = resultList;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
