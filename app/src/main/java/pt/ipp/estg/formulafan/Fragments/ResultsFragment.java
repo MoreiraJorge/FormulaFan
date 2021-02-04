@@ -63,7 +63,7 @@ public class ResultsFragment extends Fragment {
                     @Override
                     public void onTabSelected(TabLayout.Tab tab) {
                         currentTab = tab;
-                        if(tab.getText() == context.getString(R.string.pilotos)) {
+                        if (tab.getText() == context.getString(R.string.pilotos)) {
                             showDriverPositionFragment();
                         } else if (tab.getText() == context.getString(R.string.resultados)) {
                             showRaceResultsFragment();
