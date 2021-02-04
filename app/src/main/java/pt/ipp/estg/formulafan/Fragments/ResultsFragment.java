@@ -20,12 +20,14 @@ public class ResultsFragment extends Fragment {
     private FragmentManager fragmentManager;
     private RaceResultFragment raceResultFragment;
     private DriverPositionFragment driverPositionFragment;
+    private TeamPositionFragment teamPositionFragment;
     private TabLayout.Tab currentTab;
     private Context context;
 
     public ResultsFragment() {
         this.raceResultFragment = new RaceResultFragment();
         this.driverPositionFragment = new DriverPositionFragment();
+        this.teamPositionFragment = new TeamPositionFragment();
         this.currentTab = null;
     }
 
@@ -45,7 +47,7 @@ public class ResultsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_results, container, false);
 
-        if (!raceResultFragment.isAdded() && !driverPositionFragment.isAdded()) { //Falta o outro fragment
+        if (!raceResultFragment.isAdded() && !driverPositionFragment.isAdded() && !teamPositionFragment.isAdded()) {
             fragmentManager = getChildFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.add(R.id.resultsFragmentContainer, raceResultFragment);
@@ -67,6 +69,8 @@ public class ResultsFragment extends Fragment {
                             showDriverPositionFragment();
                         } else if (tab.getText() == context.getString(R.string.resultados)) {
                             showRaceResultsFragment();
+                        } else {
+                            showTeamPositionFragment();
                         }
                     }
 
@@ -92,6 +96,12 @@ public class ResultsFragment extends Fragment {
     private void showDriverPositionFragment() {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.resultsFragmentContainer, driverPositionFragment);
+        fragmentTransaction.commit();
+    }
+
+    private void showTeamPositionFragment() {
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.resultsFragmentContainer, teamPositionFragment);
         fragmentTransaction.commit();
     }
 }
