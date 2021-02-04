@@ -74,18 +74,9 @@ public class RaceResultDetailsFragment extends Fragment {
             toolbar.setTitle(raceResult.raceName + " - Resultados da Corrida");
             resultRecyclerViewAdapter.setResultList(raceResult.results);
             resultRecyclerViewAdapter.notifyDataSetChanged();
-
         }
 
         return view;
     }
 
-    public void showResults(RaceResult raceResult) {
-        this.raceResult = raceResult;
-        messageView.setVisibility(View.GONE);
-        resultDetailsView.setVisibility(View.VISIBLE);
-        toolbar.setTitle(raceResult.raceName + " - Resultados da Corrida");
-        resultRecyclerViewAdapter.setResultList(raceResult.results);
-        resultRecyclerViewAdapter.notifyDataSetChanged();
-    }
 }

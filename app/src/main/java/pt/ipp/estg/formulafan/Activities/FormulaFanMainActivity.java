@@ -2,7 +2,6 @@ package pt.ipp.estg.formulafan.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -17,6 +16,7 @@ import androidx.lifecycle.Observer;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
+import pt.ipp.estg.formulafan.Fragments.DriverPositionDetailsFragment;
 import pt.ipp.estg.formulafan.Fragments.ProfileFragment;
 import pt.ipp.estg.formulafan.Fragments.RaceDetailsFragment;
 import pt.ipp.estg.formulafan.Fragments.RaceFragment;
@@ -37,6 +37,7 @@ import pt.ipp.estg.formulafan.Utils.TabletDetectionUtil;
 public class FormulaFanMainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, IRaceDetailsListener, IStatisticsListener, IRaceResultDetailsListener, IDriverDetailsListener {
 
     public static final String SELECTED_RACE = "pt.ipp.pt.estg.cmu.selectedRace";
+    public static final String SELECTED_DRIVER = "pt.ipp.pt.estg.cmu.selectedDriver";
 
     private FragmentManager fragmentManager;
     private Toolbar toolbar;
@@ -205,12 +206,19 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
 
     @Override
     public void showRaceResultDetailsView(RaceResult raceResult) {
+
+        raceResultDetailsFragment = new RaceResultDetailsFragment();
+
+        Bundle args = new Bundle();
+        args.putSerializable(SELECTED_RACE, raceResult);
+        raceResultDetailsFragment.setArguments(args);
+
         if (TabletDetectionUtil.isTablet(this)) {
-            raceResultDetailsFragment.showResults(raceResult);
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.fragmentContainerMainUIDetails, raceResultDetailsFragment);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
         } else {
-            Bundle args = new Bundle();
-            args.putSerializable(SELECTED_RACE, raceResult);
-            raceResultDetailsFragment.setArguments(args);
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.fragmentContainerMainUI, raceResultDetailsFragment);
             fragmentTransaction.addToBackStack(null);
@@ -220,6 +228,23 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
 
     @Override
     public void showDriverDetailsView(DriverPosition driverPosition) {
-        Log.d("Test", "Olá!");
+        DriverPositionDetailsFragment driverPositionDetailsFragment = new DriverPositionDetailsFragment();
+
+        Bundle args = new Bundle();
+        args.putSerializable(SELECTED_DRIVER, driverPosition);
+        driverPositionDetailsFragment.setArguments(args);
+
+        if (TabletDetectionUtil.isTablet(this)) {
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.fragmentContainerMainUIDetails, driverPositionDetailsFragment);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+        } else {
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.fragmentContainerMainUI, driverPositionDetailsFragment);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+        }
+
     }
 }
