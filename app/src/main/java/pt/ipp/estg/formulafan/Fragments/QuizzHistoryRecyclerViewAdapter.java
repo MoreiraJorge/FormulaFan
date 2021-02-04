@@ -23,8 +23,8 @@ public class QuizzHistoryRecyclerViewAdapter extends RecyclerView.Adapter<QuizzH
     private List<QuizDone> quizzesDone;
     private IQuizHistoryListener quizHistoryListener;
 
-    public QuizzHistoryRecyclerViewAdapter(Context context) {
-        this.quizzesDone = temporaryQuizes(50);
+    public QuizzHistoryRecyclerViewAdapter(Context context, List<QuizDone> quizzes) {
+        this.quizzesDone = quizzes;
         this.quizHistoryListener = (IQuizHistoryListener) context;
     }
 
@@ -67,42 +67,5 @@ public class QuizzHistoryRecyclerViewAdapter extends RecyclerView.Adapter<QuizzH
             quizTitle = view.findViewById(R.id.questionTitle);
             quizPoints = view.findViewById(R.id.correctWrongView);
         }
-    }
-
-    /**
-     * Objetos Quiz para testar a UI
-     * (Apagar mais tarde)
-     *
-     * @param numOfQuizes
-     * @return
-     */
-    private List<QuizDone> temporaryQuizes(int numOfQuizes) {
-        List<QuizDone> temporaryList = new ArrayList<>();
-        Random rd = new Random();
-
-        for (int i = 0; i < numOfQuizes; i++) {
-            temporaryList.add(new QuizDone("Quiz" + i, rd.nextInt(1000),
-                    temporaryQuestions(10)));
-        }
-
-        return temporaryList;
-    }
-
-    /**
-     * Objetos QuestionAnswered temporario
-     * para testar UI
-     *
-     * @param numOfQuestions
-     * @return
-     */
-    private List<QuestionAnswered> temporaryQuestions(int numOfQuestions) {
-        List<QuestionAnswered> temporaryList = new ArrayList<>();
-        Random rd = new Random();
-        for (int i = 0; i < numOfQuestions; i++) {
-            temporaryList.add(new QuestionAnswered("Questao" + i, "Minha resposta",
-                    rd.nextBoolean()));
-        }
-
-        return temporaryList;
     }
 }
