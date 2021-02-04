@@ -14,9 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
-import java.security.PrivateKey;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -24,18 +21,17 @@ import java.util.List;
 import java.util.Random;
 
 import pt.ipp.estg.formulafan.Models.LeaderBoardUser;
-import pt.ipp.estg.formulafan.Models.QuizDone;
 import pt.ipp.estg.formulafan.R;
 
-public class QuizLeaderFragment extends Fragment {
+public class QiLeaderFragment extends Fragment {
 
     private RecyclerView leaderBoard;
-    private QuizLeaderFragmentAdapter quizLeaderFragmentAdapter;
+    private QiLeaderFragmentAdapter qiLeaderFragmentAdapter;
     private Context context;
     private TextView userLeaderBoardName;
     private TextView userLeaderBoardQi;
 
-    public QuizLeaderFragment() {
+    public QiLeaderFragment() {
         // Required empty public constructor
     }
 
@@ -53,7 +49,7 @@ public class QuizLeaderFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_quiz_leader, container, false);
+        View view = inflater.inflate(R.layout.fragment_qi_leader, container, false);
         leaderBoard = view.findViewById(R.id.leaderList);
         userLeaderBoardName = view.findViewById(R.id.leaderUserNameView);
         userLeaderBoardQi = view.findViewById(R.id.userLeaderboardQi);
@@ -61,14 +57,14 @@ public class QuizLeaderFragment extends Fragment {
         List<LeaderBoardUser> leaderBoardUsers = temporaryUsers(100);
 
         //os dados deste user depois sao enviados pelos args nos fragments
-        LeaderBoardUser myUser = new LeaderBoardUser("My User",543);
+        LeaderBoardUser myUser = new LeaderBoardUser("My User", 543);
         userLeaderBoardQi.setText(String.valueOf(myUser.Qi));
         userLeaderBoardName.setText(myUser.UserName);
 
-        quizLeaderFragmentAdapter =
-                new QuizLeaderFragmentAdapter();
-        quizLeaderFragmentAdapter.setLeaderBoardUserList(leaderBoardUsers);
-        leaderBoard.setAdapter(quizLeaderFragmentAdapter);
+        qiLeaderFragmentAdapter =
+                new QiLeaderFragmentAdapter();
+        qiLeaderFragmentAdapter.setLeaderBoardUserList(leaderBoardUsers);
+        leaderBoard.setAdapter(qiLeaderFragmentAdapter);
 
         leaderBoard.setLayoutManager(new LinearLayoutManager(context));
         RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(context, DividerItemDecoration.VERTICAL);
@@ -89,14 +85,14 @@ public class QuizLeaderFragment extends Fragment {
         Random rd = new Random();
 
         for (int i = 0; i < numOfusers; i++) {
-            temporaryList.add(new LeaderBoardUser("User" + i,rd.nextInt(1000)));
+            temporaryList.add(new LeaderBoardUser("User" + i, rd.nextInt(1000)));
         }
         temporaryList.add(new LeaderBoardUser("My User", 543));
 
         Collections.sort(temporaryList, new Comparator<LeaderBoardUser>() {
             @Override
             public int compare(LeaderBoardUser o1, LeaderBoardUser o2) {
-                if(o1.Qi < o2.Qi){
+                if (o1.Qi < o2.Qi) {
                     return 1;
                 } else {
                     return -1;

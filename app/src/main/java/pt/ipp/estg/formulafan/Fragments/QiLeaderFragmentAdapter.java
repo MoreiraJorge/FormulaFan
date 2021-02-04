@@ -13,7 +13,7 @@ import java.util.List;
 import pt.ipp.estg.formulafan.Models.LeaderBoardUser;
 import pt.ipp.estg.formulafan.R;
 
-public class QuizLeaderFragmentAdapter  extends RecyclerView.Adapter<QuizLeaderFragmentAdapter.ViewHolder> {
+public class QiLeaderFragmentAdapter extends RecyclerView.Adapter<QiLeaderFragmentAdapter.ViewHolder> {
 
     List<LeaderBoardUser> leaderBoardUserList;
 
@@ -22,8 +22,8 @@ public class QuizLeaderFragmentAdapter  extends RecyclerView.Adapter<QuizLeaderF
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View quizzLeaderBoardView = inflater
-                .inflate(R.layout.fragment_quiz_leader_item, parent, false);
-        return new QuizLeaderFragmentAdapter.ViewHolder(quizzLeaderBoardView);
+                .inflate(R.layout.fragment_qi_leader_item, parent, false);
+        return new QiLeaderFragmentAdapter.ViewHolder(quizzLeaderBoardView);
     }
 
     @Override

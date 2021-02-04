@@ -16,7 +16,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import pt.ipp.estg.formulafan.Fragments.AnsweredQuizDetailsFragment;
 import pt.ipp.estg.formulafan.Fragments.ProfileFragment;
-import pt.ipp.estg.formulafan.Fragments.QuizLeaderFragment;
+import pt.ipp.estg.formulafan.Fragments.QiLeaderFragment;
 import pt.ipp.estg.formulafan.Fragments.QuizzHistoryFragment;
 import pt.ipp.estg.formulafan.Fragments.RaceDetailsFragment;
 import pt.ipp.estg.formulafan.Fragments.RaceFragment;
@@ -218,13 +218,13 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
 
     @Override
     public void changeToQuizLeaderBoard() {
-        QuizLeaderFragment quizLeaderFragment = new QuizLeaderFragment();
+        QiLeaderFragment qiLeaderFragment = new QiLeaderFragment();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
         if (TabletDetectionUtil.isTablet(this)) {
-            fragmentTransaction.replace(R.id.fragmentContainerMainUIDetails, quizLeaderFragment);
+            fragmentTransaction.replace(R.id.fragmentContainerMainUIDetails, qiLeaderFragment);
         } else {
-            fragmentTransaction.replace(R.id.fragmentContainerMainUI, quizLeaderFragment);
+            fragmentTransaction.replace(R.id.fragmentContainerMainUI, qiLeaderFragment);
         }
 
         fragmentTransaction.addToBackStack(null);
