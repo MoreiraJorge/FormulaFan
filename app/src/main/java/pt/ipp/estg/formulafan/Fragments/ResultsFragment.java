@@ -19,11 +19,13 @@ public class ResultsFragment extends Fragment {
 
     private FragmentManager fragmentManager;
     private RaceResultFragment raceResultFragment;
+    private DriverPositionFragment driverPositionFragment;
     private TabLayout.Tab currentTab;
     private Context context;
 
     public ResultsFragment() {
         this.raceResultFragment = new RaceResultFragment();
+        this.driverPositionFragment = new DriverPositionFragment();
         this.currentTab = null;
     }
 
@@ -43,7 +45,7 @@ public class ResultsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_results, container, false);
 
-        if (!raceResultFragment.isAdded()) { //&& !pastRaceFragment.isAdded()
+        if (!raceResultFragment.isAdded() && !driverPositionFragment.isAdded()) { //Falta o outro fragment
             fragmentManager = getChildFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.add(R.id.resultsFragmentContainer, raceResultFragment);
@@ -61,6 +63,11 @@ public class ResultsFragment extends Fragment {
                     @Override
                     public void onTabSelected(TabLayout.Tab tab) {
                         currentTab = tab;
+                        if(tab.getText() == context.getString(R.string.pilotos)) {
+                            showDriverPositionFragment();
+                        } else if (tab.getText() == context.getString(R.string.resultados)) {
+                            showRaceResultsFragment();
+                        }
                     }
 
                     @Override
@@ -74,5 +81,17 @@ public class ResultsFragment extends Fragment {
         );
 
         return view;
+    }
+
+    private void showRaceResultsFragment() {
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.resultsFragmentContainer, raceResultFragment);
+        fragmentTransaction.commit();
+    }
+
+    private void showDriverPositionFragment() {
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.resultsFragmentContainer, driverPositionFragment);
+        fragmentTransaction.commit();
     }
 }

@@ -4,12 +4,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.Observer;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -26,6 +28,7 @@ import pt.ipp.estg.formulafan.Interfaces.IStatisticsListener;
 import pt.ipp.estg.formulafan.Models.Race;
 import pt.ipp.estg.formulafan.Models.RaceResult;
 import pt.ipp.estg.formulafan.R;
+import pt.ipp.estg.formulafan.Utils.InternetUtil;
 import pt.ipp.estg.formulafan.Utils.TabletDetectionUtil;
 
 public class FormulaFanMainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, IRaceDetailsListener, IStatisticsListener, IRaceResultDetailListener {
@@ -39,6 +42,7 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
     private RaceDetailsFragment detailsFragment;
     private BottomNavigationView bottomNavigationView;
     private RaceResultDetailsFragment raceResultDetailsFragment;
+    private InternetUtil internetUtil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +72,18 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
         }
 
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
+
+        internetUtil = new InternetUtil(getApplication());
+        internetUtil.observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isConnected) {
+                if (!isConnected) {
+                    Toast.makeText(getApplicationContext(), "Dispositivo Offline!",
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
     }
 
     @Override
