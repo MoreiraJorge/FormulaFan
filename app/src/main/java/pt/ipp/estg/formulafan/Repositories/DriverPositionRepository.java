@@ -13,7 +13,7 @@ import java.util.List;
 import pt.ipp.estg.formulafan.Databases.DriverPositionDAO;
 import pt.ipp.estg.formulafan.Databases.DriverPositionDatabase;
 import pt.ipp.estg.formulafan.Models.DriverPosition;
-import pt.ipp.estg.formulafan.Services.DriverPositionDetailsAPI;
+import pt.ipp.estg.formulafan.WebServices.DriverPositionDetailsAPI;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
