@@ -82,13 +82,13 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
         raceFragment = new RaceFragment();
         fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.fragmentContainerMainUI, raceFragment);
+        fragmentTransaction.replace(R.id.fragmentContainerMainUI, raceFragment);
         fragmentTransaction.commit();
 
         detailsFragment = new RaceDetailsFragment();
         if (TabletDetectionUtil.isTablet(this)) {
             fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.add(R.id.fragmentContainerMainUIDetails, detailsFragment);
+            fragmentTransaction.replace(R.id.fragmentContainerMainUIDetails, detailsFragment);
             fragmentTransaction.commit();
         }
 
