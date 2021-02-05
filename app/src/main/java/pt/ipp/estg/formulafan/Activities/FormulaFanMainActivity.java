@@ -196,6 +196,9 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
     }
 
     private void logOut() {
+        if (ServiceUtil.isMyServiceRunning(QuizService.class, this)) {
+            stopService(new Intent(this, QuizService.class));
+        }
         firebaseAuth.signOut();
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
