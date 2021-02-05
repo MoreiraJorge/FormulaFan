@@ -31,6 +31,7 @@ import pt.ipp.estg.formulafan.Interfaces.IDriverDetailsListener;
 import pt.ipp.estg.formulafan.Interfaces.IQuizHistoryListener;
 import pt.ipp.estg.formulafan.Interfaces.IQuizLeaderListener;
 import pt.ipp.estg.formulafan.Interfaces.IRaceDetailsListener;
+import pt.ipp.estg.formulafan.Interfaces.IRaceResultDetailsListener;
 import pt.ipp.estg.formulafan.Interfaces.IStatisticsListener;
 import pt.ipp.estg.formulafan.Interfaces.ITeamDetailsListener;
 import pt.ipp.estg.formulafan.Models.DriverPosition;
@@ -43,8 +44,8 @@ import pt.ipp.estg.formulafan.Utils.InternetUtil;
 import pt.ipp.estg.formulafan.Utils.TabletDetectionUtil;
 
 public class FormulaFanMainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener,
-        IRaceDetailsListener,
-        IStatisticsListener, IDriverDetailsListener, ITeamDetailsListener,
+        IRaceDetailsListener, IRaceResultDetailsListener,
+        IDriverDetailsListener, ITeamDetailsListener, IStatisticsListener,
         IQuizHistoryListener,
         IQuizLeaderListener {
 
@@ -266,6 +267,7 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
         fragmentTransaction.commit();
     }
 
+    @Override
     public void showRaceResultDetailsView(RaceResult raceResult) {
 
         raceResultDetailsFragment = new RaceResultDetailsFragment();
