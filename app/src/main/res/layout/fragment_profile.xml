@@ -4,18 +4,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_gravity="center|center_horizontal"
     android:layout_weight="0"
+    android:elevation="10dp"
     android:orientation="vertical"
     android:weightSum="10"
     tools:context=".Fragments.ProfileFragment">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolBarDetailsQuiz"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:title="@string/perfil"
+        app:titleTextColor="@color/white" />
+
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_image"
         android:layout_width="150dp"
-        android:layout_height="137dp"
+        android:layout_height="0dp"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
-        android:layout_weight="1"
+        android:layout_weight="2"
         android:src="@drawable/default_profile"
         app:civ_border_color="#FF000000"
         app:civ_border_width="2dp" />
@@ -23,8 +37,8 @@
     <TextView
         android:id="@+id/usaerNameView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
         android:layout_weight="1"
         android:fontFamily="@font/aldrich"
         android:text="@string/username"
@@ -33,10 +47,10 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="332dp"
-        android:layout_height="172dp"
+        android:layout_height="0dp"
         android:layout_gravity="center|center_vertical"
         android:layout_marginTop="20dp"
-        android:layout_weight="1"
+        android:layout_weight="3"
         app:cardElevation="5dp"
         app:cardMaxElevation="10dp"
         app:theme="@style/Theme.FormulaFan.MaterialCard">
@@ -52,6 +66,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="4"
+                android:baselineAligned="false"
                 android:orientation="horizontal"
                 android:weightSum="10">
 
@@ -117,14 +132,41 @@
     <Button
         android:id="@+id/statsButton"
         android:layout_width="332dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"
         android:layout_weight="1"
-        android:drawableLeft="@drawable/ic_baseline_insert_chart_outlined_28"
+        android:drawableStart="@drawable/ic_baseline_insert_chart_outlined_28"
         android:elevation="10dp"
         android:text="@string/estat_sticas"
         android:textAlignment="center"
+        app:iconGravity="start|end"
+        app:theme="@style/Theme.FormulaFan.Button" />
+
+    <Button
+        android:id="@+id/quizzHistoryButton"
+        android:layout_width="332dp"
+        android:layout_height="0dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="1"
+        android:drawableStart="@drawable/ic_baseline_psychology_28"
+        android:elevation="10dp"
+        android:text="@string/meus_quizzes"
+        android:textAlignment="center"
+        app:iconGravity="start|end"
+        app:theme="@style/Theme.FormulaFan.Button" />
+
+    <Button
+        android:id="@+id/quizzLeadersButton"
+        android:layout_width="332dp"
+        android:layout_height="0dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="1"
+        android:drawableStart="@drawable/ic_baseline_emoji_events_28"
+        android:elevation="10dp"
+        android:text="@string/quizz_leaders"
+        android:textAlignment="center"
+        app:iconGravity="start|end"
         app:theme="@style/Theme.FormulaFan.Button" />
 
 

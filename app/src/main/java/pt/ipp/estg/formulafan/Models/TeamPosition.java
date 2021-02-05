@@ -15,7 +15,6 @@ public class TeamPosition implements Serializable {
     @Embedded
     public Team team;
 
-
     public TeamPosition(int position, Team team, int points, int wins) {
         this.position = position;
         this.team = team;

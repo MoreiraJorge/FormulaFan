@@ -10,14 +10,16 @@
         layout="@layout/tab_layout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_weight="3.85" />
 
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="9" />
+        android:layout_weight="33"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp" />
 
 </LinearLayout>
 

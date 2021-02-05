@@ -16,8 +16,11 @@ import androidx.lifecycle.Observer;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
+import pt.ipp.estg.formulafan.Fragments.AnsweredQuizDetailsFragment;
 import pt.ipp.estg.formulafan.Fragments.DriverPositionDetailsFragment;
 import pt.ipp.estg.formulafan.Fragments.ProfileFragment;
+import pt.ipp.estg.formulafan.Fragments.QiLeaderFragment;
+import pt.ipp.estg.formulafan.Fragments.QuizzHistoryFragment;
 import pt.ipp.estg.formulafan.Fragments.RaceDetailsFragment;
 import pt.ipp.estg.formulafan.Fragments.RaceFragment;
 import pt.ipp.estg.formulafan.Fragments.RaceResultDetailsFragment;
@@ -25,11 +28,13 @@ import pt.ipp.estg.formulafan.Fragments.ResultsFragment;
 import pt.ipp.estg.formulafan.Fragments.StatisticFragment;
 import pt.ipp.estg.formulafan.Fragments.TeamPositionDetailsFragment;
 import pt.ipp.estg.formulafan.Interfaces.IDriverDetailsListener;
+import pt.ipp.estg.formulafan.Interfaces.IQuizHistoryListener;
+import pt.ipp.estg.formulafan.Interfaces.IQuizLeaderListener;
 import pt.ipp.estg.formulafan.Interfaces.IRaceDetailsListener;
-import pt.ipp.estg.formulafan.Interfaces.IRaceResultDetailsListener;
 import pt.ipp.estg.formulafan.Interfaces.IStatisticsListener;
 import pt.ipp.estg.formulafan.Interfaces.ITeamDetailsListener;
 import pt.ipp.estg.formulafan.Models.DriverPosition;
+import pt.ipp.estg.formulafan.Models.QuizDone;
 import pt.ipp.estg.formulafan.Models.Race;
 import pt.ipp.estg.formulafan.Models.RaceResult;
 import pt.ipp.estg.formulafan.Models.TeamPosition;
@@ -37,9 +42,14 @@ import pt.ipp.estg.formulafan.R;
 import pt.ipp.estg.formulafan.Utils.InternetUtil;
 import pt.ipp.estg.formulafan.Utils.TabletDetectionUtil;
 
-public class FormulaFanMainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, IRaceDetailsListener, IStatisticsListener, IRaceResultDetailsListener, IDriverDetailsListener, ITeamDetailsListener {
+public class FormulaFanMainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener,
+        IRaceDetailsListener,
+        IStatisticsListener, IDriverDetailsListener, ITeamDetailsListener,
+        IQuizHistoryListener,
+        IQuizLeaderListener {
 
     public static final String SELECTED_RACE = "pt.ipp.pt.estg.cmu.selectedRace";
+    public static final String SELECTED_QUIZ_DONE = "pt.ipp.pt.estg.cmu.selectedQuizDone";
     public static final String SELECTED_DRIVER = "pt.ipp.pt.estg.cmu.selectedDriver";
     public static final String SELECTED_TEAM = "pt.ipp.pt.estg.cmu.selectedTeam";
 
@@ -49,6 +59,7 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
     private RaceFragment raceFragment;
     private RaceDetailsFragment detailsFragment;
     private BottomNavigationView bottomNavigationView;
+    private AnsweredQuizDetailsFragment answeredQuizDetailsFragment;
     private RaceResultDetailsFragment raceResultDetailsFragment;
     private InternetUtil internetUtil;
 
@@ -56,6 +67,7 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_formula_fan_main);
+        answeredQuizDetailsFragment = new AnsweredQuizDetailsFragment();
 
         toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.app_name);
@@ -96,7 +108,6 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.toolbar_menu, menu);
         return true;
     }
@@ -201,7 +212,7 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
     @Override
     public void changeToStatistics() {
         StatisticFragment statFragment = new StatisticFragment();
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager()
+        FragmentTransaction fragmentTransaction = fragmentManager
                 .beginTransaction();
         fragmentTransaction.replace(R.id.fragmentContainerMainUI, statFragment);
         fragmentTransaction.addToBackStack(null);
@@ -209,6 +220,52 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
     }
 
     @Override
+
+    public void changeToQuizHistory() {
+
+        QuizzHistoryFragment quizzHistoryFragment = new QuizzHistoryFragment();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragmentContainerMainUI, quizzHistoryFragment);
+        fragmentTransaction.addToBackStack(null);
+
+        if (TabletDetectionUtil.isTablet(this)) {
+            fragmentTransaction.replace(R.id.fragmentContainerMainUIDetails, answeredQuizDetailsFragment);
+            fragmentTransaction.addToBackStack(null);
+        }
+
+        fragmentTransaction.commit();
+    }
+
+    @Override
+    public void showDoneQuizDetails(QuizDone quiz) {
+        if (TabletDetectionUtil.isTablet(this)) {
+            answeredQuizDetailsFragment.updateQuiz(quiz);
+        } else {
+            Bundle args = new Bundle();
+            args.putSerializable(SELECTED_QUIZ_DONE, quiz);
+            answeredQuizDetailsFragment.setArguments(args);
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.fragmentContainerMainUI, answeredQuizDetailsFragment);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+        }
+    }
+
+    @Override
+    public void changeToQuizLeaderBoard() {
+        QiLeaderFragment qiLeaderFragment = new QiLeaderFragment();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+        if (TabletDetectionUtil.isTablet(this)) {
+            fragmentTransaction.replace(R.id.fragmentContainerMainUIDetails, qiLeaderFragment);
+        } else {
+            fragmentTransaction.replace(R.id.fragmentContainerMainUI, qiLeaderFragment);
+        }
+
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+    }
+
     public void showRaceResultDetailsView(RaceResult raceResult) {
 
         raceResultDetailsFragment = new RaceResultDetailsFragment();
