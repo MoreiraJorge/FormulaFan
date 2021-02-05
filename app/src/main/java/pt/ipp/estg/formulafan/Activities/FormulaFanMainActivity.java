@@ -1,7 +1,9 @@
 package pt.ipp.estg.formulafan.Activities;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -10,6 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
@@ -52,6 +55,7 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
         IQuizHistoryListener,
         IQuizLeaderListener {
 
+    private static final int REQUEST_LOCATION = 100;
     public static final String SELECTED_RACE = "pt.ipp.pt.estg.cmu.selectedRace";
     public static final String SELECTED_QUIZ_DONE = "pt.ipp.pt.estg.cmu.selectedQuizDone";
     public static final String SELECTED_DRIVER = "pt.ipp.pt.estg.cmu.selectedDriver";
@@ -109,10 +113,32 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
         });
 
         if (!ServiceUtil.isMyServiceRunning(QuizService.class, this)) {
-            Intent startService = new Intent(this, QuizService.class);
-            startService(startService);
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions();
+            } else {
+                Intent startService = new Intent(this, QuizService.class);
+                startService(startService);
+            }
         }
 
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_LOCATION) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                Intent startService = new Intent(this, QuizService.class);
+                startService(startService);
+            } else {
+                Toast.makeText(this, "Habilite a premissão de localização para receber desafios!",
+                        Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    private void requestPermissions() {
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
     }
 
     @Override
