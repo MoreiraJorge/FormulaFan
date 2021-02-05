@@ -26,16 +26,15 @@ import pt.ipp.estg.formulafan.Fragments.RaceFragment;
 import pt.ipp.estg.formulafan.Fragments.RaceResultDetailsFragment;
 import pt.ipp.estg.formulafan.Fragments.ResultsFragment;
 import pt.ipp.estg.formulafan.Fragments.StatisticFragment;
-import pt.ipp.estg.formulafan.Interfaces.IQuizHistoryListener;
-import pt.ipp.estg.formulafan.Interfaces.IQuizLeaderListener;
 import pt.ipp.estg.formulafan.Fragments.TeamPositionDetailsFragment;
 import pt.ipp.estg.formulafan.Interfaces.IDriverDetailsListener;
+import pt.ipp.estg.formulafan.Interfaces.IQuizHistoryListener;
+import pt.ipp.estg.formulafan.Interfaces.IQuizLeaderListener;
 import pt.ipp.estg.formulafan.Interfaces.IRaceDetailsListener;
-import pt.ipp.estg.formulafan.Interfaces.IRaceResultDetailsListener;
 import pt.ipp.estg.formulafan.Interfaces.IStatisticsListener;
-import pt.ipp.estg.formulafan.Models.QuizDone;
 import pt.ipp.estg.formulafan.Interfaces.ITeamDetailsListener;
 import pt.ipp.estg.formulafan.Models.DriverPosition;
+import pt.ipp.estg.formulafan.Models.QuizDone;
 import pt.ipp.estg.formulafan.Models.Race;
 import pt.ipp.estg.formulafan.Models.RaceResult;
 import pt.ipp.estg.formulafan.Models.TeamPosition;
@@ -45,7 +44,7 @@ import pt.ipp.estg.formulafan.Utils.TabletDetectionUtil;
 
 public class FormulaFanMainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener,
         IRaceDetailsListener,
-        IStatisticsListener,
+        IStatisticsListener, IDriverDetailsListener, ITeamDetailsListener,
         IQuizHistoryListener,
         IQuizLeaderListener {
 
@@ -266,7 +265,7 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
-          
+
     public void showRaceResultDetailsView(RaceResult raceResult) {
 
         raceResultDetailsFragment = new RaceResultDetailsFragment();
