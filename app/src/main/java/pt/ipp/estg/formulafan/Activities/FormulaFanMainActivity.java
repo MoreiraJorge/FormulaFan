@@ -4,31 +4,43 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.Observer;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
 import pt.ipp.estg.formulafan.Fragments.AnsweredQuizDetailsFragment;
+import pt.ipp.estg.formulafan.Fragments.DriverPositionDetailsFragment;
 import pt.ipp.estg.formulafan.Fragments.ProfileFragment;
 import pt.ipp.estg.formulafan.Fragments.QiLeaderFragment;
 import pt.ipp.estg.formulafan.Fragments.QuizzHistoryFragment;
 import pt.ipp.estg.formulafan.Fragments.RaceDetailsFragment;
 import pt.ipp.estg.formulafan.Fragments.RaceFragment;
-import pt.ipp.estg.formulafan.Fragments.ResultFragment;
+import pt.ipp.estg.formulafan.Fragments.RaceResultDetailsFragment;
+import pt.ipp.estg.formulafan.Fragments.ResultsFragment;
 import pt.ipp.estg.formulafan.Fragments.StatisticFragment;
 import pt.ipp.estg.formulafan.Interfaces.IQuizHistoryListener;
 import pt.ipp.estg.formulafan.Interfaces.IQuizLeaderListener;
+import pt.ipp.estg.formulafan.Fragments.TeamPositionDetailsFragment;
+import pt.ipp.estg.formulafan.Interfaces.IDriverDetailsListener;
 import pt.ipp.estg.formulafan.Interfaces.IRaceDetailsListener;
+import pt.ipp.estg.formulafan.Interfaces.IRaceResultDetailsListener;
 import pt.ipp.estg.formulafan.Interfaces.IStatisticsListener;
 import pt.ipp.estg.formulafan.Models.QuizDone;
+import pt.ipp.estg.formulafan.Interfaces.ITeamDetailsListener;
+import pt.ipp.estg.formulafan.Models.DriverPosition;
 import pt.ipp.estg.formulafan.Models.Race;
+import pt.ipp.estg.formulafan.Models.RaceResult;
+import pt.ipp.estg.formulafan.Models.TeamPosition;
 import pt.ipp.estg.formulafan.R;
+import pt.ipp.estg.formulafan.Utils.InternetUtil;
 import pt.ipp.estg.formulafan.Utils.TabletDetectionUtil;
 
 public class FormulaFanMainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener,
@@ -39,6 +51,8 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
 
     public static final String SELECTED_RACE = "pt.ipp.pt.estg.cmu.selectedRace";
     public static final String SELECTED_QUIZ_DONE = "pt.ipp.pt.estg.cmu.selectedQuizDone";
+    public static final String SELECTED_DRIVER = "pt.ipp.pt.estg.cmu.selectedDriver";
+    public static final String SELECTED_TEAM = "pt.ipp.pt.estg.cmu.selectedTeam";
 
     private FragmentManager fragmentManager;
     private Toolbar toolbar;
@@ -46,7 +60,9 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
     private RaceFragment raceFragment;
     private RaceDetailsFragment detailsFragment;
     private BottomNavigationView bottomNavigationView;
-    AnsweredQuizDetailsFragment answeredQuizDetailsFragment;
+    private AnsweredQuizDetailsFragment answeredQuizDetailsFragment;
+    private RaceResultDetailsFragment raceResultDetailsFragment;
+    private InternetUtil internetUtil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +93,18 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
         }
 
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
+
+        internetUtil = new InternetUtil(getApplication());
+        internetUtil.observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isConnected) {
+                if (!isConnected) {
+                    Toast.makeText(getApplicationContext(), "Dispositivo Offline!",
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
     }
 
     @Override
@@ -145,11 +173,18 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
     }
 
     private void changeToResultFragment() {
-        ResultFragment resultFragment = new ResultFragment();
+        ResultsFragment resultFragment = new ResultsFragment();
+        raceResultDetailsFragment = new RaceResultDetailsFragment();
         FragmentTransaction fragmentTransaction = fragmentManager
                 .beginTransaction();
         fragmentTransaction.replace(R.id.fragmentContainerMainUI, resultFragment);
         fragmentTransaction.addToBackStack(null);
+
+        if (TabletDetectionUtil.isTablet(this)) {
+            fragmentTransaction.replace(R.id.fragmentContainerMainUIDetails, raceResultDetailsFragment);
+            fragmentTransaction.addToBackStack(null);
+        }
+
         fragmentTransaction.commit();
     }
 
@@ -186,6 +221,7 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
     }
 
     @Override
+
     public void changeToQuizHistory() {
 
         QuizzHistoryFragment quizzHistoryFragment = new QuizzHistoryFragment();
@@ -229,5 +265,69 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
 
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
+    }
+          
+    public void showRaceResultDetailsView(RaceResult raceResult) {
+
+        raceResultDetailsFragment = new RaceResultDetailsFragment();
+
+        Bundle args = new Bundle();
+        args.putSerializable(SELECTED_RACE, raceResult);
+        raceResultDetailsFragment.setArguments(args);
+
+        if (TabletDetectionUtil.isTablet(this)) {
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.fragmentContainerMainUIDetails, raceResultDetailsFragment);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+        } else {
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.fragmentContainerMainUI, raceResultDetailsFragment);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+        }
+    }
+
+    @Override
+    public void showDriverDetailsView(DriverPosition driverPosition) {
+        DriverPositionDetailsFragment driverPositionDetailsFragment = new DriverPositionDetailsFragment();
+
+        Bundle args = new Bundle();
+        args.putSerializable(SELECTED_DRIVER, driverPosition);
+        driverPositionDetailsFragment.setArguments(args);
+
+        if (TabletDetectionUtil.isTablet(this)) {
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.fragmentContainerMainUIDetails, driverPositionDetailsFragment);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+        } else {
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.fragmentContainerMainUI, driverPositionDetailsFragment);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+        }
+
+    }
+
+    @Override
+    public void showTeamDetailsView(TeamPosition teamPosition) {
+        TeamPositionDetailsFragment teamPositionDetailsFragment = new TeamPositionDetailsFragment();
+
+        Bundle args = new Bundle();
+        args.putSerializable(SELECTED_TEAM, teamPosition);
+        teamPositionDetailsFragment.setArguments(args);
+
+        if (TabletDetectionUtil.isTablet(this)) {
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.fragmentContainerMainUIDetails, teamPositionDetailsFragment);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+        } else {
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.fragmentContainerMainUI, teamPositionDetailsFragment);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+        }
     }
 }
