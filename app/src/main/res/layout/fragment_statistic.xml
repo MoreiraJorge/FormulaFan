@@ -10,7 +10,7 @@
         layout="@layout/tab_layout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="2" />
+        android:layout_weight="4.07" />
 
 
     <androidx.viewpager2.widget.ViewPager2
@@ -19,7 +19,7 @@
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
-        android:layout_weight="16" />
+        android:layout_weight="33" />
 
 </LinearLayout>
 
