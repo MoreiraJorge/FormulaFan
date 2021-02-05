@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragments.RaceDetailsFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Fragments.DriverPositionDetailsFragment">
 
     <LinearLayout
-        android:id="@+id/raceDetailsView"
+        android:id="@+id/driverDetailsView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -17,14 +17,14 @@
             layout="@layout/app_bar"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="4" />
+            android:layout_weight="2" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:layout_weight="10"
+            android:layout_weight="18"
             android:orientation="vertical"
             android:paddingTop="20dp">
 
@@ -36,11 +36,11 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="@string/temporada"
+                    android:text="@string/name"
                     android:textSize="18sp" />
 
                 <TextView
-                    android:id="@+id/seasonView"
+                    android:id="@+id/nameView"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:textSize="18sp" />
@@ -55,11 +55,11 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="@string/ronda"
+                    android:text="@string/numero"
                     android:textSize="18sp" />
 
                 <TextView
-                    android:id="@+id/roundView"
+                    android:id="@+id/numberView"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:textSize="18sp" />
@@ -74,11 +74,11 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="@string/data"
+                    android:text="@string/nacionalidade"
                     android:textSize="18sp" />
 
                 <TextView
-                    android:id="@+id/dateView"
+                    android:id="@+id/nationalityView"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:textSize="18sp" />
@@ -93,34 +93,37 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="@string/circuito"
+                    android:text="@string/wins"
                     android:textSize="18sp" />
 
                 <TextView
-                    android:id="@+id/circuitView"
+                    android:id="@+id/winsView"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:textSize="18sp" />
 
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/team"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/teamView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
 
         </LinearLayout>
-
-        <FrameLayout
-            android:id="@+id/mapView"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_margin="16dp"
-            android:layout_weight="24">
-
-            <fragment
-                android:id="@+id/mapLocation"
-                android:name="com.google.android.gms.maps.SupportMapFragment"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-        </FrameLayout>
 
     </LinearLayout>
 
@@ -133,7 +136,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@string/seleciona_uma_corrida_para_ver_os_detalhes"
+            android:text="@string/selecione_um_item_da_lista_para_ver_mais_detalhes"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
