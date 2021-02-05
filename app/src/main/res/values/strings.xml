@@ -64,4 +64,6 @@
     <string name="numero">Número :</string>
     <string name="team">Equipa :</string>
     <string name="selecione_um_item_da_lista_para_ver_mais_detalhes">Selecione um item da lista para ver mais detalhes!</string>
+    <string name="formula_fan_service">Serviço do FormulaFan!</string>
+    <string name="formula_fan_service_description">Serviço de desafios de FormulaFan</string>
 </resources>

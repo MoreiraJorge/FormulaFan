@@ -1,5 +1,6 @@
 package pt.ipp.estg.formulafan.Activities;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -39,8 +40,10 @@ import pt.ipp.estg.formulafan.Models.QuizDone;
 import pt.ipp.estg.formulafan.Models.Race;
 import pt.ipp.estg.formulafan.Models.RaceResult;
 import pt.ipp.estg.formulafan.Models.TeamPosition;
+import pt.ipp.estg.formulafan.NativeServices.QuizService;
 import pt.ipp.estg.formulafan.R;
 import pt.ipp.estg.formulafan.Utils.InternetUtil;
+import pt.ipp.estg.formulafan.Utils.ServiceUtil;
 import pt.ipp.estg.formulafan.Utils.TabletDetectionUtil;
 
 public class FormulaFanMainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener,
@@ -105,6 +108,11 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
             }
         });
 
+        if (!ServiceUtil.isMyServiceRunning(QuizService.class, this)) {
+            Intent startService = new Intent(this, QuizService.class);
+            startService(startService);
+        }
+
     }
 
     @Override
@@ -127,15 +135,14 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
         }
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.logoutButton:
-                logOut();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == R.id.logoutButton) {
+            logOut();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     private void changeToProfileFragment() {
