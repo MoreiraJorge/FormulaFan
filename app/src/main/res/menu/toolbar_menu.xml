@@ -8,4 +8,11 @@
         android:icon="@drawable/ic_baseline_exit_to_app_24"
         android:title="@string/toolBarLogOut"
         app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/quizButton"
+        android:enabled="true"
+        android:title="Quiz"
+        app:showAsAction="ifRoom" />
+
 </menu>

@@ -64,4 +64,10 @@
     <string name="numero">Número :</string>
     <string name="team">Equipa :</string>
     <string name="selecione_um_item_da_lista_para_ver_mais_detalhes">Selecione um item da lista para ver mais detalhes!</string>
+    <string name="resposta1">Resposta1</string>
+    <string name="resposta2">Resposta2</string>
+    <string name="resposta3">Resposta3</string>
+    <string name="radiobutton">RadioButton</string>
+    <string name="resposta4">Resposta4</string>
+    <string name="seguinte">Seguinte</string>
 </resources>

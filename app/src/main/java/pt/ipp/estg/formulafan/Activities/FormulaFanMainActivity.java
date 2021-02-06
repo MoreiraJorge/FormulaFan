@@ -1,5 +1,6 @@
 package pt.ipp.estg.formulafan.Activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -63,6 +64,7 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
     private AnsweredQuizDetailsFragment answeredQuizDetailsFragment;
     private RaceResultDetailsFragment raceResultDetailsFragment;
     private InternetUtil internetUtil;
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -133,6 +135,8 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
             case R.id.logoutButton:
                 logOut();
                 return true;
+            case R.id.quizButton:
+                toQuiz();
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -330,5 +334,13 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
         }
+    }
+
+    private void toQuiz(){
+        this.context = this;
+        Intent intent = new Intent(context, QuizActivity.class);
+        startActivity(intent);
+        Toast.makeText(context, "Quiz Iniciado!",
+                Toast.LENGTH_SHORT).show();
     }
 }
