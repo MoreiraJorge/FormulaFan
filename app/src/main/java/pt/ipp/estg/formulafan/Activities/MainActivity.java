@@ -15,7 +15,6 @@ import androidx.lifecycle.Observer;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
@@ -180,13 +179,13 @@ public class MainActivity extends AppCompatActivity implements ISessionListener 
         fragmentTransaction.commit();
     }
 
-    private void updateUI(FirebaseUser user){
-        if(user!=null){
+    private void updateUI(FirebaseUser user) {
+        if (user != null) {
             toMainPage();
         }
     }
 
-    private void toMainPage(){
+    private void toMainPage() {
         Intent intent = new Intent(context, FormulaFanMainActivity.class);
         startActivity(intent);
         Toast.makeText(context, "Login efetuado!",

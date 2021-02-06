@@ -25,7 +25,7 @@ public class Question {
         this.option4 = option4;
     }
 
-    public boolean checkAnswer(int userAnswer){
+    public boolean checkAnswer(int userAnswer) {
         return userAnswer == this.answer ? true : false;
     }
 
