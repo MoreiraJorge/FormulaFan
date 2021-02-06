@@ -1,7 +1,5 @@
 package pt.ipp.estg.formulafan.Activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -10,12 +8,13 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 import pt.ipp.estg.formulafan.Models.Question;
-import pt.ipp.estg.formulafan.Models.QuestionAnswered;
 import pt.ipp.estg.formulafan.Models.Quiz;
 import pt.ipp.estg.formulafan.R;
 
@@ -90,7 +89,7 @@ public class QuizActivity extends AppCompatActivity {
         answerGroup.clearCheck();
         if (questionCounter < questionList.size()) {
 
-            if(questionCounter == questionList.size() - 1){
+            if (questionCounter == questionList.size() - 1) {
                 confirm.setText("Finalizar");
             }
 

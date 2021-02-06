@@ -336,7 +336,7 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
         }
     }
 
-    private void toQuiz(){
+    private void toQuiz() {
         this.context = this;
         Intent intent = new Intent(context, QuizActivity.class);
         startActivity(intent);
