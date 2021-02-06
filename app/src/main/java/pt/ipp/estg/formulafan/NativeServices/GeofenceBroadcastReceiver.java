@@ -11,14 +11,18 @@ import androidx.core.app.NotificationManagerCompat;
 import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.GeofencingEvent;
 
+import java.util.List;
+
 import pt.ipp.estg.formulafan.Activities.FormulaFanMainActivity;
 import pt.ipp.estg.formulafan.R;
 
 public class GeofenceBroadcastReceiver extends BroadcastReceiver {
 
+    public static final String CLOSEST_CIRCUIT = "pt.ipp.pt.estg.cmu.closestCircuit";
     private static final int NOTIFICATION_ID = 2;
 
     private Context context;
+    private String circuitName;
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -30,6 +34,10 @@ public class GeofenceBroadcastReceiver extends BroadcastReceiver {
         int geofenceTransition = geofencingEvent.getGeofenceTransition();
 
         if (geofenceTransition == Geofence.GEOFENCE_TRANSITION_ENTER) {
+
+            List<Geofence> triggeringGeofences = geofencingEvent.getTriggeringGeofences();
+            circuitName = triggeringGeofences.get(0).getRequestId();
+
             createNotification();
         }
     }
@@ -45,6 +53,7 @@ public class GeofenceBroadcastReceiver extends BroadcastReceiver {
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
         Intent clickIntent = new Intent(context, FormulaFanMainActivity.class);
+        clickIntent.putExtra(CLOSEST_CIRCUIT, circuitName);
         clickIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent clickPendingIntent = PendingIntent.getActivity(context, 0, clickIntent, 0);
 
