@@ -135,8 +135,6 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
             case R.id.logoutButton:
                 logOut();
                 return true;
-            case R.id.quizButton:
-                toQuiz();
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -334,13 +332,5 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
         }
-    }
-
-    private void toQuiz(){
-        this.context = this;
-        Intent intent = new Intent(context, QuizActivity.class);
-        startActivity(intent);
-        Toast.makeText(context, "Quiz Iniciado!",
-                Toast.LENGTH_SHORT).show();
     }
 }

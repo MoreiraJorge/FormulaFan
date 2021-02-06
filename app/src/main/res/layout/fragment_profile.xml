@@ -8,7 +8,6 @@
     android:layout_weight="0"
     android:elevation="10dp"
     android:orientation="vertical"
-    android:weightSum="10"
     tools:context=".Fragments.ProfileFragment">
 
     <androidx.appcompat.widget.Toolbar
@@ -29,7 +28,7 @@
         android:layout_height="0dp"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
-        android:layout_weight="2"
+        android:layout_weight="2.5"
         android:src="@drawable/default_profile"
         app:civ_border_color="#FF000000"
         app:civ_border_width="2dp" />
@@ -43,14 +42,14 @@
         android:fontFamily="@font/aldrich"
         android:text="@string/username"
         android:textAlignment="center"
-        android:textSize="30sp" />
+        android:textSize="24sp" />
 
     <androidx.cardview.widget.CardView
         android:layout_width="332dp"
         android:layout_height="0dp"
         android:layout_gravity="center|center_vertical"
         android:layout_marginTop="20dp"
-        android:layout_weight="3"
+        android:layout_weight="2.5"
         app:cardElevation="5dp"
         app:cardMaxElevation="10dp"
         app:theme="@style/Theme.FormulaFan.MaterialCard">
@@ -60,21 +59,21 @@
             android:layout_height="match_parent"
             android:layout_margin="5dp"
             android:orientation="vertical"
-            android:weightSum="9">
+            android:weightSum="10">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="4"
+                android:layout_weight="5"
                 android:baselineAligned="false"
                 android:orientation="horizontal"
-                android:weightSum="10">
+                android:weightSum="5">
 
                 <TextView
                     android:id="@+id/qiTextView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="5"
+                    android:layout_weight="2.5"
                     android:fontFamily="@font/aldrich"
                     android:gravity="center_horizontal|center_vertical"
                     android:text="@string/qi"
@@ -84,7 +83,7 @@
                     android:id="@+id/EmailFrame"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="5">
+                    android:layout_weight="2.5">
 
                     <ImageView
                         android:id="@+id/imageView2"
@@ -100,15 +99,15 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="6"
+                android:layout_weight="5"
                 android:orientation="horizontal"
-                android:weightSum="10">
+                android:weightSum="5">
 
                 <TextView
                     android:id="@+id/qiPointsView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="5"
+                    android:layout_weight="2.5"
                     android:fontFamily="@font/aldrich"
                     android:gravity="center_horizontal|center_vertical"
                     android:text="@string/_000"
@@ -118,7 +117,7 @@
                     android:id="@+id/emailViewProfile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="5"
+                    android:layout_weight="2.5"
                     android:fontFamily="@font/aldrich"
                     android:gravity="center_vertical"
                     android:text="@string/defaultemail_email_com"
@@ -135,7 +134,7 @@
         android:layout_height="0dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"
-        android:layout_weight="1"
+        android:layout_weight="1.5"
         android:drawableStart="@drawable/ic_baseline_insert_chart_outlined_28"
         android:elevation="10dp"
         android:text="@string/estat_sticas"
@@ -148,7 +147,7 @@
         android:layout_width="332dp"
         android:layout_height="0dp"
         android:layout_gravity="center_horizontal"
-        android:layout_weight="1"
+        android:layout_weight="1.5"
         android:drawableStart="@drawable/ic_baseline_psychology_28"
         android:elevation="10dp"
         android:text="@string/meus_quizzes"
@@ -161,7 +160,7 @@
         android:layout_width="332dp"
         android:layout_height="0dp"
         android:layout_gravity="center_horizontal"
-        android:layout_weight="1"
+        android:layout_weight="1.5"
         android:drawableStart="@drawable/ic_baseline_emoji_events_28"
         android:elevation="10dp"
         android:text="@string/quizz_leaders"
