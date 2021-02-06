@@ -29,7 +29,7 @@ public class QuizActivity extends AppCompatActivity {
     private Button confirm;
     private RadioGroup answerGroup;
 
-    private boolean answered;
+    private boolean answered = false;
     private Question currentQuestion;
     private Quiz quiz;
     private List<Question> questionList;
@@ -57,16 +57,12 @@ public class QuizActivity extends AppCompatActivity {
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!answered){
-                    if (answer1.isChecked() || answer2.isChecked() ||
-                            answer3.isChecked() || answer4.isChecked()) {
-                        checkAnswer();
-                    } else {
-                        Toast.makeText(QuizActivity.this, "Please select an answer",
-                                Toast.LENGTH_SHORT).show();
-                    }
+                if (answer1.isChecked() || answer2.isChecked() ||
+                        answer3.isChecked() || answer4.isChecked()) {
+                    checkAnswer();
                 } else {
-                    showNextQuestion();
+                    Toast.makeText(QuizActivity.this, "Please select an answer",
+                            Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -74,12 +70,30 @@ public class QuizActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-            finishQuiz();
+        finish();
+    }
+
+    private void checkAnswer() {
+        answered = true;
+        RadioButton rbSelected = findViewById(answerGroup.getCheckedRadioButtonId());
+        int answerNr = answerGroup.indexOfChild(rbSelected) + 1;
+        if (currentQuestion.checkAnswer(answerNr)) {
+            userScore += currentQuestion.points;
+            //criar aqui objeto AnsweredQuestion para guardar resposta do user e se esta certo ou errado
+            //adicionar objeto a lista de answeredQuestions de quizdone
+        }
+
+        showNextQuestion();
     }
 
     private void showNextQuestion() {
         answerGroup.clearCheck();
         if (questionCounter < questionList.size()) {
+
+            if(questionCounter == questionList.size() - 1){
+                confirm.setText("Finalizar");
+            }
+
             currentQuestion = questionList.get(questionCounter);
             questionTextView.setText(currentQuestion.title);
             answer1.setText(currentQuestion.option1);
@@ -87,23 +101,14 @@ public class QuizActivity extends AppCompatActivity {
             answer3.setText(currentQuestion.option3);
             answer4.setText(currentQuestion.option4);
             questionCounter++;
+            answered = false;
         } else {
             finishQuiz();
         }
     }
 
-    private void checkAnswer(){
-        answered = true;
-        RadioButton rbSelected = findViewById(answerGroup.getCheckedRadioButtonId());
-        int answerNr = answerGroup.indexOfChild(rbSelected) + 1;
-        if (currentQuestion.checkAnswer(answerNr)) {
-            userScore+=currentQuestion.points;
-            //criar aqui objeto AnsweredQuestion para guardar resposta do user e se esta certo ou errado
-            //adicionar objeto a lista de answeredQuestions de quizdone
-        }
-    }
 
-    private void finishQuiz(){
+    private void finishQuiz() {
         quiz.setDone(true);
         //Aqui adicionar quizDone com AnsweredQuestions e na BD para aparecer no historico
         finish();
@@ -121,7 +126,7 @@ public class QuizActivity extends AppCompatActivity {
         Random rd = new Random();
         for (int i = 0; i < numOfQuestions; i++) {
             temporaryList.add(new Question("Questão " + i, 2, rd.nextInt(10),
-                    "errada","resposta","errada","errada"));
+                    "errada", "resposta", "errada", "errada"));
         }
 
         return temporaryList;
