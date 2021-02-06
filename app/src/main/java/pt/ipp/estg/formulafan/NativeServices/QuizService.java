@@ -6,17 +6,17 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.IBinder;
-import android.util.Log;
 import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
+import androidx.lifecycle.LifecycleService;
+import androidx.lifecycle.LiveData;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.Geofence;
@@ -36,7 +36,7 @@ import pt.ipp.estg.formulafan.Databases.RaceDAO;
 import pt.ipp.estg.formulafan.Models.Race;
 import pt.ipp.estg.formulafan.R;
 
-public class QuizService extends Service {
+public class QuizService extends LifecycleService {
 
     public static final String CHANNEL_ID = "1";
     private static final int NOTIFICATION_ID = 1;
@@ -95,11 +95,13 @@ public class QuizService extends Service {
 
     @Override
     public IBinder onBind(Intent intent) {
+        super.onBind(intent);
         return null;
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        super.onStartCommand(intent, flags, startId);
         if (checkPermission(getApplicationContext())) {
             setLocationUpdates();
             setGeofencingSettings();
@@ -127,40 +129,43 @@ public class QuizService extends Service {
     @SuppressLint("MissingPermission")
     private void setGeofencingSettings() {
         CurrentRaceDatabase db = CurrentRaceDatabase.getDatabase(getApplication());
-        CurrentRaceDatabase.databaseWriteExecutor.execute(() -> {
-            RaceDAO raceDAO = db.getRaceDAO();
-            List<Race> tmp = raceDAO.getStaticRaces();
 
-            List<Geofence> geofenceList = new ArrayList<>();
+        RaceDAO raceDAO = db.getRaceDAO();
+        LiveData<List<Race>> listLiveData = raceDAO.getRaces();
 
-            for (Race race : tmp) {
-                Log.d("Test", race.circuit.circuitName);
-                //Creating Geofecing list
-                geofenceList.add(new Geofence.Builder()
-                        .setRequestId(race.circuit.circuitName)
-                        .setCircularRegion(
-                                race.circuit.location.lat,
-                                race.circuit.location.lng,
-                                GEOFENCE_RADIUS_IN_METERS
-                        )
-                        .setExpirationDuration(Geofence.NEVER_EXPIRE)
-                        .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER |
-                                Geofence.GEOFENCE_TRANSITION_EXIT)
-                        .build());
+        List<Geofence> geofenceList = new ArrayList<>();
+
+        listLiveData.observe(this, (races) -> {
+            if (races.size() > 0) {
+                for (Race race : races) {
+                    //Creating Geofecing list
+                    geofenceList.add(new Geofence.Builder()
+                            .setRequestId(race.circuit.circuitName)
+                            .setCircularRegion(
+                                    race.circuit.location.lat,
+                                    race.circuit.location.lng,
+                                    GEOFENCE_RADIUS_IN_METERS
+                            )
+                            .setExpirationDuration(Geofence.NEVER_EXPIRE)
+                            .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER |
+                                    Geofence.GEOFENCE_TRANSITION_EXIT)
+                            .build());
+                }
+
+                //Setting Request
+                GeofencingRequest.Builder builder = new GeofencingRequest.Builder();
+                builder.setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER);
+                builder.addGeofences(geofenceList);
+                GeofencingRequest request = builder.build();
+
+                //Adding Geofencing Request
+                Intent geoIntent = new Intent(getApplicationContext(), GeofenceBroadcastReceiver.class);
+                geofencePendingIntent = PendingIntent.getBroadcast(this, 0, geoIntent, PendingIntent.
+                        FLAG_UPDATE_CURRENT);
+                geofencingClient.addGeofences(request, geofencePendingIntent);
             }
-
-            //Setting Request
-            GeofencingRequest.Builder builder = new GeofencingRequest.Builder();
-            builder.setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER);
-            builder.addGeofences(geofenceList);
-            GeofencingRequest request = builder.build();
-
-            //Adding Geofencing Request
-            Intent geoIntent = new Intent(getApplicationContext(), GeofenceBroadcastReceiver.class);
-            geofencePendingIntent = PendingIntent.getBroadcast(this, 0, geoIntent, PendingIntent.
-                    FLAG_UPDATE_CURRENT);
-            geofencingClient.addGeofences(request, geofencePendingIntent);
         });
+
     }
 
     private void startLocationUpdates() {
