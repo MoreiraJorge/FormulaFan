@@ -1,5 +1,6 @@
 package pt.ipp.estg.formulafan.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -18,6 +19,8 @@ import pt.ipp.estg.formulafan.Models.Question;
 import pt.ipp.estg.formulafan.Models.Quiz;
 import pt.ipp.estg.formulafan.R;
 
+import static pt.ipp.estg.formulafan.NativeServices.GeofenceBroadcastReceiver.CLOSEST_CIRCUIT;
+
 public class QuizActivity extends AppCompatActivity {
 
     private TextView questionTextView;
@@ -28,16 +31,20 @@ public class QuizActivity extends AppCompatActivity {
     private Button confirm;
     private RadioGroup answerGroup;
 
-    private Question currentQuestion;
-    private Quiz quiz;
     private List<Question> questionList;
     private int questionCounter = 0;
+    private Question currentQuestion;
+    private String circuitName;
     private int userScore = 0;
+    private Quiz quiz;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
+
+        Intent intent = getIntent();
+        circuitName = intent.getStringExtra(CLOSEST_CIRCUIT);
 
         questionTextView = findViewById(R.id.questionTextView);
         answerGroup = findViewById(R.id.radioGroup);
@@ -47,23 +54,25 @@ public class QuizActivity extends AppCompatActivity {
         answer4 = findViewById(R.id.resposta4);
         confirm = findViewById(R.id.confirmButton);
 
-        questionList = temporaryQuestions(10);
-        quiz = new Quiz("Test Quiz", questionList);
+        if (intent != null && circuitName != null) {
+            questionList = temporaryQuestions(10);
+            quiz = new Quiz("Test Quiz", questionList);
 
-        showNextQuestion();
+            showNextQuestion();
 
-        confirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (answer1.isChecked() || answer2.isChecked() ||
-                        answer3.isChecked() || answer4.isChecked()) {
-                    checkAnswer();
-                } else {
-                    Toast.makeText(QuizActivity.this, "Please select an answer",
-                            Toast.LENGTH_SHORT).show();
+            confirm.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (answer1.isChecked() || answer2.isChecked() ||
+                            answer3.isChecked() || answer4.isChecked()) {
+                        checkAnswer();
+                    } else {
+                        Toast.makeText(QuizActivity.this, "Please select an answer",
+                                Toast.LENGTH_SHORT).show();
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
     @Override
