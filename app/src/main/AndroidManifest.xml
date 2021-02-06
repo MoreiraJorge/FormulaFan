@@ -15,6 +15,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FormulaFan">
+        <activity android:name=".Activities.QuizActivity" />
         <receiver
             android:name=".NativeServices.GeofenceBroadcastReceiver"
             android:enabled="true"

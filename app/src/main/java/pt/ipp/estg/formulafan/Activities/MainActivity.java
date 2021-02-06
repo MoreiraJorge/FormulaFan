@@ -18,6 +18,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.FirebaseUser;
 
 import pt.ipp.estg.formulafan.Fragments.LoginFragment;
 import pt.ipp.estg.formulafan.Fragments.RegisterFragment;
@@ -33,6 +34,15 @@ public class MainActivity extends AppCompatActivity implements ISessionListener 
     private FragmentManager fragmentManager;
     private FirebaseAuth firebaseAuth;
     private InternetUtil internetUtil;
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+        updateUI(currentUser);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,8 +61,6 @@ public class MainActivity extends AppCompatActivity implements ISessionListener 
                 }
             }
         });
-
-        firebaseAuth = FirebaseAuth.getInstance();
 
         LoginFragment loginFragment = new LoginFragment();
         fragmentManager = getSupportFragmentManager();
@@ -90,11 +98,7 @@ public class MainActivity extends AppCompatActivity implements ISessionListener 
                                     break;
                             }
                         } else {
-                            Intent intent = new Intent(context, FormulaFanMainActivity.class);
-                            startActivity(intent);
-                            Toast.makeText(context, "Login efetuado!",
-                                    Toast.LENGTH_SHORT).show();
-                            finish();
+                            toMainPage();
                         }
                     }
                 });
@@ -173,5 +177,19 @@ public class MainActivity extends AppCompatActivity implements ISessionListener 
         fragmentTransaction.replace(R.id.fragmentContainer, registerFragment);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
+    }
+
+    private void updateUI(FirebaseUser user) {
+        if (user != null) {
+            toMainPage();
+        }
+    }
+
+    private void toMainPage() {
+        Intent intent = new Intent(context, FormulaFanMainActivity.class);
+        startActivity(intent);
+        Toast.makeText(context, "Login efetuado!",
+                Toast.LENGTH_SHORT).show();
+        finish();
     }
 }

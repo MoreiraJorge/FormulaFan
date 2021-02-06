@@ -70,6 +70,7 @@ public class PieChartFragment extends Fragment implements IThemeListener {
         pieChart.setCenterText("Respostas");
         pieChart.setCenterTextSize(18f);
         pieChart.setRotationEnabled(false);
+        pieChart.setTouchEnabled(false);
 
         checkDarkMode();
 
