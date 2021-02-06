@@ -16,7 +16,6 @@ import android.widget.Toast;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.lifecycle.LifecycleService;
-import androidx.lifecycle.LiveData;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.Geofence;
@@ -31,10 +30,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pt.ipp.estg.formulafan.Activities.FormulaFanMainActivity;
-import pt.ipp.estg.formulafan.Databases.CurrentRaceDatabase;
-import pt.ipp.estg.formulafan.Databases.RaceDAO;
 import pt.ipp.estg.formulafan.Models.Race;
 import pt.ipp.estg.formulafan.R;
+import pt.ipp.estg.formulafan.Repositories.CurrentRaceRepository;
 
 public class QuizService extends LifecycleService {
 
@@ -128,14 +126,10 @@ public class QuizService extends LifecycleService {
 
     @SuppressLint("MissingPermission")
     private void setGeofencingSettings() {
-        CurrentRaceDatabase db = CurrentRaceDatabase.getDatabase(getApplication());
-
-        RaceDAO raceDAO = db.getRaceDAO();
-        LiveData<List<Race>> listLiveData = raceDAO.getRaces();
-
         List<Geofence> geofenceList = new ArrayList<>();
 
-        listLiveData.observe(this, (races) -> {
+        CurrentRaceRepository currentRaceRepository = new CurrentRaceRepository(getApplication());
+        currentRaceRepository.getAllRaces().observe(this, (races) -> {
             if (races.size() > 0) {
                 for (Race race : races) {
                     //Creating Geofecing list
