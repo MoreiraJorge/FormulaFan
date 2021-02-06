@@ -70,4 +70,6 @@
     <string name="radiobutton">RadioButton</string>
     <string name="resposta4">Resposta4</string>
     <string name="seguinte">Seguinte</string>
+    <string name="formula_fan_service">Serviço do FormulaFan!</string>
+    <string name="formula_fan_service_description">Serviço de desafios de FormulaFan</string>
 </resources>

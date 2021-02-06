@@ -13,7 +13,7 @@ import java.util.List;
 import pt.ipp.estg.formulafan.Databases.RaceResultDAO;
 import pt.ipp.estg.formulafan.Databases.RaceResultDatabase;
 import pt.ipp.estg.formulafan.Models.RaceResult;
-import pt.ipp.estg.formulafan.Services.ResultDetailsAPI;
+import pt.ipp.estg.formulafan.WebServices.ResultDetailsAPI;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

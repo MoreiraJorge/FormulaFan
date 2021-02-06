@@ -1,4 +1,4 @@
-package pt.ipp.estg.formulafan.Services;
+package pt.ipp.estg.formulafan.WebServices;
 
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
