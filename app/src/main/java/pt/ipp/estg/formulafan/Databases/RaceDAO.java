@@ -23,6 +23,9 @@ public interface RaceDAO {
     @Query("Select * From Race")
     public LiveData<List<Race>> getRaces();
 
+    @Query("Select * From Race")
+    public List<Race> getStaticRaces();
+
     @Delete
     public void deleteRace(Race... races);
 

@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.IBinder;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
@@ -30,6 +31,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pt.ipp.estg.formulafan.Activities.FormulaFanMainActivity;
+import pt.ipp.estg.formulafan.Databases.CurrentRaceDatabase;
+import pt.ipp.estg.formulafan.Databases.RaceDAO;
+import pt.ipp.estg.formulafan.Models.Race;
 import pt.ipp.estg.formulafan.R;
 
 public class QuizService extends Service {
@@ -122,32 +126,41 @@ public class QuizService extends Service {
 
     @SuppressLint("MissingPermission")
     private void setGeofencingSettings() {
-        List<Geofence> geofenceList = new ArrayList<>();
+        CurrentRaceDatabase db = CurrentRaceDatabase.getDatabase(getApplication());
+        CurrentRaceDatabase.databaseWriteExecutor.execute(() -> {
+            RaceDAO raceDAO = db.getRaceDAO();
+            List<Race> tmp = raceDAO.getStaticRaces();
 
-        //Creating Geofecing list
-        geofenceList.add(new Geofence.Builder()
-                .setRequestId("Red Bull Ring")
-                .setCircularRegion(
-                        47.22422438435841d,
-                        14.766116421777344d,
-                        GEOFENCE_RADIUS_IN_METERS
-                )
-                .setExpirationDuration(Geofence.NEVER_EXPIRE)
-                .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER |
-                        Geofence.GEOFENCE_TRANSITION_EXIT)
-                .build());
+            List<Geofence> geofenceList = new ArrayList<>();
 
-        //Setting Request
-        GeofencingRequest.Builder builder = new GeofencingRequest.Builder();
-        builder.setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER);
-        builder.addGeofences(geofenceList);
-        GeofencingRequest request = builder.build();
+            for (Race race : tmp) {
+                Log.d("Test", race.circuit.circuitName);
+                //Creating Geofecing list
+                geofenceList.add(new Geofence.Builder()
+                        .setRequestId(race.circuit.circuitName)
+                        .setCircularRegion(
+                                race.circuit.location.lat,
+                                race.circuit.location.lng,
+                                GEOFENCE_RADIUS_IN_METERS
+                        )
+                        .setExpirationDuration(Geofence.NEVER_EXPIRE)
+                        .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER |
+                                Geofence.GEOFENCE_TRANSITION_EXIT)
+                        .build());
+            }
 
-        //Adding Geofencing Request
-        Intent geoIntent = new Intent(getApplicationContext(), GeofenceBroadcastReceiver.class);
-        geofencePendingIntent = PendingIntent.getBroadcast(this, 0, geoIntent, PendingIntent.
-                FLAG_UPDATE_CURRENT);
-        geofencingClient.addGeofences(request, geofencePendingIntent);
+            //Setting Request
+            GeofencingRequest.Builder builder = new GeofencingRequest.Builder();
+            builder.setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER);
+            builder.addGeofences(geofenceList);
+            GeofencingRequest request = builder.build();
+
+            //Adding Geofencing Request
+            Intent geoIntent = new Intent(getApplicationContext(), GeofenceBroadcastReceiver.class);
+            geofencePendingIntent = PendingIntent.getBroadcast(this, 0, geoIntent, PendingIntent.
+                    FLAG_UPDATE_CURRENT);
+            geofencingClient.addGeofences(request, geofencePendingIntent);
+        });
     }
 
     private void startLocationUpdates() {
