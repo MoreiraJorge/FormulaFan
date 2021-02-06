@@ -1,4 +1,4 @@
-package pt.ipp.estg.formulafan.Services;
+package pt.ipp.estg.formulafan.WebServices;
 
 import java.util.List;
 

@@ -13,7 +13,7 @@ import java.util.List;
 import pt.ipp.estg.formulafan.Databases.TeamPositionDAO;
 import pt.ipp.estg.formulafan.Databases.TeamPositionDatabase;
 import pt.ipp.estg.formulafan.Models.TeamPosition;
-import pt.ipp.estg.formulafan.Services.TeamPositionDetailsAPI;
+import pt.ipp.estg.formulafan.WebServices.TeamPositionDetailsAPI;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
