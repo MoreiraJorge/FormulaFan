@@ -1,6 +1,5 @@
 package pt.ipp.estg.formulafan.Activities;
 
-import android.content.Context;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -71,7 +70,6 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
     private AnsweredQuizDetailsFragment answeredQuizDetailsFragment;
     private RaceResultDetailsFragment raceResultDetailsFragment;
     private InternetUtil internetUtil;
-    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

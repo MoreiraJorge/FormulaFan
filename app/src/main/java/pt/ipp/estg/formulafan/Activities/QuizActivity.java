@@ -28,7 +28,6 @@ public class QuizActivity extends AppCompatActivity {
     private Button confirm;
     private RadioGroup answerGroup;
 
-    private boolean answered = false;
     private Question currentQuestion;
     private Quiz quiz;
     private List<Question> questionList;
@@ -73,7 +72,6 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void checkAnswer() {
-        answered = true;
         RadioButton rbSelected = findViewById(answerGroup.getCheckedRadioButtonId());
         int answerNr = answerGroup.indexOfChild(rbSelected) + 1;
         if (currentQuestion.checkAnswer(answerNr)) {
@@ -100,7 +98,6 @@ public class QuizActivity extends AppCompatActivity {
             answer3.setText(currentQuestion.option3);
             answer4.setText(currentQuestion.option4);
             questionCounter++;
-            answered = false;
         } else {
             finishQuiz();
         }
