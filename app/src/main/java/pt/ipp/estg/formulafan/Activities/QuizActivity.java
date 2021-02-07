@@ -49,7 +49,6 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
     private int userScore;
     private Quiz quiz;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
