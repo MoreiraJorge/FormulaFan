@@ -72,4 +72,6 @@
     <string name="seguinte">Seguinte</string>
     <string name="formula_fan_service">Serviço do FormulaFan!</string>
     <string name="formula_fan_service_description">Serviço de desafios de FormulaFan</string>
+    <string name="no_available_quiz">Não existem desafios disponíveis para esta localização!</string>
+    <string name="select_an_option">Escolha uma das opções.</string>
 </resources>

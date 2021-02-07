@@ -1,5 +1,6 @@
 package pt.ipp.estg.formulafan.Activities;
 
+import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,11 +19,13 @@ import java.util.Random;
 
 import pt.ipp.estg.formulafan.Models.Question;
 import pt.ipp.estg.formulafan.Models.Quiz;
+import pt.ipp.estg.formulafan.Models.Race;
 import pt.ipp.estg.formulafan.R;
+import pt.ipp.estg.formulafan.ViewModels.PastRaceViewModel;
 
 import static pt.ipp.estg.formulafan.NativeServices.GeofenceBroadcastReceiver.CLOSEST_CIRCUIT;
 
-public class QuizActivity extends AppCompatActivity {
+public class QuizActivity extends AppCompatActivity implements View.OnClickListener {
 
     private TextView questionTextView;
     private RadioButton answer1;
@@ -31,11 +35,13 @@ public class QuizActivity extends AppCompatActivity {
     private Button confirm;
     private RadioGroup answerGroup;
 
+    private PastRaceViewModel pastRaceViewModel;
     private List<Question> questionList;
-    private int questionCounter = 0;
+    private List<Race> pastRaceList;
+    private int questionCounter;
     private Question currentQuestion;
     private String circuitName;
-    private int userScore = 0;
+    private int userScore;
     private Quiz quiz;
 
     @Override
@@ -54,24 +60,39 @@ public class QuizActivity extends AppCompatActivity {
         answer4 = findViewById(R.id.resposta4);
         confirm = findViewById(R.id.confirmButton);
 
-        if (intent != null && circuitName != null) {
-            questionList = temporaryQuestions(10);
-            quiz = new Quiz("Test Quiz", questionList);
+        if (circuitName != null) {
+            pastRaceViewModel = new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory((Application) this.getApplicationContext())).get(PastRaceViewModel.class);
 
-            showNextQuestion();
+            pastRaceViewModel.getAllRaces().observe(this, (races) -> {
+                        if (races.size() != 0) {
+                            this.pastRaceList = races;
 
-            confirm.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (answer1.isChecked() || answer2.isChecked() ||
-                            answer3.isChecked() || answer4.isChecked()) {
-                        checkAnswer();
-                    } else {
-                        Toast.makeText(QuizActivity.this, "Please select an answer",
-                                Toast.LENGTH_SHORT).show();
+                            questionList = generateQuestions();
+                            quiz = new Quiz(" " + circuitName + " - Quiz", questionList);
+                            questionCounter = 0;
+                            userScore = 0;
+
+                            if (questionList.size() != 0) {
+                                showNextQuestion();
+                                confirm.setOnClickListener(this);
+                            } else {
+                                Toast.makeText(this, this.getString(R.string.no_available_quiz),
+                                        Toast.LENGTH_LONG).show();
+                            }
+                        }
                     }
-                }
-            });
+            );
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (answer1.isChecked() || answer2.isChecked() ||
+                answer3.isChecked() || answer4.isChecked()) {
+            checkAnswer();
+        } else {
+            Toast.makeText(QuizActivity.this, this.getString(R.string.select_an_option),
+                    Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -82,6 +103,7 @@ public class QuizActivity extends AppCompatActivity {
 
     private void checkAnswer() {
         RadioButton rbSelected = findViewById(answerGroup.getCheckedRadioButtonId());
+
         int answerNr = answerGroup.indexOfChild(rbSelected) + 1;
         if (currentQuestion.checkAnswer(answerNr)) {
             userScore += currentQuestion.points;
@@ -93,7 +115,9 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void showNextQuestion() {
+        //Limpar radioGroup
         answerGroup.clearCheck();
+
         if (questionCounter < questionList.size()) {
 
             if (questionCounter == questionList.size() - 1) {
@@ -106,34 +130,47 @@ public class QuizActivity extends AppCompatActivity {
             answer2.setText(currentQuestion.option2);
             answer3.setText(currentQuestion.option3);
             answer4.setText(currentQuestion.option4);
+
             questionCounter++;
         } else {
             finishQuiz();
         }
     }
 
+    private List<Question> generateQuestions() {
+        List<Question> questionList = new ArrayList<>();
+        Random rd = new Random();
+        int selectedRace = -1;
+
+        for (int i = 0; i < pastRaceList.size(); i++) {
+            if (pastRaceList.get(i).circuit.circuitName.equals(circuitName)) {
+                selectedRace = i;
+                break;
+            }
+        }
+
+        if (selectedRace != -1) {
+            if (selectedRace + 3 < pastRaceList.size()) {
+                questionList.add(new Question("Quando occoreu a ultima corrida no circuito " + circuitName + " ?", 2, rd.nextInt(10),
+                        pastRaceList.get(selectedRace + 1).date.toGMTString(),
+                        pastRaceList.get(selectedRace).date.toGMTString(),
+                        pastRaceList.get(selectedRace + 2).date.toGMTString(),
+                        pastRaceList.get(selectedRace + 3).date.toGMTString()));
+            } else {
+                questionList.add(new Question("Quando occoreu a ultima corrida no circuito " + circuitName + " ?", 2, rd.nextInt(10),
+                        pastRaceList.get(selectedRace - 1).date.toGMTString(),
+                        pastRaceList.get(selectedRace).date.toGMTString(),
+                        pastRaceList.get(selectedRace - 2).date.toGMTString(),
+                        pastRaceList.get(selectedRace - 3).date.toGMTString()));
+            }
+        }
+
+        return questionList;
+    }
 
     private void finishQuiz() {
         quiz.setDone(true);
         //Aqui adicionar quizDone com AnsweredQuestions e na BD para aparecer no historico
         finish();
-    }
-
-    /**
-     * Objetos Question temporario
-     * para testar UI
-     *
-     * @param numOfQuestions
-     * @return
-     */
-    private List<Question> temporaryQuestions(int numOfQuestions) {
-        List<Question> temporaryList = new ArrayList<>();
-        Random rd = new Random();
-        for (int i = 0; i < numOfQuestions; i++) {
-            temporaryList.add(new Question("Questão " + i, 2, rd.nextInt(10),
-                    "errada", "resposta", "errada", "errada"));
-        }
-
-        return temporaryList;
     }
 }
