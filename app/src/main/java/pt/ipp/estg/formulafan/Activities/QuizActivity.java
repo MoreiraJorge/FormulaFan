@@ -49,7 +49,7 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
 
-        Intent intent = getIntent();
+        Intent intent = this.getIntent();
         circuitName = intent.getStringExtra(CLOSEST_CIRCUIT);
 
         questionTextView = findViewById(R.id.questionTextView);

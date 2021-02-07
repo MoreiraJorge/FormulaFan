@@ -55,7 +55,7 @@ public class GeofenceBroadcastReceiver extends BroadcastReceiver {
         Intent clickIntent = new Intent(context, QuizActivity.class);
         clickIntent.putExtra(CLOSEST_CIRCUIT, circuitName);
         clickIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        PendingIntent clickPendingIntent = PendingIntent.getActivity(context, 0, clickIntent, 0);
+        PendingIntent clickPendingIntent = PendingIntent.getActivity(context, 0, clickIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         mBuilder.setAutoCancel(true);
         mBuilder.setContentIntent(clickPendingIntent);
