@@ -1,7 +1,6 @@
 package pt.ipp.estg.formulafan.Activities;
 
 import android.app.Application;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -11,7 +10,6 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -68,7 +66,6 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
         answer4 = findViewById(R.id.resposta4);
         confirm = findViewById(R.id.confirmButton);
 
-        answeredQuestions = new ArrayList<>();
         quizDoneViewModel = new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory((Application) getApplicationContext())).get(QuizDoneViewModel.class);
 
         if (circuitName != null) {
@@ -82,6 +79,7 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
                             quiz = new Quiz(" " + circuitName + " - Quiz", questionList);
                             questionCounter = 0;
                             userScore = 0;
+                            answeredQuestions = new ArrayList<>();
 
                             if (questionList.size() != 0) {
                                 showNextQuestion();
@@ -194,10 +192,8 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void finishQuiz() {
-        quiz.setDone(true);
         QuizDone quizDone = new QuizDone(quiz.Title, userScore, answeredQuestions);
         quizDoneViewModel.insertQuiz(quizDone);
-
         finish();
     }
 
