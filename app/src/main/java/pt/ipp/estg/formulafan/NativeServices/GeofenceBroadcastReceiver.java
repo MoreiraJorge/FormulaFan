@@ -13,7 +13,7 @@ import com.google.android.gms.location.GeofencingEvent;
 
 import java.util.List;
 
-import pt.ipp.estg.formulafan.Activities.FormulaFanMainActivity;
+import pt.ipp.estg.formulafan.Activities.QuizActivity;
 import pt.ipp.estg.formulafan.R;
 
 public class GeofenceBroadcastReceiver extends BroadcastReceiver {
@@ -52,10 +52,10 @@ public class GeofenceBroadcastReceiver extends BroadcastReceiver {
                         .bigText("Tem um novo quiz para realizar!"))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
-        Intent clickIntent = new Intent(context, FormulaFanMainActivity.class);
+        Intent clickIntent = new Intent(context, QuizActivity.class);
         clickIntent.putExtra(CLOSEST_CIRCUIT, circuitName);
         clickIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        PendingIntent clickPendingIntent = PendingIntent.getActivity(context, 0, clickIntent, 0);
+        PendingIntent clickPendingIntent = PendingIntent.getActivity(context, 0, clickIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         mBuilder.setAutoCancel(true);
         mBuilder.setContentIntent(clickPendingIntent);
