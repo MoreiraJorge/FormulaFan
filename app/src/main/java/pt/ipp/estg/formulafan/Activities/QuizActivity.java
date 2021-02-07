@@ -150,14 +150,30 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         if (selectedRace != -1) {
+
+            //Questão temporada
+            questionList.add(new Question("Qual foi a ultima season que passou no circuito " + circuitName + " ?", 3, rd.nextInt(10),
+                    "" + (pastRaceList.get(selectedRace).season - 2),
+                    "" + (pastRaceList.get(selectedRace).season - 1),
+                    "" + pastRaceList.get(selectedRace).season,
+                    "" + (pastRaceList.get(selectedRace).season - 3)));
+
+            //Questão temporada
+            questionList.add(new Question("Qual foi a ultima ronda que passou no circuito " + circuitName + " ?", 4, rd.nextInt(10),
+                    "" + (pastRaceList.get(selectedRace).round + 2),
+                    "" + (pastRaceList.get(selectedRace).round + 1),
+                    "" + (pastRaceList.get(selectedRace).round + 3),
+                    "" + pastRaceList.get(selectedRace).round));
+
+            //Questão data
             if (selectedRace + 3 < pastRaceList.size()) {
-                questionList.add(new Question("Quando occoreu a ultima corrida no circuito " + circuitName + " ?", 2, rd.nextInt(10),
+                questionList.add(new Question("Quando ocorreu a ultima corrida no circuito " + circuitName + " ?", 2, rd.nextInt(10),
                         pastRaceList.get(selectedRace + 1).date.toGMTString(),
                         pastRaceList.get(selectedRace).date.toGMTString(),
                         pastRaceList.get(selectedRace + 2).date.toGMTString(),
                         pastRaceList.get(selectedRace + 3).date.toGMTString()));
             } else {
-                questionList.add(new Question("Quando occoreu a ultima corrida no circuito " + circuitName + " ?", 2, rd.nextInt(10),
+                questionList.add(new Question("Quando ocorreu a ultima corrida no circuito " + circuitName + " ?", 2, rd.nextInt(10),
                         pastRaceList.get(selectedRace - 1).date.toGMTString(),
                         pastRaceList.get(selectedRace).date.toGMTString(),
                         pastRaceList.get(selectedRace - 2).date.toGMTString(),
