@@ -45,4 +45,28 @@ public class Converters {
         return results;
     }
 
+    @TypeConverter
+    public String fromAnsweredQuestionList(List<QuestionAnswered> questions) {
+        if (questions == null) {
+            return (null);
+        }
+        Gson gson = new Gson();
+        Type type = new TypeToken<List<QuestionAnswered>>() {
+        }.getType();
+        String json = gson.toJson(questions, type);
+        return json;
+    }
+
+    @TypeConverter
+    public List<QuestionAnswered> toAnsweredQuestionList(String questionString) {
+        if (questionString == null) {
+            return (null);
+        }
+        Gson gson = new Gson();
+        Type type = new TypeToken<List<QuestionAnswered>>() {
+        }.getType();
+        List<QuestionAnswered> results = gson.fromJson(questionString, type);
+        return results;
+    }
+
 }

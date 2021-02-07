@@ -1,6 +1,7 @@
 package pt.ipp.estg.formulafan.Activities;
 
 import android.app.Application;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -18,10 +20,13 @@ import java.util.List;
 import java.util.Random;
 
 import pt.ipp.estg.formulafan.Models.Question;
+import pt.ipp.estg.formulafan.Models.QuestionAnswered;
 import pt.ipp.estg.formulafan.Models.Quiz;
+import pt.ipp.estg.formulafan.Models.QuizDone;
 import pt.ipp.estg.formulafan.Models.Race;
 import pt.ipp.estg.formulafan.R;
 import pt.ipp.estg.formulafan.ViewModels.PastRaceViewModel;
+import pt.ipp.estg.formulafan.ViewModels.QuizDoneViewModel;
 
 import static pt.ipp.estg.formulafan.NativeServices.GeofenceBroadcastReceiver.CLOSEST_CIRCUIT;
 
@@ -35,14 +40,17 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
     private Button confirm;
     private RadioGroup answerGroup;
 
+    private QuizDoneViewModel quizDoneViewModel;
     private PastRaceViewModel pastRaceViewModel;
     private List<Question> questionList;
+    private List<QuestionAnswered> answeredQuestions;
     private List<Race> pastRaceList;
     private int questionCounter;
     private Question currentQuestion;
     private String circuitName;
     private int userScore;
     private Quiz quiz;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +67,9 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
         answer3 = findViewById(R.id.resposta3);
         answer4 = findViewById(R.id.resposta4);
         confirm = findViewById(R.id.confirmButton);
+
+        answeredQuestions = new ArrayList<>();
+        quizDoneViewModel = new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory((Application) getApplicationContext())).get(QuizDoneViewModel.class);
 
         if (circuitName != null) {
             pastRaceViewModel = new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory((Application) this.getApplicationContext())).get(PastRaceViewModel.class);
@@ -103,19 +114,18 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
 
     private void checkAnswer() {
         RadioButton rbSelected = findViewById(answerGroup.getCheckedRadioButtonId());
-
         int answerNr = answerGroup.indexOfChild(rbSelected) + 1;
-        if (currentQuestion.checkAnswer(answerNr)) {
+        boolean isCorrect;
+
+        if (isCorrect = currentQuestion.checkAnswer(answerNr)) {
             userScore += currentQuestion.points;
-            //criar aqui objeto AnsweredQuestion para guardar resposta do user e se esta certo ou errado
-            //adicionar objeto a lista de answeredQuestions de quizdone
         }
 
+        answeredQuestions.add(new QuestionAnswered(currentQuestion.title, rbSelected.getText().toString(), isCorrect));
         showNextQuestion();
     }
 
     private void showNextQuestion() {
-        //Limpar radioGroup
         answerGroup.clearCheck();
 
         if (questionCounter < questionList.size()) {
@@ -152,14 +162,14 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
         if (selectedRace != -1) {
 
             //Questão temporada
-            questionList.add(new Question("Qual foi a ultima season que passou no circuito " + circuitName + " ?", 3, rd.nextInt(10),
+            questionList.add(new Question("Qual foi a ultima season que passou no circuito " + circuitName + " ?", 3, 2,
                     "" + (pastRaceList.get(selectedRace).season - 2),
                     "" + (pastRaceList.get(selectedRace).season - 1),
                     "" + pastRaceList.get(selectedRace).season,
                     "" + (pastRaceList.get(selectedRace).season - 3)));
 
             //Questão ronda
-            questionList.add(new Question("Qual foi a ultima ronda que passou no circuito " + circuitName + " ?", 4, rd.nextInt(10),
+            questionList.add(new Question("Qual foi a ultima ronda que passou no circuito " + circuitName + " ?", 4, 3,
                     "" + (pastRaceList.get(selectedRace).round + 2),
                     "" + (pastRaceList.get(selectedRace).round + 1),
                     "" + (pastRaceList.get(selectedRace).round + 3),
@@ -167,26 +177,28 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
 
             //Questão data
             if (selectedRace + 3 < pastRaceList.size()) {
-                questionList.add(new Question("Quando ocorreu a ultima corrida no circuito " + circuitName + " ?", 2, rd.nextInt(10),
+                questionList.add(new Question("Quando ocorreu a ultima corrida no circuito " + circuitName + " ?", 2, 4,
                         pastRaceList.get(selectedRace + 1).date.toGMTString(),
                         pastRaceList.get(selectedRace).date.toGMTString(),
                         pastRaceList.get(selectedRace + 2).date.toGMTString(),
                         pastRaceList.get(selectedRace + 3).date.toGMTString()));
             } else {
-                questionList.add(new Question("Quando ocorreu a ultima corrida no circuito " + circuitName + " ?", 2, rd.nextInt(10),
+                questionList.add(new Question("Quando ocorreu a ultima corrida no circuito " + circuitName + " ?", 2, 4,
                         pastRaceList.get(selectedRace - 1).date.toGMTString(),
                         pastRaceList.get(selectedRace).date.toGMTString(),
                         pastRaceList.get(selectedRace - 2).date.toGMTString(),
                         pastRaceList.get(selectedRace - 3).date.toGMTString()));
             }
         }
-
         return questionList;
     }
 
     private void finishQuiz() {
         quiz.setDone(true);
-        //Aqui adicionar quizDone com AnsweredQuestions e na BD para aparecer no historico
+        QuizDone quizDone = new QuizDone(quiz.Title, userScore, answeredQuestions);
+        quizDoneViewModel.insertQuiz(quizDone);
+
         finish();
     }
+
 }
