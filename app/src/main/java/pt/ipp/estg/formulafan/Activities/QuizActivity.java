@@ -158,7 +158,7 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
                     "" + pastRaceList.get(selectedRace).season,
                     "" + (pastRaceList.get(selectedRace).season - 3)));
 
-            //Questão temporada
+            //Questão ronda
             questionList.add(new Question("Qual foi a ultima ronda que passou no circuito " + circuitName + " ?", 4, rd.nextInt(10),
                     "" + (pastRaceList.get(selectedRace).round + 2),
                     "" + (pastRaceList.get(selectedRace).round + 1),
