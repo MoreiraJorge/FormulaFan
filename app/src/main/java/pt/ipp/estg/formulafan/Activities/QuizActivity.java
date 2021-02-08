@@ -13,6 +13,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.firebase.auth.UserInfo;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,9 +23,11 @@ import pt.ipp.estg.formulafan.Models.QuestionAnswered;
 import pt.ipp.estg.formulafan.Models.Quiz;
 import pt.ipp.estg.formulafan.Models.QuizDone;
 import pt.ipp.estg.formulafan.Models.Race;
+import pt.ipp.estg.formulafan.Models.User;
 import pt.ipp.estg.formulafan.R;
 import pt.ipp.estg.formulafan.ViewModels.PastRaceViewModel;
 import pt.ipp.estg.formulafan.ViewModels.QuizDoneViewModel;
+import pt.ipp.estg.formulafan.ViewModels.UserInfoViewModel;
 
 import static pt.ipp.estg.formulafan.NativeServices.GeofenceBroadcastReceiver.CLOSEST_CIRCUIT;
 
@@ -39,6 +43,9 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
 
     private QuizDoneViewModel quizDoneViewModel;
     private PastRaceViewModel pastRaceViewModel;
+    private UserInfoViewModel userInfoViewModel;
+    private User user;
+    private String userMail;
     private List<Question> questionList;
     private List<QuestionAnswered> answeredQuestions;
     private List<Race> pastRaceList;
@@ -55,6 +62,7 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
 
         Intent intent = this.getIntent();
         circuitName = intent.getStringExtra(CLOSEST_CIRCUIT);
+        userMail = getIntent().getExtras().getString("MAIL");
 
         questionTextView = findViewById(R.id.questionTextView);
         answerGroup = findViewById(R.id.radioGroup);
@@ -64,7 +72,21 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
         answer4 = findViewById(R.id.resposta4);
         confirm = findViewById(R.id.confirmButton);
 
+        userInfoViewModel =
+                new ViewModelProvider(this,
+                        new ViewModelProvider.AndroidViewModelFactory((Application) getApplicationContext())).get(UserInfoViewModel.class);
+
         quizDoneViewModel = new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory((Application) getApplicationContext())).get(QuizDoneViewModel.class);
+
+        userInfoViewModel.getUserInfo(userMail).observe(this, (user) -> {
+            if(user!=null){
+                this.user = new User(user.email,user.userName);
+                this.user.setQi(user.qi);
+                this.user.setQuizesDone(user.quizesDone);
+                this.user.setCorrectAnswers(user.correctAnswers);
+                this.user.setWrongAnsers(user.wrongAnsers);
+            }
+        });
 
         if (circuitName != null) {
             pastRaceViewModel = new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory((Application) this.getApplicationContext())).get(PastRaceViewModel.class);
@@ -115,6 +137,14 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
 
         if (isCorrect = currentQuestion.checkAnswer(answerNr)) {
             userScore += currentQuestion.points;
+            if(this.user != null){
+                this.user.setCorrectAnswers(this.user.correctAnswers + 1);
+            }
+
+        } else {
+            if(this.user != null){
+                this.user.setWrongAnsers(this.user.wrongAnsers + 1);
+            }
         }
 
         answeredQuestions.add(new QuestionAnswered(currentQuestion.title, rbSelected.getText().toString(), isCorrect));
@@ -189,9 +219,14 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void finishQuiz() {
-        String userMail = getIntent().getExtras().getString("MAIL");
         QuizDone quizDone = new QuizDone(userMail, quiz.Title, userScore, answeredQuestions);
         quizDoneViewModel.insertQuiz(quizDone);
+
+        if(this.user != null){
+            this.user.setQi(this.user.qi + userScore);
+            this.user.setQuizesDone(this.user.quizesDone + 1);
+            userInfoViewModel.updateUserInfo(userMail,this.user);
+        }
         finish();
     }
 

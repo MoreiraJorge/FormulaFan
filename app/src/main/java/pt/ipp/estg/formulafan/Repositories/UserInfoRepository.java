@@ -34,4 +34,8 @@ public class UserInfoRepository {
     public LiveData<User> getUserInfo(String email){
         return userInfoDao.getUserInfo(email);
     }
+
+    public void updateUserInfo(String email, User user){
+        UserInfoFirestoreService.updateUseInfo(email, user);
+    }
 }

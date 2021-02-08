@@ -28,4 +28,8 @@ public class UserInfoViewModel extends AndroidViewModel {
     public LiveData<User> getUserInfo(String email) {
         return userInfoRepository.getUserInfo(email);
     }
+
+    public void updateUserInfo(String email, User user){
+        userInfoRepository.updateUserInfo(email, user);
+    }
 }

@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
 
-@Entity(indices = {@Index(value = {"userId"}, unique = true)})
+@Entity(indices = {@Index(value = {"email"}, unique = true)})
 public class User implements Serializable {
 
     @NonNull
