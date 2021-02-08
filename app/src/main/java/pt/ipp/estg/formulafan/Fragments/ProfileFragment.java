@@ -13,11 +13,15 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import pt.ipp.estg.formulafan.Interfaces.IQuizHistoryListener;
 import pt.ipp.estg.formulafan.Interfaces.IQuizLeaderListener;
 import pt.ipp.estg.formulafan.Interfaces.IStatisticsListener;
+import pt.ipp.estg.formulafan.Models.User;
 import pt.ipp.estg.formulafan.R;
 import pt.ipp.estg.formulafan.ViewModels.UserInfoViewModel;
+import pt.ipp.estg.formulafan.WebServices.UserInfoFirestoreService;
 
 public class ProfileFragment extends Fragment {
 
@@ -68,7 +72,14 @@ public class ProfileFragment extends Fragment {
                         userNameView.setText(user.userName);
                         userEmailView.setText(user.email);
                         userQiView.setText(String.valueOf(user.qi));
+                    } else {
+                        User fireUser = UserInfoFirestoreService.getUserFromFireStore(email);
+                        userNameView.setText(fireUser.userName);
+                        userEmailView.setText(fireUser.email);
+                        userQiView.setText(String.valueOf(fireUser.qi));
+                        userInfoViewModel.insertUser(fireUser);
                     }
+
                 }
         );
 
@@ -97,5 +108,4 @@ public class ProfileFragment extends Fragment {
 
         return view;
     }
-
 }

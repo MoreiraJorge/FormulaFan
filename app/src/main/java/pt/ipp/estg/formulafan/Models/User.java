@@ -2,6 +2,7 @@ package pt.ipp.estg.formulafan.Models;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
@@ -31,6 +32,18 @@ public class User implements Serializable {
         this.quizesMissed = 0;
     }
 
+    @Ignore
+    public User(String email, String userName, int qi, int correctAnswers, int wrongAnsers,
+                int quizesDone, int quizesMissed) {
+        this.email = email;
+        this.userName = userName;
+        this.qi = qi;
+        this.correctAnswers = correctAnswers;
+        this.wrongAnsers = wrongAnsers;
+        this.quizesDone = quizesDone;
+        this.quizesMissed = quizesMissed;
+    }
+
     public void setCorrectAnswers(int correctAnswers) {
         this.correctAnswers = correctAnswers;
     }
@@ -45,5 +58,9 @@ public class User implements Serializable {
 
     public void setQuizesMissed(int quizesMissed) {
         this.quizesMissed = quizesMissed;
+    }
+
+    public void setQi(int qi) {
+        this.qi = qi;
     }
 }
