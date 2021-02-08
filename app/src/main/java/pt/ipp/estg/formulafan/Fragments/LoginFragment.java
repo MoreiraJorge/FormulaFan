@@ -71,7 +71,7 @@ public class LoginFragment extends Fragment implements IThemeListener {
         signInButton = view.findViewById(R.id.logInButton);
         registerButton = view.findViewById(R.id.buttonRegister);
 
-        userInfoViewModel = userInfoViewModel =
+        userInfoViewModel =
                 new ViewModelProvider(this,
                         new ViewModelProvider.AndroidViewModelFactory((Application) getActivity()
                                 .getApplicationContext())).get(UserInfoViewModel.class);

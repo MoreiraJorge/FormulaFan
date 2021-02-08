@@ -15,7 +15,6 @@ import androidx.lifecycle.ViewModelProvider;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import pt.ipp.estg.formulafan.Models.Question;
 import pt.ipp.estg.formulafan.Models.QuestionAnswered;

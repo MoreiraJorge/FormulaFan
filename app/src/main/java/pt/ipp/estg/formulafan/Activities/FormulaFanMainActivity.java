@@ -133,6 +133,7 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
         if (requestCode == REQUEST_LOCATION) {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                 Intent startService = new Intent(this, QuizService.class);
+                startService.putExtra("USER_EMAIL", userMail);
                 startService(startService);
             } else {
                 Toast.makeText(this, "Habilite a premissão de localização para receber desafios!",

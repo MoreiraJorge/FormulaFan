@@ -65,6 +65,7 @@ public class ProfileFragment extends Fragment {
                 new ViewModelProvider(this,
                         new ViewModelProvider.AndroidViewModelFactory((Application) getActivity()
                                 .getApplicationContext())).get(UserInfoViewModel.class);
+        userInfoViewModel.insertUser(email);
 
         userInfoViewModel.getUserInfo(email).observe(this, (user) -> {
                     if (user != null) {
