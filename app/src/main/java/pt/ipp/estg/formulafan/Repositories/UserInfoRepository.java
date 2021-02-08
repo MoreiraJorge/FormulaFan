@@ -38,6 +38,7 @@ public class UserInfoRepository {
     public void updateUserInfo(String email, User user) {
         UserInfoDatabase.databaseWriteExecutor.execute(() -> {
             UserInfoFirestoreService.updateUseInfo(email, user);
+            this.insertUserToDb(email);
         });
     }
 }
