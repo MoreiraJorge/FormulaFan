@@ -30,6 +30,7 @@ public class ProfileFragment extends Fragment {
     private TextView userNameView;
     private TextView userQiView;
     private TextView userEmailView;
+    private String email;
 
     public ProfileFragment() {
     }
@@ -58,7 +59,7 @@ public class ProfileFragment extends Fragment {
         userNameView = view.findViewById(R.id.userNameView);
         userQiView = view.findViewById(R.id.qiPointsView);
 
-        String email = getActivity().getIntent().getExtras().getString("USER_MAIL");
+        email = getActivity().getIntent().getExtras().getString("USER_MAIL");
 
         UserInfoViewModel userInfoViewModel =
                 new ViewModelProvider(this,
@@ -86,7 +87,7 @@ public class ProfileFragment extends Fragment {
         quizzHistoryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                quizHistoryListener.changeToQuizHistory();
+                quizHistoryListener.changeToQuizHistory(email);
             }
         });
 

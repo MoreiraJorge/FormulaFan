@@ -146,7 +146,6 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
 
     private List<Question> generateQuestions() {
         List<Question> questionList = new ArrayList<>();
-        Random rd = new Random();
         int selectedRace = -1;
 
         for (int i = 0; i < pastRaceList.size(); i++) {
@@ -191,7 +190,8 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void finishQuiz() {
-        QuizDone quizDone = new QuizDone(quiz.Title, userScore, answeredQuestions);
+        String userMail = getIntent().getExtras().getString("MAIL");
+        QuizDone quizDone = new QuizDone(userMail, quiz.Title, userScore, answeredQuestions);
         quizDoneViewModel.insertQuiz(quizDone);
         finish();
     }
