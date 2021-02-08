@@ -17,8 +17,12 @@ public class UserInfoViewModel extends AndroidViewModel {
         userInfoRepository = new UserInfoRepository(application);
     }
 
-    public void insertUser(User user) {
-        userInfoRepository.insertUser(user);
+    public void registerUser(User user) {
+        userInfoRepository.registerUser(user);
+    }
+
+    public void insertUser(String email){
+        userInfoRepository.insertUserToDb(email);
     }
 
     public LiveData<User> getUserInfo(String email) {

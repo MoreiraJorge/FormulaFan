@@ -13,15 +13,11 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.google.firebase.firestore.FirebaseFirestore;
-
 import pt.ipp.estg.formulafan.Interfaces.IQuizHistoryListener;
 import pt.ipp.estg.formulafan.Interfaces.IQuizLeaderListener;
 import pt.ipp.estg.formulafan.Interfaces.IStatisticsListener;
-import pt.ipp.estg.formulafan.Models.User;
 import pt.ipp.estg.formulafan.R;
 import pt.ipp.estg.formulafan.ViewModels.UserInfoViewModel;
-import pt.ipp.estg.formulafan.WebServices.UserInfoFirestoreService;
 
 public class ProfileFragment extends Fragment {
 
@@ -65,21 +61,16 @@ public class ProfileFragment extends Fragment {
         String email = getActivity().getIntent().getExtras().getString("USER_MAIL");
 
         UserInfoViewModel userInfoViewModel =
-                new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory((Application) getActivity().getApplicationContext())).get(UserInfoViewModel.class);
+                new ViewModelProvider(this,
+                        new ViewModelProvider.AndroidViewModelFactory((Application) getActivity()
+                                .getApplicationContext())).get(UserInfoViewModel.class);
 
         userInfoViewModel.getUserInfo(email).observe(this, (user) -> {
                     if (user != null) {
                         userNameView.setText(user.userName);
                         userEmailView.setText(user.email);
                         userQiView.setText(String.valueOf(user.qi));
-                    } else {
-                        User fireUser = UserInfoFirestoreService.getUserFromFireStore(email);
-                        userNameView.setText(fireUser.userName);
-                        userEmailView.setText(fireUser.email);
-                        userQiView.setText(String.valueOf(fireUser.qi));
-                        userInfoViewModel.insertUser(fireUser);
                     }
-
                 }
         );
 

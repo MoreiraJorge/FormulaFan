@@ -17,10 +17,17 @@ public class UserInfoRepository {
         userInfoDao = db.getUserInfoDAO();
     }
 
-    public void insertUser(User user){
+    public void registerUser(User user){
+            UserInfoFirestoreService.addUserToFirestore(user);
+    }
+
+    public void insertUserToDb(String email){
+        UserInfoFirestoreService.getUserFromFireStore(email, this);
+    }
+
+    public void setUserFromService(User user){
         UserInfoDatabase.databaseWriteExecutor.execute(() -> {
             userInfoDao.insertUserInfo(user);
-            UserInfoFirestoreService.addUserToFirestore(user);
         });
     }
 

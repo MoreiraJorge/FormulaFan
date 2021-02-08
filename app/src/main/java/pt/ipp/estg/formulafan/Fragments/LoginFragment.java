@@ -18,6 +18,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.card.MaterialCardView;
 
@@ -25,6 +26,7 @@ import pt.ipp.estg.formulafan.Activities.MainActivity;
 import pt.ipp.estg.formulafan.Interfaces.IThemeListener;
 import pt.ipp.estg.formulafan.R;
 import pt.ipp.estg.formulafan.Utils.InternetUtil;
+import pt.ipp.estg.formulafan.ViewModels.UserInfoViewModel;
 
 public class LoginFragment extends Fragment implements IThemeListener {
 
@@ -38,6 +40,7 @@ public class LoginFragment extends Fragment implements IThemeListener {
     private Button signInButton;
     private Button registerButton;
     private MaterialCardView card;
+    private UserInfoViewModel userInfoViewModel;
 
     public LoginFragment() {
     }
@@ -68,6 +71,11 @@ public class LoginFragment extends Fragment implements IThemeListener {
         signInButton = view.findViewById(R.id.logInButton);
         registerButton = view.findViewById(R.id.buttonRegister);
 
+        userInfoViewModel = userInfoViewModel =
+                new ViewModelProvider(this,
+                        new ViewModelProvider.AndroidViewModelFactory((Application) getActivity()
+                                .getApplicationContext())).get(UserInfoViewModel.class);
+
         InternetUtil internetUtil = new InternetUtil((Application) context.getApplicationContext());
         internetUtil.observe(this, new Observer<Boolean>() {
             @Override
@@ -88,6 +96,7 @@ public class LoginFragment extends Fragment implements IThemeListener {
                 if (((MainActivity) context).validateForm(insertEmailField, insertPassField) == true) {
                     String email = insertEmailField.getText().toString();
                     String password = insertPassField.getText().toString();
+                    userInfoViewModel.insertUser(email);
                     ((MainActivity) context).signIn(email, password);
                 } else {
                     Toast.makeText(context, "Preencha todos os dados!",

@@ -31,9 +31,6 @@ import pt.ipp.estg.formulafan.Utils.InternetUtil;
 import pt.ipp.estg.formulafan.ViewModels.UserInfoViewModel;
 
 public class MainActivity extends AppCompatActivity implements ISessionListener {
-
-    private static final String TAG = "SessionEmailPass";
-
     private Context context;
     private FragmentManager fragmentManager;
     private FirebaseAuth firebaseAuth;
@@ -145,7 +142,7 @@ public class MainActivity extends AppCompatActivity implements ISessionListener 
                             }
                         } else {
                             User user = new User(email.getText().toString(), userName.getText().toString());
-                            userInfoViewModel.insertUser(user);
+                            userInfoViewModel.registerUser(user);
                             firebaseAuth.signOut();
                             fragmentManager.popBackStack();
                             Toast.makeText(context, "Registo completo!",

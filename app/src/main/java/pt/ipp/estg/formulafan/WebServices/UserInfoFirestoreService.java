@@ -14,13 +14,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 import pt.ipp.estg.formulafan.Models.User;
+import pt.ipp.estg.formulafan.Repositories.UserInfoRepository;
 
 public class UserInfoFirestoreService {
-
     private static final String TAG = "Test firestore";
 
     private static FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private static User user;
 
     public static void addUserToFirestore(User user) {
 
@@ -33,7 +32,7 @@ public class UserInfoFirestoreService {
         fireUser.put("quizesDone", user.quizesDone);
         fireUser.put("quizesMissed", user.quizesMissed);
 
-        db.collection("userInfo")
+        db.collection("users")
                 .document(user.email)
                 .set(fireUser)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -50,28 +49,30 @@ public class UserInfoFirestoreService {
                 });
     }
 
-    public static User getUserFromFireStore(String email) {
-        DocumentReference docRef = db.document("userInfo" + "/" + email);
+    public static void getUserFromFireStore(String email, UserInfoRepository repo) {
+        DocumentReference docRef = db.collection("users").document(email);
         docRef.get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        if(documentSnapshot.exists()){
-
+                        if (documentSnapshot.exists()) {
                             String email = documentSnapshot.getString("email");
                             String userName = documentSnapshot.getString("userName");
-                            int qi = Integer.parseInt(documentSnapshot.getString("qi"));
-                            int correctAnswers = Integer.parseInt(documentSnapshot.getString("correctAnswers"));
-                            int wrongAnsers = Integer.parseInt(documentSnapshot.getString("wrongAnsers"));
-                            int quizesDone = Integer.parseInt(documentSnapshot.getString("quizesDone"));
-                            int quizesMissed = Integer.parseInt(documentSnapshot.getString("quizesMissed"));
+                            int qi = documentSnapshot.getLong("qi").intValue();
+                            int correctAnswers = documentSnapshot.getLong("correctAnswers").intValue();
+                            int wrongAnsers = documentSnapshot.getLong("wrongAnsers").intValue();
+                            int quizesDone = documentSnapshot.getLong("quizesDone").intValue();
+                            int quizesMissed = documentSnapshot.getLong("quizesMissed").intValue();
 
-                            user = new User(email,userName);
+                            User user;
+                            user = new User(email, userName);
                             user.setCorrectAnswers(correctAnswers);
                             user.setWrongAnsers(wrongAnsers);
                             user.setQuizesDone(quizesDone);
                             user.setQuizesMissed(quizesMissed);
                             user.setQi(qi);
+
+                            repo.setUserFromService(user);
 
                             Log.d(TAG, "FETCH USER SUCCESS!");
                         }
@@ -83,6 +84,6 @@ public class UserInfoFirestoreService {
                         Log.d(TAG, "FETCH USER FAILED!");
                     }
                 });
-        return user;
     }
+
 }
