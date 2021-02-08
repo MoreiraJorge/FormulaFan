@@ -21,7 +21,7 @@ public class UserInfoViewModel extends AndroidViewModel {
         userInfoRepository.registerUser(user);
     }
 
-    public void insertUser(String email){
+    public void insertUser(String email) {
         userInfoRepository.insertUserToDb(email);
     }
 
@@ -29,7 +29,7 @@ public class UserInfoViewModel extends AndroidViewModel {
         return userInfoRepository.getUserInfo(email);
     }
 
-    public void updateUserInfo(String email, User user){
+    public void updateUserInfo(String email, User user) {
         userInfoRepository.updateUserInfo(email, user);
     }
 }

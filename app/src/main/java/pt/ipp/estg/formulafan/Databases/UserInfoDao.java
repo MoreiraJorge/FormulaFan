@@ -12,7 +12,7 @@ import pt.ipp.estg.formulafan.Models.User;
 public interface UserInfoDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertUserInfo(User...user);
+    void insertUserInfo(User... user);
 
     @Query("Select * From User Where email = :user_mail")
     LiveData<User> getUserInfo(String user_mail);

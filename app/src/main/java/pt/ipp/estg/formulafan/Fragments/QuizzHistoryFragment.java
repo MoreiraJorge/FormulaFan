@@ -14,15 +14,8 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
-import pt.ipp.estg.formulafan.Models.QuestionAnswered;
-import pt.ipp.estg.formulafan.Models.QuizDone;
 import pt.ipp.estg.formulafan.R;
 import pt.ipp.estg.formulafan.ViewModels.QuizDoneViewModel;
-import pt.ipp.estg.formulafan.ViewModels.UserInfoViewModel;
 
 public class QuizzHistoryFragment extends Fragment {
 

@@ -9,7 +9,6 @@ import java.util.List;
 import pt.ipp.estg.formulafan.Databases.QuizDoneDatabase;
 import pt.ipp.estg.formulafan.Databases.QuizDoneDatabaseDAO;
 import pt.ipp.estg.formulafan.Models.QuizDone;
-import pt.ipp.estg.formulafan.Models.Race;
 
 public class QuizDoneRepository {
     private QuizDoneDatabaseDAO quizDoneDao;

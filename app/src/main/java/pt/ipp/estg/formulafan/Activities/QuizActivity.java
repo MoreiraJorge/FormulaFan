@@ -13,8 +13,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.google.firebase.auth.UserInfo;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -79,8 +77,8 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
         quizDoneViewModel = new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory((Application) getApplicationContext())).get(QuizDoneViewModel.class);
 
         userInfoViewModel.getUserInfo(userMail).observe(this, (user) -> {
-            if(user!=null){
-                this.user = new User(user.email,user.userName);
+            if (user != null) {
+                this.user = new User(user.email, user.userName);
                 this.user.setQi(user.qi);
                 this.user.setQuizesDone(user.quizesDone);
                 this.user.setCorrectAnswers(user.correctAnswers);
@@ -137,12 +135,12 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
 
         if (isCorrect = currentQuestion.checkAnswer(answerNr)) {
             userScore += currentQuestion.points;
-            if(this.user != null){
+            if (this.user != null) {
                 this.user.setCorrectAnswers(this.user.correctAnswers + 1);
             }
 
         } else {
-            if(this.user != null){
+            if (this.user != null) {
                 this.user.setWrongAnsers(this.user.wrongAnsers + 1);
             }
         }
@@ -222,11 +220,12 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
         QuizDone quizDone = new QuizDone(userMail, quiz.Title, userScore, answeredQuestions);
         quizDoneViewModel.insertQuiz(quizDone);
 
-        if(this.user != null){
+        if (this.user != null) {
             this.user.setQi(this.user.qi + userScore);
             this.user.setQuizesDone(this.user.quizesDone + 1);
-            userInfoViewModel.updateUserInfo(userMail,this.user);
+            userInfoViewModel.updateUserInfo(userMail, this.user);
         }
+
         finish();
     }
 

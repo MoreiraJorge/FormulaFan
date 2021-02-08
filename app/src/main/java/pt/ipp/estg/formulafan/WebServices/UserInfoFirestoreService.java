@@ -86,7 +86,7 @@ public class UserInfoFirestoreService {
                 });
     }
 
-    public static void updateUseInfo(String email, User user){
+    public static void updateUseInfo(String email, User user) {
         db.collection("users").document(email).set(user);
     }
 

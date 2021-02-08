@@ -2,12 +2,9 @@ package pt.ipp.estg.formulafan.Models;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
-import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
-
-import com.google.android.gms.common.internal.safeparcel.SafeParcelable;
 
 import java.io.Serializable;
 import java.util.List;
