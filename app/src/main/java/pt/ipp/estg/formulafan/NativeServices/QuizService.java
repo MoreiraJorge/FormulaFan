@@ -47,8 +47,6 @@ public class QuizService extends LifecycleService {
     private GeofencingClient geofencingClient;
     private PendingIntent geofencePendingIntent;
 
-    private boolean isStarted;
-
     private void createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence name = getString(R.string.formula_fan_service);
@@ -66,7 +64,6 @@ public class QuizService extends LifecycleService {
     @Override
     public void onCreate() {
         super.onCreate();
-        isStarted = false;
         createNotificationChannel();
 
         Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
@@ -97,17 +94,14 @@ public class QuizService extends LifecycleService {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         super.onStartCommand(intent, flags, startId);
-        if (!isStarted) {
-            isStarted = true;
-            if (checkPermission(getApplicationContext())) {
-                setLocationUpdates();
-                setGeofencingSettings();
-            } else {
-                Toast.makeText(getApplicationContext(), "Habilite a premissão de localização para receber desafios!",
-                        Toast.LENGTH_LONG).show();
-            }
+        if (checkPermission(getApplicationContext())) {
+            setLocationUpdates();
+            setGeofencingSettings();
+        } else {
+            Toast.makeText(getApplicationContext(), "Habilite a premissão de localização para receber desafios!",
+                    Toast.LENGTH_LONG).show();
         }
-        return START_NOT_STICKY;
+        return START_STICKY;
     }
 
     private boolean checkPermission(final Context context) {

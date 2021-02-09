@@ -40,10 +40,6 @@ public class MainActivity extends AppCompatActivity implements ISessionListener 
     @Override
     public void onStart() {
         super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
-        firebaseAuth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
-        updateUI(currentUser);
     }
 
     @Override
@@ -64,13 +60,20 @@ public class MainActivity extends AppCompatActivity implements ISessionListener 
             }
         });
 
-        userInfoViewModel = new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory((Application) context.getApplicationContext())).get(UserInfoViewModel.class);
+        // Check if user is signed in (non-null) and update UI accordingly.
+        firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
 
-        LoginFragment loginFragment = new LoginFragment();
-        fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.fragmentContainer, loginFragment);
-        fragmentTransaction.commit();
+        userInfoViewModel = new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory((Application) context.getApplicationContext())).get(UserInfoViewModel.class);
+        if (currentUser == null) {
+            LoginFragment loginFragment = new LoginFragment();
+            fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.add(R.id.fragmentContainer, loginFragment);
+            fragmentTransaction.commit();
+        } else {
+            updateUI(currentUser);
+        }
     }
 
     @Override

@@ -23,6 +23,7 @@ public class GeofenceBroadcastReceiver extends BroadcastReceiver {
 
     private Context context;
     private String circuitName;
+    private static String lastCircuitName = null;
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -38,7 +39,11 @@ public class GeofenceBroadcastReceiver extends BroadcastReceiver {
             List<Geofence> triggeringGeofences = geofencingEvent.getTriggeringGeofences();
             circuitName = triggeringGeofences.get(0).getRequestId();
 
-            createNotification();
+            if (lastCircuitName == null || !(lastCircuitName.equals(circuitName))) {
+                lastCircuitName = circuitName;
+                createNotification();
+            }
+
         }
     }
 
