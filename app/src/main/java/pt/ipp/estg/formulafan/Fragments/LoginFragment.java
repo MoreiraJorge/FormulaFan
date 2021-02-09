@@ -2,10 +2,12 @@ package pt.ipp.estg.formulafan.Fragments;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +29,8 @@ import pt.ipp.estg.formulafan.Interfaces.IThemeListener;
 import pt.ipp.estg.formulafan.R;
 import pt.ipp.estg.formulafan.Utils.InternetUtil;
 import pt.ipp.estg.formulafan.ViewModels.UserInfoViewModel;
+
+import static pt.ipp.estg.formulafan.Activities.FormulaFanMainActivity.RUNNING_SERVICE;
 
 public class LoginFragment extends Fragment implements IThemeListener {
 
@@ -54,6 +58,10 @@ public class LoginFragment extends Fragment implements IThemeListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(RUNNING_SERVICE, false);
+        editor.commit();
     }
 
     @Override

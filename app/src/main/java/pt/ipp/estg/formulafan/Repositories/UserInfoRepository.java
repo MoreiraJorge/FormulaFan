@@ -24,12 +24,12 @@ public class UserInfoRepository {
     public void insertUserToDb(String email) {
         UserInfoFirestoreService.getUserFromFireStore(email, this);
     }
-
-    public LiveData<List<User>> getAllUsersInfo(){
+  
+    public LiveData<List<User>> getAllUsersInfo() {
         return userInfoDao.getAllUsersInfo();
     }
 
-    public void insertAllUsers(){
+    public void insertAllUsers() {
         UserInfoFirestoreService.getAllUsersInfo(this);
     }
 

@@ -29,7 +29,6 @@ import com.google.android.gms.location.LocationServices;
 import java.util.ArrayList;
 import java.util.List;
 
-import pt.ipp.estg.formulafan.Activities.FormulaFanMainActivity;
 import pt.ipp.estg.formulafan.Models.Race;
 import pt.ipp.estg.formulafan.R;
 import pt.ipp.estg.formulafan.Repositories.CurrentRaceRepository;
@@ -65,17 +64,12 @@ public class QuizService extends LifecycleService {
     @Override
     public void onCreate() {
         super.onCreate();
-
         createNotificationChannel();
-
-        Intent notificationIntent = new Intent(this, FormulaFanMainActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
 
         Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setContentTitle(getString(R.string.formula_fan_service))
                 .setContentText("Sempre que existir um novo desafio receberá uma notificação!")
                 .setSmallIcon(R.drawable.ic_baseline_emoji_events_24)
-                .setContentIntent(pendingIntent)
                 .setPriority(NotificationCompat.PRIORITY_LOW)
                 .setTicker("")
                 .build();

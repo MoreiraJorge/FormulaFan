@@ -4,11 +4,6 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +13,9 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
@@ -34,7 +32,7 @@ import pt.ipp.estg.formulafan.ViewModels.PastRaceViewModel;
 import pt.ipp.estg.formulafan.ViewModels.QuizDoneViewModel;
 import pt.ipp.estg.formulafan.ViewModels.UserInfoViewModel;
 
-import static pt.ipp.estg.formulafan.NativeServices.GeofenceBroadcastReceiver.CLOSEST_CIRCUIT;
+import static pt.ipp.estg.formulafan.NativeServices.GeofenceBroadcastReceiver.CIRCUIT;
 
 public class QuizFragment extends Fragment implements View.OnClickListener {
 
@@ -84,7 +82,7 @@ public class QuizFragment extends Fragment implements View.OnClickListener {
         view = inflater.inflate(R.layout.fragment_quiz, container, false);
 
         Intent intent = getActivity().getIntent();
-        circuitName = intent.getStringExtra(CLOSEST_CIRCUIT);
+        circuitName = intent.getStringExtra(CIRCUIT);
         userMail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
 
         questionTextView = view.findViewById(R.id.questionTextView);

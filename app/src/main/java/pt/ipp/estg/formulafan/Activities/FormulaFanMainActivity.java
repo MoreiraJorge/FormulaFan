@@ -3,8 +3,10 @@ package pt.ipp.estg.formulafan.Activities;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -16,6 +18,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -45,9 +48,11 @@ import pt.ipp.estg.formulafan.Models.RaceResult;
 import pt.ipp.estg.formulafan.Models.TeamPosition;
 import pt.ipp.estg.formulafan.NativeServices.QuizService;
 import pt.ipp.estg.formulafan.R;
+import pt.ipp.estg.formulafan.Utils.AlarmManagerUtil;
 import pt.ipp.estg.formulafan.Utils.InternetUtil;
 import pt.ipp.estg.formulafan.Utils.ServiceUtil;
 import pt.ipp.estg.formulafan.Utils.TabletDetectionUtil;
+import pt.ipp.estg.formulafan.ViewModels.CurrentRaceViewModel;
 
 public class FormulaFanMainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener,
         IRaceDetailsListener, IRaceResultDetailsListener,
@@ -55,12 +60,12 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
         IQuizHistoryListener,
         IQuizLeaderListener {
 
-    private static final int REQUEST_LOCATION = 100;
     public static final String SELECTED_RACE = "pt.ipp.pt.estg.cmu.selectedRace";
     public static final String SELECTED_QUIZ_DONE = "pt.ipp.pt.estg.cmu.selectedQuizDone";
     public static final String SELECTED_DRIVER = "pt.ipp.pt.estg.cmu.selectedDriver";
     public static final String SELECTED_TEAM = "pt.ipp.pt.estg.cmu.selectedTeam";
-
+    public static final String RUNNING_SERVICE = "pt.ipp.pt.estg.cmu.runningService";
+    private static final int REQUEST_LOCATION = 100;
     private FragmentManager fragmentManager;
     private Toolbar toolbar;
     private FirebaseAuth firebaseAuth;
@@ -71,6 +76,7 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
     private RaceResultDetailsFragment raceResultDetailsFragment;
     private StatisticFragment statFragment;
     private InternetUtil internetUtil;
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,15 +120,29 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
             }
         });
 
-        if (!ServiceUtil.isMyServiceRunning(QuizService.class, this)) {
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                requestPermissions();
-            } else {
-                Intent startService = new Intent(this, QuizService.class);
-                startService(startService);
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        if (!sharedPreferences.getBoolean(RUNNING_SERVICE, true)) {
+            if (!ServiceUtil.isMyServiceRunning(QuizService.class, this)) {
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    requestPermissions();
+                } else {
+                    Intent startService = new Intent(this, QuizService.class);
+                    startService(startService);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putBoolean(RUNNING_SERVICE, true);
+                    editor.commit();
+                }
             }
         }
 
+        CurrentRaceViewModel currentRaceViewModel = new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory(getApplication())).get(CurrentRaceViewModel.class);
+        currentRaceViewModel.getAllRaces().observe(this, (races) -> {
+                    if (races.size() != 0) {
+                        AlarmManagerUtil.startAlarm(getApplicationContext(), races.get(0));
+                    }
+                }
+        );
     }
 
     @Override
@@ -130,8 +150,12 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == REQUEST_LOCATION) {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
                 Intent startService = new Intent(this, QuizService.class);
                 startService(startService);
+                editor.putBoolean(RUNNING_SERVICE, true);
+                editor.commit();
             } else {
                 Toast.makeText(this, "Habilite a premissão de localização para receber desafios!",
                         Toast.LENGTH_LONG).show();
