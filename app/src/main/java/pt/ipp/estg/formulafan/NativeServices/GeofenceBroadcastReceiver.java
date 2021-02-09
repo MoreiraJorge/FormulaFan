@@ -23,14 +23,12 @@ public class GeofenceBroadcastReceiver extends BroadcastReceiver {
 
     private Context context;
     private String circuitName;
-    private String userEmail;
 
     @Override
     public void onReceive(Context context, Intent intent) {
         this.context = context;
 
         GeofencingEvent geofencingEvent = GeofencingEvent.fromIntent(intent);
-        userEmail = intent.getExtras().getString("EMAIL");
 
         // Get the transition type.
         int geofenceTransition = geofencingEvent.getGeofenceTransition();
@@ -56,7 +54,6 @@ public class GeofenceBroadcastReceiver extends BroadcastReceiver {
 
         Intent clickIntent = new Intent(context, QuizActivity.class);
         clickIntent.putExtra(CIRCUIT, circuitName);
-        clickIntent.putExtra("MAIL", userEmail);
         clickIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent clickPendingIntent = PendingIntent.getActivity(context, 0, clickIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 

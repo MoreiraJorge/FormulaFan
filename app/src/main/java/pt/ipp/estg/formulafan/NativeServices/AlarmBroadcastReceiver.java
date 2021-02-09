@@ -11,11 +11,10 @@ import android.os.Build;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
-import pt.ipp.estg.formulafan.Activities.QuizActivity;
+import pt.ipp.estg.formulafan.Activities.LiveQuizActivity;
 import pt.ipp.estg.formulafan.R;
 
 import static pt.ipp.estg.formulafan.NativeServices.GeofenceBroadcastReceiver.CIRCUIT;
-import static pt.ipp.estg.formulafan.Utils.AlarmManagerUtil.EMAIL;
 
 public class AlarmBroadcastReceiver extends BroadcastReceiver {
 
@@ -24,14 +23,12 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver {
 
     private Context context;
     private String circuitName;
-    private String userEmail;
 
     @Override
     public void onReceive(Context context, Intent intent) {
         this.context = context;
         createNotification();
         circuitName = intent.getStringExtra(CIRCUIT);
-        userEmail = intent.getStringExtra(EMAIL);
     }
 
     private void createNotification() {
@@ -45,9 +42,8 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver {
                         .bigText("Tem um novo quiz para realizar de um evento live!"))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
-        Intent clickIntent = new Intent(context, QuizActivity.class);
+        Intent clickIntent = new Intent(context, LiveQuizActivity.class);
         clickIntent.putExtra(CIRCUIT, circuitName);
-        clickIntent.putExtra(EMAIL, userEmail);
         clickIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent clickPendingIntent = PendingIntent.getActivity(context, 0, clickIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 

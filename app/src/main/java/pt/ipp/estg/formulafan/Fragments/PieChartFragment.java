@@ -24,9 +24,14 @@ import pt.ipp.estg.formulafan.R;
 
 public class PieChartFragment extends Fragment implements IThemeListener {
     private PieChart pieChart;
+    private int correct, wrong;
 
     public PieChartFragment() {
-        // Required empty public constructor
+    }
+
+    public PieChartFragment(int correct, int wrong) {
+        this.correct = correct;
+        this.wrong = wrong;
     }
 
     @Override
@@ -39,7 +44,7 @@ public class PieChartFragment extends Fragment implements IThemeListener {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_pie_chart, container, false);
         pieChart = view.findViewById(R.id.pieChart);
-        generatePie(5, 4);
+        generatePie(correct, wrong);
         return view;
     }
 
