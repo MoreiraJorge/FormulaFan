@@ -1,6 +1,5 @@
 package pt.ipp.estg.formulafan.Fragments;
 
-
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,8 +18,11 @@ import pt.ipp.estg.formulafan.R;
 public class StatisticFragment extends Fragment {
     private ViewPager2 pager;
 
+    private int correct;
+    private int wrong;
+    private int done;
+
     public StatisticFragment() {
-        // Required empty public constructor
     }
 
     @Override
@@ -34,9 +36,14 @@ public class StatisticFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_statistic, container, false);
         pager = view.findViewById(R.id.pager);
 
+        Bundle args = getArguments();
+        correct = args.getInt("correct", 0);
+        wrong = args.getInt("wrong", 0);
+        done = args.getInt("done", 0);
+
         ArrayList<Fragment> listOfFragments = new ArrayList<>();
-        listOfFragments.add(new PieChartFragment());
-        listOfFragments.add(new BarChartFragment());
+        listOfFragments.add(new PieChartFragment(correct, wrong));
+        listOfFragments.add(new BarChartFragment(done));
 
         StatisticPagerAdapter adapter =
                 new StatisticPagerAdapter(getChildFragmentManager(),

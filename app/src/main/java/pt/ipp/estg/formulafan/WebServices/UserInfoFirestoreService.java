@@ -66,11 +66,11 @@ public class UserInfoFirestoreService {
 
                             User user;
                             user = new User(email, userName);
-                            user.setCorrectAnswers(correctAnswers);
-                            user.setWrongAnsers(wrongAnsers);
-                            user.setQuizesDone(quizesDone);
-                            user.setQuizesMissed(quizesMissed);
-                            user.setQi(qi);
+                            user.correctAnswers = correctAnswers;
+                            user.wrongAnsers = wrongAnsers;
+                            user.quizesDone = quizesDone;
+                            user.quizesMissed = quizesMissed;
+                            user.qi = qi;
 
                             repo.setUserFromService(user);
 

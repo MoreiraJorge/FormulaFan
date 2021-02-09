@@ -14,7 +14,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,10 +82,10 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
         userInfoViewModel.getUserInfo(userMail).observe(this, (user) -> {
             if (user != null) {
                 this.user = new User(user.email, user.userName);
-                this.user.setQi(user.qi);
-                this.user.setQuizesDone(user.quizesDone);
-                this.user.setCorrectAnswers(user.correctAnswers);
-                this.user.setWrongAnsers(user.wrongAnsers);
+                this.user.qi = user.qi;
+                this.user.quizesDone = user.quizesDone;
+                this.user.correctAnswers = user.correctAnswers;
+                this.user.wrongAnsers = user.wrongAnsers;
             }
         });
 
@@ -140,12 +139,12 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
         if (isCorrect = currentQuestion.checkAnswer(answerNr)) {
             userScore += currentQuestion.points;
             if (this.user != null) {
-                this.user.setCorrectAnswers(this.user.correctAnswers + 1);
+                this.user.correctAnswers = this.user.correctAnswers + 1;
             }
 
         } else {
             if (this.user != null) {
-                this.user.setWrongAnsers(this.user.wrongAnsers + 1);
+                this.user.wrongAnsers = this.user.wrongAnsers + 1;
             }
         }
 
@@ -225,8 +224,8 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
         quizDoneViewModel.insertQuiz(quizDone);
 
         if (this.user != null) {
-            this.user.setQi(this.user.qi + userScore);
-            this.user.setQuizesDone(this.user.quizesDone + 1);
+            this.user.qi = this.user.qi + userScore;
+            this.user.quizesDone = this.user.quizesDone + 1;
             userInfoViewModel.updateUserInfo(userMail, this.user);
         }
 
