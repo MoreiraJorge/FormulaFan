@@ -14,6 +14,8 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import pt.ipp.estg.formulafan.R;
 import pt.ipp.estg.formulafan.ViewModels.QuizDoneViewModel;
 
@@ -43,8 +45,7 @@ public class QuizzHistoryFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_quiz_history, container, false);
 
-        Bundle args = getArguments();
-        String mail = args.getString("userEmail");
+        String mail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
 
         quizDoneViewModel = new ViewModelProvider(this,
                 new ViewModelProvider.AndroidViewModelFactory((Application) getActivity()

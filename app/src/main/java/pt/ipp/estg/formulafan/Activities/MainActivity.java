@@ -226,7 +226,6 @@ public class MainActivity extends AppCompatActivity implements ISessionListener 
     private void toMainPage() {
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
         Intent intent = new Intent(context, FormulaFanMainActivity.class);
-        intent.putExtra("USER_MAIL", currentUser.getEmail());
         startActivity(intent);
         Toast.makeText(context, "Login efetuado!",
                 Toast.LENGTH_SHORT).show();

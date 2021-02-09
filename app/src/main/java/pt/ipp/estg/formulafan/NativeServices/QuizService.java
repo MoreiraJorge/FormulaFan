@@ -48,8 +48,6 @@ public class QuizService extends LifecycleService {
     private GeofencingClient geofencingClient;
     private PendingIntent geofencePendingIntent;
 
-    private String userMail;
-
     private void createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence name = getString(R.string.formula_fan_service);
@@ -102,7 +100,6 @@ public class QuizService extends LifecycleService {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         super.onStartCommand(intent, flags, startId);
-        userMail = intent.getExtras().getString("USER_EMAIL");
         if (checkPermission(getApplicationContext())) {
             setLocationUpdates();
             setGeofencingSettings();
@@ -157,7 +154,6 @@ public class QuizService extends LifecycleService {
 
                 //Adding Geofencing Request
                 Intent geoIntent = new Intent(getApplicationContext(), GeofenceBroadcastReceiver.class);
-                geoIntent.putExtra("EMAIL", userMail);
                 geofencePendingIntent = PendingIntent.getBroadcast(this, 0, geoIntent, PendingIntent.
                         FLAG_UPDATE_CURRENT);
                 geofencingClient.addGeofences(request, geofencePendingIntent);

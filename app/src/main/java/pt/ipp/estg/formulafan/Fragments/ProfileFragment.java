@@ -13,6 +13,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import pt.ipp.estg.formulafan.Interfaces.IQuizHistoryListener;
 import pt.ipp.estg.formulafan.Interfaces.IQuizLeaderListener;
 import pt.ipp.estg.formulafan.Interfaces.IStatisticsListener;
@@ -59,7 +61,7 @@ public class ProfileFragment extends Fragment {
         userNameView = view.findViewById(R.id.userNameView);
         userQiView = view.findViewById(R.id.qiPointsView);
 
-        email = getActivity().getIntent().getExtras().getString("USER_MAIL");
+        email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
 
         UserInfoViewModel userInfoViewModel =
                 new ViewModelProvider(this,

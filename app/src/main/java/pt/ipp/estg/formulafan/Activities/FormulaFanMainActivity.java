@@ -70,7 +70,6 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
     private AnsweredQuizDetailsFragment answeredQuizDetailsFragment;
     private RaceResultDetailsFragment raceResultDetailsFragment;
     private InternetUtil internetUtil;
-    private String userMail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,8 +80,6 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
         toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.app_name);
         setSupportActionBar(toolbar);
-
-        userMail = getIntent().getExtras().getString("USER_MAIL");
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -120,7 +117,6 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
                 requestPermissions();
             } else {
                 Intent startService = new Intent(this, QuizService.class);
-                startService.putExtra("USER_EMAIL", userMail);
                 startService(startService);
             }
         }
@@ -133,7 +129,6 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
         if (requestCode == REQUEST_LOCATION) {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                 Intent startService = new Intent(this, QuizService.class);
-                startService.putExtra("USER_EMAIL", userMail);
                 startService(startService);
             } else {
                 Toast.makeText(this, "Habilite a premissão de localização para receber desafios!",
@@ -267,9 +262,6 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
         QuizzHistoryFragment quizzHistoryFragment = new QuizzHistoryFragment();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragmentContainerMainUI, quizzHistoryFragment);
-        Bundle args = new Bundle();
-        args.putString("userEmail", email);
-        quizzHistoryFragment.setArguments(args);
         fragmentTransaction.addToBackStack(null);
 
         if (TabletDetectionUtil.isTablet(this)) {

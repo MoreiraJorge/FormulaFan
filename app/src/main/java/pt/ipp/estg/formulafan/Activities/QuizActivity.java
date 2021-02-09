@@ -13,6 +13,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,7 +63,8 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
 
         Intent intent = this.getIntent();
         circuitName = intent.getStringExtra(CLOSEST_CIRCUIT);
-        userMail = getIntent().getExtras().getString("MAIL");
+
+        userMail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
 
         questionTextView = findViewById(R.id.questionTextView);
         answerGroup = findViewById(R.id.radioGroup);
