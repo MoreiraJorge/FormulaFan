@@ -19,7 +19,7 @@ public interface UserInfoDao {
     @Query("Select * From User Where email = :user_mail")
     LiveData<User> getUserInfo(String user_mail);
 
-    @Query("Select * From User")
+    @Query("Select * From User order by qi desc")
     LiveData<List<User>> getAllUsersInfo();
 
 }

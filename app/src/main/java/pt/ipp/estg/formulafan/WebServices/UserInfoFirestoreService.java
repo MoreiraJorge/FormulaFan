@@ -38,19 +38,7 @@ public class UserInfoFirestoreService {
 
         db.collection("users")
                 .document(user.email)
-                .set(fireUser)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d(TAG, "Saved!");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.d(TAG, "Failed!");
-                    }
-                });
+                .set(fireUser);
     }
 
     public static void getUserFromFireStore(String email, UserInfoRepository repo) {
@@ -77,15 +65,13 @@ public class UserInfoFirestoreService {
                             user.qi = qi;
 
                             repo.setUserFromService(user);
-
-                            Log.d(TAG, "FETCH USER SUCCESS!");
                         }
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.d(TAG, "FETCH USER FAILED!");
+                        Log.d(TAG, "Fetch user failed!");
                     }
                 });
     }

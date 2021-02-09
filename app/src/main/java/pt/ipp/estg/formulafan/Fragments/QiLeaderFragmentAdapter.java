@@ -10,12 +10,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-import pt.ipp.estg.formulafan.Models.LeaderBoardUser;
+import pt.ipp.estg.formulafan.Models.User;
 import pt.ipp.estg.formulafan.R;
 
 public class QiLeaderFragmentAdapter extends RecyclerView.Adapter<QiLeaderFragmentAdapter.ViewHolder> {
 
-    List<LeaderBoardUser> leaderBoardUserList;
+    List<User> leaderBoardUserList;
 
     @NonNull
     @Override
@@ -28,9 +28,9 @@ public class QiLeaderFragmentAdapter extends RecyclerView.Adapter<QiLeaderFragme
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        LeaderBoardUser user = this.leaderBoardUserList.get(position);
-        holder.userQiView.setText(String.valueOf(user.Qi));
-        holder.userLeaderBoardView.setText(user.UserName);
+        User user = this.leaderBoardUserList.get(position);
+        holder.userQiView.setText(String.valueOf(user.qi));
+        holder.userLeaderBoardView.setText(user.userName);
     }
 
     @Override
@@ -38,7 +38,7 @@ public class QiLeaderFragmentAdapter extends RecyclerView.Adapter<QiLeaderFragme
         return this.leaderBoardUserList.size();
     }
 
-    public void setLeaderBoardUserList(List<LeaderBoardUser> leaderBoardUserList) {
+    public void setLeaderBoardUserList(List<User> leaderBoardUserList) {
         this.leaderBoardUserList = leaderBoardUserList;
     }
 

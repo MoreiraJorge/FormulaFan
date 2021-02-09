@@ -17,13 +17,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-
-import pt.ipp.estg.formulafan.Models.LeaderBoardUser;
-import pt.ipp.estg.formulafan.Models.User;
 import pt.ipp.estg.formulafan.R;
 import pt.ipp.estg.formulafan.ViewModels.UserInfoViewModel;
 
@@ -66,34 +59,16 @@ public class QiLeaderFragment extends Fragment {
 
         String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
         userInfoViewModel.getUserInfo(email).observe(this, (user) -> {
-
-            LeaderBoardUser myUser = new LeaderBoardUser(user.userName, user.qi);
-            userLeaderBoardQi.setText(String.valueOf(myUser.Qi));
-            userLeaderBoardName.setText(myUser.UserName);
+            userLeaderBoardQi.setText(String.valueOf(user.qi));
+            userLeaderBoardName.setText(user.userName);
         });
 
         userInfoViewModel.getAllInfo().observe(this, (users) -> {
                     if (users != null) {
 
-                        List<LeaderBoardUser> leaderBoardUsers = new ArrayList<>();
-
-                        for (User user : users) {
-                            leaderBoardUsers.add(new LeaderBoardUser(user.userName, user.qi));
-                        }
-
-                        Collections.sort(leaderBoardUsers, new Comparator<LeaderBoardUser>() {
-                            @Override
-                            public int compare(LeaderBoardUser o1, LeaderBoardUser o2) {
-                                if (o1.Qi < o2.Qi) {
-                                    return 1;
-                                }
-                                return -1;
-                            }
-                        });
-
                         qiLeaderFragmentAdapter =
                                 new QiLeaderFragmentAdapter();
-                        qiLeaderFragmentAdapter.setLeaderBoardUserList(leaderBoardUsers);
+                        qiLeaderFragmentAdapter.setLeaderBoardUserList(users);
                         leaderBoard.setAdapter(qiLeaderFragmentAdapter);
 
                         leaderBoard.setLayoutManager(new LinearLayoutManager(context));
