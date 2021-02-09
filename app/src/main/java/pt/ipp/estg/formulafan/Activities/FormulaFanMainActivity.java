@@ -69,6 +69,7 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
     private BottomNavigationView bottomNavigationView;
     private AnsweredQuizDetailsFragment answeredQuizDetailsFragment;
     private RaceResultDetailsFragment raceResultDetailsFragment;
+    private StatisticFragment statFragment;
     private InternetUtil internetUtil;
 
     @Override
@@ -76,6 +77,7 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_formula_fan_main);
         answeredQuizDetailsFragment = new AnsweredQuizDetailsFragment();
+        statFragment = new StatisticFragment();
 
         toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.app_name);
@@ -187,7 +189,6 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
         }
 
         fragmentTransaction.commit();
-
     }
 
     private void changeToRaceFragment() {
@@ -247,18 +248,13 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
     }
 
     @Override
-    public void changeToStatistics(int quizDone, int correct, int wrong) {
-        StatisticFragment statFragment = new StatisticFragment();
-        Bundle args = new Bundle();
-        args.putInt("correct", correct);
-        args.putInt("wrong", wrong);
-        args.putInt("done", quizDone);
-        statFragment.setArguments(args);
+    public void changeToStatistics() {
         FragmentTransaction fragmentTransaction = fragmentManager
                 .beginTransaction();
         fragmentTransaction.replace(R.id.fragmentContainerMainUI, statFragment);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
+
     }
 
     @Override

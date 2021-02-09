@@ -33,9 +33,6 @@ public class ProfileFragment extends Fragment {
     private TextView userQiView;
     private TextView userEmailView;
     private String email;
-    private int quizDone = 0;
-    private int correct = 0;
-    private int wrong = 0;
 
     public ProfileFragment() {
     }
@@ -77,10 +74,6 @@ public class ProfileFragment extends Fragment {
                         userNameView.setText(user.userName);
                         userEmailView.setText(user.email);
                         userQiView.setText(String.valueOf(user.qi));
-
-                        correct = user.correctAnswers;
-                        wrong = user.wrongAnsers;
-                        quizDone = user.quizesDone;
                     }
                 }
         );
@@ -89,9 +82,8 @@ public class ProfileFragment extends Fragment {
             statButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (quizDone != 0 && wrong != 0 & correct != 0) {
-                        statisticsListener.changeToStatistics(quizDone, correct, wrong);
-                    }
+                    statisticsListener.changeToStatistics();
+
                 }
             });
         }
