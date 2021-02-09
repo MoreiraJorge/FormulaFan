@@ -1,5 +1,6 @@
 package pt.ipp.estg.formulafan.Fragments;
 
+import android.app.Application;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,23 +9,22 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import com.google.firebase.auth.FirebaseAuth;
 
-import pt.ipp.estg.formulafan.Models.QuestionAnswered;
-import pt.ipp.estg.formulafan.Models.QuizDone;
 import pt.ipp.estg.formulafan.R;
+import pt.ipp.estg.formulafan.ViewModels.QuizDoneViewModel;
 
 public class QuizzHistoryFragment extends Fragment {
 
     private Context context;
     private QuizzHistoryRecyclerViewAdapter quizzHistoryRecyclerViewAdapter;
     private RecyclerView recyclerView;
+    private QuizDoneViewModel quizDoneViewModel;
 
     public QuizzHistoryFragment() {
     }
@@ -45,52 +45,28 @@ public class QuizzHistoryFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_quiz_history, container, false);
 
+        String mail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+
+        quizDoneViewModel = new ViewModelProvider(this,
+                new ViewModelProvider.AndroidViewModelFactory((Application) getActivity()
+                        .getApplicationContext())).get(QuizDoneViewModel.class);
+
+
         recyclerView = view.findViewById(R.id.quizzHistoryList);
         quizzHistoryRecyclerViewAdapter =
-                new QuizzHistoryRecyclerViewAdapter(context, temporaryQuizes(50));
+                new QuizzHistoryRecyclerViewAdapter(context);
         recyclerView.setAdapter(quizzHistoryRecyclerViewAdapter);
+
+        quizDoneViewModel.getQuizesDone(mail).observe(getViewLifecycleOwner(), (quizes) -> {
+                    quizzHistoryRecyclerViewAdapter.setQuizzesDone(quizes);
+                    quizzHistoryRecyclerViewAdapter.notifyDataSetChanged();
+                }
+        );
 
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(context, DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(itemDecoration);
 
         return view;
-    }
-
-    /**
-     * Objetos Quiz para testar a UI
-     * (Apagar mais tarde)
-     *
-     * @param numOfQuizes
-     * @return
-     */
-    private List<QuizDone> temporaryQuizes(int numOfQuizes) {
-        List<QuizDone> temporaryList = new ArrayList<>();
-        Random rd = new Random();
-
-        for (int i = 0; i < numOfQuizes; i++) {
-            temporaryList.add(new QuizDone("Quiz" + i, rd.nextInt(1000),
-                    temporaryQuestions(10)));
-        }
-
-        return temporaryList;
-    }
-
-    /**
-     * Objetos QuestionAnswered temporario
-     * para testar UI
-     *
-     * @param numOfQuestions
-     * @return
-     */
-    private List<QuestionAnswered> temporaryQuestions(int numOfQuestions) {
-        List<QuestionAnswered> temporaryList = new ArrayList<>();
-        Random rd = new Random();
-        for (int i = 0; i < numOfQuestions; i++) {
-            temporaryList.add(new QuestionAnswered("Questao" + i, "Minha resposta",
-                    rd.nextBoolean()));
-        }
-
-        return temporaryList;
     }
 }

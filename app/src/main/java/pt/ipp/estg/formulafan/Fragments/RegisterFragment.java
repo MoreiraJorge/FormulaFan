@@ -25,12 +25,14 @@ import pt.ipp.estg.formulafan.R;
 import pt.ipp.estg.formulafan.Utils.InternetUtil;
 
 public class RegisterFragment extends Fragment implements IThemeListener {
+
     private Context context;
 
     private EditText registerMail;
     private EditText registerPass;
     private EditText verifyPass;
     private TextView registView;
+    private EditText registUserName;
     private Button registerButton;
     private MaterialCardView card;
 
@@ -58,6 +60,7 @@ public class RegisterFragment extends Fragment implements IThemeListener {
         registView = view.findViewById(R.id.RegistView);
         registerMail = view.findViewById(R.id.registerEmail);
         registerPass = view.findViewById(R.id.registerPassword);
+        registUserName = view.findViewById(R.id.registerName);
         verifyPass = view.findViewById(R.id.insertVerifyPass);
         card = view.findViewById(R.id.registerCard);
 
@@ -78,11 +81,11 @@ public class RegisterFragment extends Fragment implements IThemeListener {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (((MainActivity) context).validateForm(registerMail, registerPass) == true) {
+                if (((MainActivity) context).validateForm(registUserName, registerMail, registerPass) == true) {
                     String password = registerPass.getText().toString();
                     String passVerify = verifyPass.getText().toString();
                     if (passVerify.equals(password) == true) {
-                        ((MainActivity) context).register(registerMail, registerPass);
+                        ((MainActivity) context).register(registUserName, registerMail, registerPass);
                     } else {
                         verifyPass.setError("As passwords não coincidem!");
                         Toast.makeText(context, "As passwords não coincidem!",

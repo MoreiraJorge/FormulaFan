@@ -1,5 +1,6 @@
 package pt.ipp.estg.formulafan.Fragments;
 
+import android.app.Application;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,18 +10,15 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Random;
+import com.google.firebase.auth.FirebaseAuth;
 
-import pt.ipp.estg.formulafan.Models.LeaderBoardUser;
 import pt.ipp.estg.formulafan.R;
+import pt.ipp.estg.formulafan.ViewModels.UserInfoViewModel;
 
 public class QiLeaderFragment extends Fragment {
 
@@ -53,52 +51,33 @@ public class QiLeaderFragment extends Fragment {
         userLeaderBoardName = view.findViewById(R.id.leaderUserNameView);
         userLeaderBoardQi = view.findViewById(R.id.userLeaderboardQi);
 
-        List<LeaderBoardUser> leaderBoardUsers = temporaryUsers(100);
+        UserInfoViewModel userInfoViewModel =
+                new ViewModelProvider(this,
+                        new ViewModelProvider.AndroidViewModelFactory((Application) getActivity()
+                                .getApplicationContext())).get(UserInfoViewModel.class);
+        userInfoViewModel.insertAllInfo();
 
-        //os dados deste user depois sao enviados pelos args nos fragments
-        LeaderBoardUser myUser = new LeaderBoardUser("My User", 543);
-        userLeaderBoardQi.setText(String.valueOf(myUser.Qi));
-        userLeaderBoardName.setText(myUser.UserName);
-
-        qiLeaderFragmentAdapter =
-                new QiLeaderFragmentAdapter();
-        qiLeaderFragmentAdapter.setLeaderBoardUserList(leaderBoardUsers);
-        leaderBoard.setAdapter(qiLeaderFragmentAdapter);
-
-        leaderBoard.setLayoutManager(new LinearLayoutManager(context));
-        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(context, DividerItemDecoration.VERTICAL);
-        leaderBoard.addItemDecoration(itemDecoration);
-
-        return view;
-    }
-
-    /**
-     * Objetos LeaderBoardUser para testar a UI
-     * (Apagar mais tarde)
-     *
-     * @param numOfusers
-     * @return
-     */
-    private List<LeaderBoardUser> temporaryUsers(int numOfusers) {
-        List<LeaderBoardUser> temporaryList = new ArrayList<>();
-        Random rd = new Random();
-
-        for (int i = 0; i < numOfusers; i++) {
-            temporaryList.add(new LeaderBoardUser("User" + i, rd.nextInt(1000)));
-        }
-        temporaryList.add(new LeaderBoardUser("My User", 543));
-
-        Collections.sort(temporaryList, new Comparator<LeaderBoardUser>() {
-            @Override
-            public int compare(LeaderBoardUser o1, LeaderBoardUser o2) {
-                if (o1.Qi < o2.Qi) {
-                    return 1;
-                } else {
-                    return -1;
-                }
-            }
+        String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+        userInfoViewModel.getUserInfo(email).observe(this, (user) -> {
+            userLeaderBoardQi.setText(String.valueOf(user.qi));
+            userLeaderBoardName.setText(user.userName);
         });
 
-        return temporaryList;
+        userInfoViewModel.getAllInfo().observe(this, (users) -> {
+                    if (users != null) {
+
+                        qiLeaderFragmentAdapter =
+                                new QiLeaderFragmentAdapter();
+                        qiLeaderFragmentAdapter.setLeaderBoardUserList(users);
+                        leaderBoard.setAdapter(qiLeaderFragmentAdapter);
+
+                        leaderBoard.setLayoutManager(new LinearLayoutManager(context));
+                        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(context, DividerItemDecoration.VERTICAL);
+                        leaderBoard.addItemDecoration(itemDecoration);
+                    }
+                }
+        );
+
+        return view;
     }
 }

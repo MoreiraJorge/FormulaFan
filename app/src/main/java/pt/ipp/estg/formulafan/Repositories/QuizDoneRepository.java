@@ -2,6 +2,10 @@ package pt.ipp.estg.formulafan.Repositories;
 
 import android.app.Application;
 
+import androidx.lifecycle.LiveData;
+
+import java.util.List;
+
 import pt.ipp.estg.formulafan.Databases.QuizDoneDatabase;
 import pt.ipp.estg.formulafan.Databases.QuizDoneDatabaseDAO;
 import pt.ipp.estg.formulafan.Models.QuizDone;
@@ -18,5 +22,9 @@ public class QuizDoneRepository {
         QuizDoneDatabase.databaseWriteExecutor.execute(() -> {
             quizDoneDao.insertQuizDone(quiz);
         });
+    }
+
+    public LiveData<List<QuizDone>> getQuizesDone(String email) {
+        return quizDoneDao.getQuizesDoneFromUser(email);
     }
 }

@@ -29,8 +29,13 @@ import pt.ipp.estg.formulafan.R;
 public class BarChartFragment extends Fragment implements IThemeListener {
 
     private BarChart barChart;
+    private int quizesDone;
 
     public BarChartFragment() {
+    }
+
+    public BarChartFragment(int quizDone) {
+        quizesDone = quizDone;
     }
 
     @Override
@@ -53,14 +58,9 @@ public class BarChartFragment extends Fragment implements IThemeListener {
     }
 
     private void setData() {
-        int quizDone = 100;
-        int quizMiss = 25;
 
         ArrayList<BarEntry> values1 = new ArrayList<>();
-        values1.add(new BarEntry(1, quizDone));
-
-        ArrayList<BarEntry> values2 = new ArrayList<>();
-        values2.add(new BarEntry(2, quizMiss));
+        values1.add(new BarEntry(1, quizesDone));
 
         ValueFormatter vf = new ValueFormatter() {
             @Override
@@ -76,16 +76,8 @@ public class BarChartFragment extends Fragment implements IThemeListener {
         set1.setValueTextSize(16f);
         set1.setValueFormatter(vf);
 
-        BarDataSet set2;
-        set2 = new BarDataSet(values2, "Quizzes por fazer");
-        set2.setDrawIcons(false);
-        set2.setColors(Color.rgb(255, 214, 51));
-        set2.setValueTextSize(16f);
-        set2.setValueFormatter(vf);
-
         ArrayList<IBarDataSet> dataSets = new ArrayList<>();
         dataSets.add(set1);
-        dataSets.add(set2);
 
         BarData data = new BarData(dataSets);
         data.setHighlightEnabled(false);

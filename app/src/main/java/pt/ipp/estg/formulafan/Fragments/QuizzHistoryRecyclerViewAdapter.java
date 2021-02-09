@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import pt.ipp.estg.formulafan.Interfaces.IQuizHistoryListener;
@@ -20,8 +21,8 @@ public class QuizzHistoryRecyclerViewAdapter extends RecyclerView.Adapter<QuizzH
     private List<QuizDone> quizzesDone;
     private IQuizHistoryListener quizHistoryListener;
 
-    public QuizzHistoryRecyclerViewAdapter(Context context, List<QuizDone> quizzes) {
-        this.quizzesDone = quizzes;
+    public QuizzHistoryRecyclerViewAdapter(Context context) {
+        this.quizzesDone = new ArrayList<>();
         this.quizHistoryListener = (IQuizHistoryListener) context;
     }
 
@@ -52,6 +53,10 @@ public class QuizzHistoryRecyclerViewAdapter extends RecyclerView.Adapter<QuizzH
     @Override
     public int getItemCount() {
         return quizzesDone.size();
+    }
+
+    public void setQuizzesDone(List<QuizDone> quizzesDone) {
+        this.quizzesDone = quizzesDone;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

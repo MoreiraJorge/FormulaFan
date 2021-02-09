@@ -9,7 +9,7 @@
         android:id="@+id/leaderName"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="4"
+        android:layout_weight="6"
         android:gravity="center_horizontal|center_vertical"
         android:hint="@string/questao"
         android:padding="5dp" />
@@ -19,7 +19,7 @@
         android:layout_height="0dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
-        android:layout_weight="8"
+        android:layout_weight="7"
         android:orientation="vertical"
         android:padding="5dp"
         android:weightSum="10">

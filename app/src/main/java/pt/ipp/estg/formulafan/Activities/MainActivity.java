@@ -1,5 +1,6 @@
 package pt.ipp.estg.formulafan.Activities;
 
+import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -23,17 +25,17 @@ import com.google.firebase.auth.FirebaseUser;
 import pt.ipp.estg.formulafan.Fragments.LoginFragment;
 import pt.ipp.estg.formulafan.Fragments.RegisterFragment;
 import pt.ipp.estg.formulafan.Interfaces.ISessionListener;
+import pt.ipp.estg.formulafan.Models.User;
 import pt.ipp.estg.formulafan.R;
 import pt.ipp.estg.formulafan.Utils.InternetUtil;
+import pt.ipp.estg.formulafan.ViewModels.UserInfoViewModel;
 
 public class MainActivity extends AppCompatActivity implements ISessionListener {
-
-    private static final String TAG = "SessionEmailPass";
-
     private Context context;
     private FragmentManager fragmentManager;
     private FirebaseAuth firebaseAuth;
     private InternetUtil internetUtil;
+    private UserInfoViewModel userInfoViewModel;
 
     @Override
     public void onStart() {
@@ -61,6 +63,8 @@ public class MainActivity extends AppCompatActivity implements ISessionListener 
                 }
             }
         });
+
+        userInfoViewModel = new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory((Application) context.getApplicationContext())).get(UserInfoViewModel.class);
 
         LoginFragment loginFragment = new LoginFragment();
         fragmentManager = getSupportFragmentManager();
@@ -105,10 +109,9 @@ public class MainActivity extends AppCompatActivity implements ISessionListener 
     }
 
     @Override
-    public void register(EditText email, EditText password) {
+    public void register(EditText userName, EditText email, EditText password) {
         firebaseAuth.createUserWithEmailAndPassword(email.getText().toString(),
                 password.getText().toString())
-
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -137,14 +140,49 @@ public class MainActivity extends AppCompatActivity implements ISessionListener 
                                             Toast.LENGTH_SHORT).show();
                                     break;
                             }
-
                         } else {
+                            User user = new User(email.getText().toString(), userName.getText().toString());
+                            userInfoViewModel.registerUser(user);
+                            firebaseAuth.signOut();
                             fragmentManager.popBackStack();
                             Toast.makeText(context, "Registo completo!",
                                     Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
+    }
+
+    public boolean validateForm(EditText insertUserName,
+                                EditText insertEmailField,
+                                EditText insertPassField) {
+        boolean valid = true;
+
+        String userName = insertUserName.getText().toString();
+        if (TextUtils.isEmpty(userName)) {
+            insertEmailField.setError("Campo obrigatório!");
+            valid = false;
+        } else {
+            insertEmailField.setError(null);
+        }
+
+
+        String email = insertEmailField.getText().toString();
+        if (TextUtils.isEmpty(email)) {
+            insertEmailField.setError("Campo obrigatório!");
+            valid = false;
+        } else {
+            insertEmailField.setError(null);
+        }
+
+        String password = insertPassField.getText().toString();
+        if (TextUtils.isEmpty(password)) {
+            insertPassField.setError("Campo obrigatório!");
+            valid = false;
+        } else {
+            insertPassField.setError(null);
+        }
+
+        return valid;
     }
 
     public boolean validateForm(EditText insertEmailField,
