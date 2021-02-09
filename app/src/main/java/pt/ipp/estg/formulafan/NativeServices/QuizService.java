@@ -110,7 +110,7 @@ public class QuizService extends LifecycleService {
             Toast.makeText(getApplicationContext(), "Habilite a premissão de localização para receber desafios!",
                     Toast.LENGTH_LONG).show();
         }
-        return START_STICKY;
+        return START_NOT_STICKY;
     }
 
     private boolean checkPermission(final Context context) {
