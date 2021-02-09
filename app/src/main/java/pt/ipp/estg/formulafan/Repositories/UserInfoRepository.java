@@ -1,7 +1,9 @@
 package pt.ipp.estg.formulafan.Repositories;
 
 import android.app.Application;
+
 import androidx.lifecycle.LiveData;
+
 import java.util.List;
 
 import pt.ipp.estg.formulafan.Databases.UserInfoDao;
@@ -25,11 +27,11 @@ public class UserInfoRepository {
         UserInfoFirestoreService.getUserFromFireStore(email, this);
     }
 
-    public LiveData<List<User>> getAllUsersInfo(){
+    public LiveData<List<User>> getAllUsersInfo() {
         return userInfoDao.getAllUsersInfo();
     }
 
-    public void insertAllUsers(){
+    public void insertAllUsers() {
         UserInfoFirestoreService.getAllUsersInfo(this);
     }
 

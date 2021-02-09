@@ -28,7 +28,7 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         this.context = context;
         circuitName = intent.getStringExtra(CIRCUIT);
-        if(circuitName != null) {
+        if (circuitName != null) {
             createNotification();
         }
     }

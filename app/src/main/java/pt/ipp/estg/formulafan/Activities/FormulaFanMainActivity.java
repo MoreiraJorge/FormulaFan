@@ -2,7 +2,6 @@ package pt.ipp.estg.formulafan.Activities;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Application;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -23,7 +22,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
 import pt.ipp.estg.formulafan.Fragments.AnsweredQuizDetailsFragment;
-import pt.ipp.estg.formulafan.Fragments.CurrentRaceRecyclerViewAdapter;
 import pt.ipp.estg.formulafan.Fragments.DriverPositionDetailsFragment;
 import pt.ipp.estg.formulafan.Fragments.ProfileFragment;
 import pt.ipp.estg.formulafan.Fragments.QiLeaderFragment;
@@ -131,7 +129,7 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
         CurrentRaceViewModel currentRaceViewModel = new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory(getApplication())).get(CurrentRaceViewModel.class);
 
         currentRaceViewModel.getAllRaces().observe(this, (races) -> {
-                    if(races.size() != 0) {
+                    if (races.size() != 0) {
                         AlarmManagerUtil.startAlarm(getApplicationContext(), races.get(0));
                     }
                 }
