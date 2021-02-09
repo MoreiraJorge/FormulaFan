@@ -47,9 +47,6 @@ public class CurrentRaceFragment extends Fragment {
         currentRaceViewModel.getAllRaces().observe(getViewLifecycleOwner(), (races) -> {
                     currentRaceRecyclerViewAdapter.setRaceList(races);
                     currentRaceRecyclerViewAdapter.notifyDataSetChanged();
-                    if (races.size() != 0) {
-                        AlarmManagerUtil.startAlarm(context, races.get(0));
-                    }
                 }
         );
 

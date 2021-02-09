@@ -16,7 +16,6 @@ import static pt.ipp.estg.formulafan.NativeServices.GeofenceBroadcastReceiver.CI
 public class AlarmManagerUtil {
 
     public static void startAlarm(Context context, Race race) {
-
         AlarmManager alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, AlarmBroadcastReceiver.class);
         intent.putExtra(CIRCUIT, race.circuit.circuitName);

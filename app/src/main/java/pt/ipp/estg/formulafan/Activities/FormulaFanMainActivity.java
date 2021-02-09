@@ -2,6 +2,7 @@ package pt.ipp.estg.formulafan.Activities;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Application;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -16,11 +17,13 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
 import pt.ipp.estg.formulafan.Fragments.AnsweredQuizDetailsFragment;
+import pt.ipp.estg.formulafan.Fragments.CurrentRaceRecyclerViewAdapter;
 import pt.ipp.estg.formulafan.Fragments.DriverPositionDetailsFragment;
 import pt.ipp.estg.formulafan.Fragments.ProfileFragment;
 import pt.ipp.estg.formulafan.Fragments.QiLeaderFragment;
@@ -45,9 +48,11 @@ import pt.ipp.estg.formulafan.Models.RaceResult;
 import pt.ipp.estg.formulafan.Models.TeamPosition;
 import pt.ipp.estg.formulafan.NativeServices.QuizService;
 import pt.ipp.estg.formulafan.R;
+import pt.ipp.estg.formulafan.Utils.AlarmManagerUtil;
 import pt.ipp.estg.formulafan.Utils.InternetUtil;
 import pt.ipp.estg.formulafan.Utils.ServiceUtil;
 import pt.ipp.estg.formulafan.Utils.TabletDetectionUtil;
+import pt.ipp.estg.formulafan.ViewModels.CurrentRaceViewModel;
 
 public class FormulaFanMainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener,
         IRaceDetailsListener, IRaceResultDetailsListener,
@@ -122,6 +127,15 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
                 startService(startService);
             }
         }
+
+        CurrentRaceViewModel currentRaceViewModel = new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory(getApplication())).get(CurrentRaceViewModel.class);
+
+        currentRaceViewModel.getAllRaces().observe(this, (races) -> {
+                    if(races.size() != 0) {
+                        AlarmManagerUtil.startAlarm(getApplicationContext(), races.get(0));
+                    }
+                }
+        );
 
     }
 
