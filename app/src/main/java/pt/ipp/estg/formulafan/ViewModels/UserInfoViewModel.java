@@ -26,7 +26,7 @@ public class UserInfoViewModel extends AndroidViewModel {
     public void insertUser(String email) {
         userInfoRepository.insertUserToDb(email);
     }
-  
+
     public LiveData<List<User>> getAllInfo() {
         return userInfoRepository.getAllUsersInfo();
     }

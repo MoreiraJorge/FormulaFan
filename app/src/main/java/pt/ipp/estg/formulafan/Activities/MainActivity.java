@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements ISessionListener 
                 }
             }
         });
-      
+
         firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
 
