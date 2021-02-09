@@ -122,7 +122,6 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
-
         if (!sharedPreferences.getBoolean(RUNNING_SERVICE, true)) {
             if (!ServiceUtil.isMyServiceRunning(QuizService.class, this)) {
                 if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -138,14 +137,12 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
         }
 
         CurrentRaceViewModel currentRaceViewModel = new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory(getApplication())).get(CurrentRaceViewModel.class);
-
         currentRaceViewModel.getAllRaces().observe(this, (races) -> {
                     if (races.size() != 0) {
                         AlarmManagerUtil.startAlarm(getApplicationContext(), races.get(0));
                     }
                 }
         );
-
     }
 
     @Override
