@@ -25,6 +25,7 @@
             android:launchMode="singleTask"
             android:taskAffinity=""
             android:excludeFromRecents="true" />
+
         <receiver
             android:name=".NativeServices.GeofenceBroadcastReceiver"
             android:enabled="true"
