@@ -17,14 +17,14 @@
         android:theme="@style/Theme.FormulaFan">
         <activity
             android:name=".Activities.QuizActivity"
+            android:excludeFromRecents="true"
             android:launchMode="singleTask"
-            android:taskAffinity=""
-            android:excludeFromRecents="true" />
+            android:taskAffinity="" />
         <activity
             android:name=".Activities.LiveQuizActivity"
+            android:excludeFromRecents="true"
             android:launchMode="singleTask"
-            android:taskAffinity=""
-            android:excludeFromRecents="true" />
+            android:taskAffinity="" />
 
         <receiver
             android:name=".NativeServices.GeofenceBroadcastReceiver"

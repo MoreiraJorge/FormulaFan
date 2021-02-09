@@ -19,8 +19,8 @@ import pt.ipp.estg.formulafan.R;
 
 public class RaceResultRecyclerViewAdapter extends RecyclerView.Adapter<RaceResultRecyclerViewAdapter.ViewHolder> {
 
-    private List<RaceResult> raceResultList;
     private final IRaceResultDetailsListener raceResultDetailListener;
+    private List<RaceResult> raceResultList;
 
     public RaceResultRecyclerViewAdapter(Context context) {
         this.raceResultList = new ArrayList<>();

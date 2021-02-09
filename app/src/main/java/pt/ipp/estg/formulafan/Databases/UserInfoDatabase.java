@@ -17,9 +17,18 @@ import pt.ipp.estg.formulafan.Models.User;
 public abstract class UserInfoDatabase extends RoomDatabase {
 
     private static final int NUMBER_OF_THREADS = 4;
-    private static volatile UserInfoDatabase INSTANCE;
     public static final ExecutorService databaseWriteExecutor =
             Executors.newFixedThreadPool(NUMBER_OF_THREADS);
+    private static volatile UserInfoDatabase INSTANCE;
+    private static RoomDatabase.Callback sRoomDatabaseCallBack = new RoomDatabase.Callback() {
+        @Override
+        public void onCreate(@NonNull SupportSQLiteDatabase db) {
+            super.onCreate(db);
+            databaseWriteExecutor.execute(() -> {
+                UserInfoDao dao = INSTANCE.getUserInfoDAO();
+            });
+        }
+    };
 
     public static UserInfoDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {
@@ -35,15 +44,5 @@ public abstract class UserInfoDatabase extends RoomDatabase {
     }
 
     public abstract UserInfoDao getUserInfoDAO();
-
-    private static RoomDatabase.Callback sRoomDatabaseCallBack = new RoomDatabase.Callback() {
-        @Override
-        public void onCreate(@NonNull SupportSQLiteDatabase db) {
-            super.onCreate(db);
-            databaseWriteExecutor.execute(() -> {
-                UserInfoDao dao = INSTANCE.getUserInfoDAO();
-            });
-        }
-    };
 
 }

@@ -62,14 +62,14 @@ public class QuizFragment extends Fragment implements View.OnClickListener {
     private View view;
 
 
+    public QuizFragment() {
+        // Required empty public constructor
+    }
+
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         this.context = context;
-    }
-
-    public QuizFragment() {
-        // Required empty public constructor
     }
 
     @Override

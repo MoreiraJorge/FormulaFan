@@ -2,6 +2,7 @@ package pt.ipp.estg.formulafan.Activities;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Application;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -22,6 +23,9 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.ArrayList;
+import java.util.Collections;
 
 import pt.ipp.estg.formulafan.Fragments.AnsweredQuizDetailsFragment;
 import pt.ipp.estg.formulafan.Fragments.DriverPositionDetailsFragment;
@@ -53,6 +57,9 @@ import pt.ipp.estg.formulafan.Utils.InternetUtil;
 import pt.ipp.estg.formulafan.Utils.ServiceUtil;
 import pt.ipp.estg.formulafan.Utils.TabletDetectionUtil;
 import pt.ipp.estg.formulafan.ViewModels.CurrentRaceViewModel;
+import pt.ipp.estg.formulafan.ViewModels.PastRaceViewModel;
+
+import static pt.ipp.estg.formulafan.NativeServices.GeofenceBroadcastReceiver.CIRCUIT;
 
 public class FormulaFanMainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener,
         IRaceDetailsListener, IRaceResultDetailsListener,
@@ -77,12 +84,21 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
     private StatisticFragment statFragment;
     private InternetUtil internetUtil;
     private SharedPreferences sharedPreferences;
+    private String circuitName;
+    private PastRaceViewModel pastRaceViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_formula_fan_main);
+
+        pastRaceViewModel =
+                new ViewModelProvider(this,
+                        new ViewModelProvider.AndroidViewModelFactory((Application) getApplicationContext())).get(PastRaceViewModel.class);
+        shuffleCircuits();
+
         answeredQuizDetailsFragment = new AnsweredQuizDetailsFragment();
+
         statFragment = new StatisticFragment();
 
         toolbar = findViewById(R.id.toolbar);
@@ -192,9 +208,22 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.logoutButton) {
             logOut();
-            return true;
+        } else if (item.getItemId() == R.id.quizButton) {
+            Intent intent = new Intent(this, QuizActivity.class);
+            intent.putExtra(CIRCUIT, circuitName);
+            startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void shuffleCircuits() {
+        pastRaceViewModel.getAllRaces().observe(this, (races) -> {
+            if (races.size() != 0) {
+                ArrayList<Race> racesList = (ArrayList<Race>) races;
+                Collections.shuffle(racesList);
+                circuitName = racesList.get(0).circuit.circuitName;
+            }
+        });
     }
 
     private void changeToProfileFragment() {

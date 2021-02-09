@@ -21,8 +21,8 @@ import retrofit2.Response;
 public class TeamPositionRepository {
 
     private final TeamPositionDAO teamPositionDAO;
-    private LiveData<List<TeamPosition>> allTeamsPositions;
     private final Context toastContext;
+    private LiveData<List<TeamPosition>> allTeamsPositions;
 
     public TeamPositionRepository(Application application) {
         toastContext = application.getApplicationContext();
