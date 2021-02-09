@@ -6,6 +6,8 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
+import java.util.List;
+
 import pt.ipp.estg.formulafan.Models.User;
 
 @Dao
@@ -16,5 +18,8 @@ public interface UserInfoDao {
 
     @Query("Select * From User Where email = :user_mail")
     LiveData<User> getUserInfo(String user_mail);
+
+    @Query("Select * From User")
+    LiveData<List<User>> getAllUsersInfo();
 
 }

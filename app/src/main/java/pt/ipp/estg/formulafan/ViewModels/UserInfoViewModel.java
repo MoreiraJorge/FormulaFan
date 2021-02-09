@@ -6,6 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+import java.util.List;
+
 import pt.ipp.estg.formulafan.Models.User;
 import pt.ipp.estg.formulafan.Repositories.UserInfoRepository;
 
@@ -23,6 +25,14 @@ public class UserInfoViewModel extends AndroidViewModel {
 
     public void insertUser(String email) {
         userInfoRepository.insertUserToDb(email);
+    }
+
+    public LiveData<List<User>> getAllInfo(){
+        return userInfoRepository.getAllUsersInfo();
+    }
+
+    public void insertAllInfo(){
+        userInfoRepository.insertAllUsers();
     }
 
     public LiveData<User> getUserInfo(String email) {
