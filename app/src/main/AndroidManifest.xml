@@ -20,10 +20,16 @@
             android:launchMode="singleTask"
             android:taskAffinity=""
             android:excludeFromRecents="true" />
+
         <receiver
             android:name=".NativeServices.GeofenceBroadcastReceiver"
             android:enabled="true"
             android:exported="false" />
+        <receiver
+            android:name=".NativeServices.AlarmBroadcastReceiver"
+            android:enabled="true"
+            android:exported="false" />
+
         <service
             android:name=".NativeServices.QuizService"
             android:enabled="true"

@@ -27,7 +27,7 @@ import pt.ipp.estg.formulafan.ViewModels.PastRaceViewModel;
 import pt.ipp.estg.formulafan.ViewModels.QuizDoneViewModel;
 import pt.ipp.estg.formulafan.ViewModels.UserInfoViewModel;
 
-import static pt.ipp.estg.formulafan.NativeServices.GeofenceBroadcastReceiver.CLOSEST_CIRCUIT;
+import static pt.ipp.estg.formulafan.NativeServices.GeofenceBroadcastReceiver.CIRCUIT;
 
 public class QuizActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -59,7 +59,7 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_quiz);
 
         Intent intent = this.getIntent();
-        circuitName = intent.getStringExtra(CLOSEST_CIRCUIT);
+        circuitName = intent.getStringExtra(CIRCUIT);
         userMail = getIntent().getExtras().getString("MAIL");
 
         questionTextView = findViewById(R.id.questionTextView);

@@ -18,7 +18,7 @@ import pt.ipp.estg.formulafan.R;
 
 public class GeofenceBroadcastReceiver extends BroadcastReceiver {
 
-    public static final String CLOSEST_CIRCUIT = "pt.ipp.pt.estg.cmu.closestCircuit";
+    public static final String CIRCUIT = "pt.ipp.pt.estg.cmu.Circuit";
     private static final int NOTIFICATION_ID = 2;
 
     private Context context;
@@ -55,7 +55,7 @@ public class GeofenceBroadcastReceiver extends BroadcastReceiver {
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
         Intent clickIntent = new Intent(context, QuizActivity.class);
-        clickIntent.putExtra(CLOSEST_CIRCUIT, circuitName);
+        clickIntent.putExtra(CIRCUIT, circuitName);
         clickIntent.putExtra("MAIL", userEmail);
         clickIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent clickPendingIntent = PendingIntent.getActivity(context, 0, clickIntent, PendingIntent.FLAG_UPDATE_CURRENT);

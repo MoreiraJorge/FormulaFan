@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import pt.ipp.estg.formulafan.R;
+import pt.ipp.estg.formulafan.Utils.AlarmManagerUtil;
 import pt.ipp.estg.formulafan.ViewModels.CurrentRaceViewModel;
 
 public class CurrentRaceFragment extends Fragment {
@@ -46,6 +47,9 @@ public class CurrentRaceFragment extends Fragment {
         currentRaceViewModel.getAllRaces().observe(getViewLifecycleOwner(), (races) -> {
                     currentRaceRecyclerViewAdapter.setRaceList(races);
                     currentRaceRecyclerViewAdapter.notifyDataSetChanged();
+                    if (races.size() != 0) {
+                        AlarmManagerUtil.startAlarm(context, races.get(0));
+                    }
                 }
         );
 
