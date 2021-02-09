@@ -16,7 +16,7 @@
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
-        app:title="LiveQuiz"
+        app:title="Quiz"
         app:titleTextColor="@color/white" />
 
     <LinearLayout
@@ -36,10 +36,9 @@
 
         <RadioGroup
             android:id="@+id/radioGroup"
-            android:layout_width="match_parent"
+            android:layout_width="671dp"
             android:layout_height="0dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_gravity="center_horizontal"
             android:layout_marginBottom="10dp"
             android:layout_weight="3"
             android:weightSum="3">
@@ -81,11 +80,9 @@
 
             <Button
                 android:id="@+id/confirmButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="370dp"
+                android:layout_height="76dp"
                 android:layout_gravity="center_horizontal|center_vertical"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
                 android:text="@string/seguinte" />
         </FrameLayout>
 
