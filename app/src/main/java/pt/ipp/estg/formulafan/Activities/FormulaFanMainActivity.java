@@ -65,7 +65,6 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
     public static final String SELECTED_DRIVER = "pt.ipp.pt.estg.cmu.selectedDriver";
     public static final String SELECTED_TEAM = "pt.ipp.pt.estg.cmu.selectedTeam";
     public static final String RUNNING_SERVICE = "pt.ipp.pt.estg.cmu.runningService";
-    public static final String FIRST_TIME = "pt.ipp.pt.estg.cmu.firstTime";
     private static final int REQUEST_LOCATION = 100;
     private FragmentManager fragmentManager;
     private Toolbar toolbar;
@@ -138,20 +137,14 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
             }
         }
 
+        CurrentRaceViewModel currentRaceViewModel = new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory(getApplication())).get(CurrentRaceViewModel.class);
 
-        if (sharedPreferences.getBoolean(FIRST_TIME, false)) {
-            CurrentRaceViewModel currentRaceViewModel = new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory(getApplication())).get(CurrentRaceViewModel.class);
-
-            currentRaceViewModel.getAllRaces().observe(this, (races) -> {
-                        if (races.size() != 0) {
-                            AlarmManagerUtil.startAlarm(getApplicationContext(), races.get(0));
-                            SharedPreferences.Editor editor = sharedPreferences.edit();
-                            editor.putBoolean(FIRST_TIME, false);
-                            editor.commit();
-                        }
+        currentRaceViewModel.getAllRaces().observe(this, (races) -> {
+                    if (races.size() != 0) {
+                        AlarmManagerUtil.startAlarm(getApplicationContext(), races.get(0));
                     }
-            );
-        }
+                }
+        );
 
     }
 

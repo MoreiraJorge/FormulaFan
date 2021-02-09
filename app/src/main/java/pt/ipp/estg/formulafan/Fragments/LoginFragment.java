@@ -30,7 +30,6 @@ import pt.ipp.estg.formulafan.R;
 import pt.ipp.estg.formulafan.Utils.InternetUtil;
 import pt.ipp.estg.formulafan.ViewModels.UserInfoViewModel;
 
-import static pt.ipp.estg.formulafan.Activities.FormulaFanMainActivity.FIRST_TIME;
 import static pt.ipp.estg.formulafan.Activities.FormulaFanMainActivity.RUNNING_SERVICE;
 
 public class LoginFragment extends Fragment implements IThemeListener {
@@ -62,7 +61,6 @@ public class LoginFragment extends Fragment implements IThemeListener {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean(RUNNING_SERVICE, false);
-        editor.putBoolean(FIRST_TIME, true);
         editor.commit();
     }
 
