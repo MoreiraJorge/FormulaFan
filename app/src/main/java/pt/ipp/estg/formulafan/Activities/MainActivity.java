@@ -59,8 +59,7 @@ public class MainActivity extends AppCompatActivity implements ISessionListener 
                 }
             }
         });
-
-        // Check if user is signed in (non-null) and update UI accordingly.
+      
         firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
 
