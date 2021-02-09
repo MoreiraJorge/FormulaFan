@@ -67,12 +67,6 @@ public class UserInfoFirestoreService {
                             repo.setUserFromService(user);
                         }
                     }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.d(TAG, "Fetch user failed!");
-                    }
                 });
     }
 
@@ -103,8 +97,6 @@ public class UserInfoFirestoreService {
 
                                 repo.setUserFromService(user);
                             }
-                        } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
                         }
                     }
                 });
