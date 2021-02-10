@@ -23,13 +23,17 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver {
 
     private Context context;
     private String circuitName;
+    private static String lastCircuitName = null;
 
     @Override
     public void onReceive(Context context, Intent intent) {
         this.context = context;
         circuitName = intent.getStringExtra(CIRCUIT);
         if (circuitName != null) {
-            createNotification();
+            if (lastCircuitName == null || !(lastCircuitName.equals(circuitName))) {
+                lastCircuitName = circuitName;
+                createNotification();
+            }
         }
     }
 
