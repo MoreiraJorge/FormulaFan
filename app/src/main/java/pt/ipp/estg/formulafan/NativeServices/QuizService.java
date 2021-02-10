@@ -36,7 +36,7 @@ import pt.ipp.estg.formulafan.Repositories.CurrentRaceRepository;
 public class QuizService extends LifecycleService {
 
     public static final String CHANNEL_ID = "1";
-    private static final int NOTIFICATION_ID = 1;
+    public static final int NOTIFICATION_ID = 1;
     private static final float GEOFENCE_RADIUS_IN_METERS = 5000f;
     private static final int TIME_BETWEEN_REQUESTS = 5000;
 

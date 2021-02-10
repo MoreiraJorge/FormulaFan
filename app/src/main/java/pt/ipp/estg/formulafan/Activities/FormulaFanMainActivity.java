@@ -3,6 +3,8 @@ package pt.ipp.estg.formulafan.Activities;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Application;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -50,6 +52,8 @@ import pt.ipp.estg.formulafan.Models.QuizDone;
 import pt.ipp.estg.formulafan.Models.Race;
 import pt.ipp.estg.formulafan.Models.RaceResult;
 import pt.ipp.estg.formulafan.Models.TeamPosition;
+import pt.ipp.estg.formulafan.NativeServices.AlarmBroadcastReceiver;
+import pt.ipp.estg.formulafan.NativeServices.GeofenceBroadcastReceiver;
 import pt.ipp.estg.formulafan.NativeServices.QuizService;
 import pt.ipp.estg.formulafan.R;
 import pt.ipp.estg.formulafan.Utils.AlarmManagerUtil;
@@ -208,6 +212,10 @@ public class FormulaFanMainActivity extends AppCompatActivity implements BottomN
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.logoutButton) {
             logOut();
+            NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            notificationManager.cancel(QuizService.NOTIFICATION_ID);
+            notificationManager.cancel(GeofenceBroadcastReceiver.NOTIFICATION_ID);
+            notificationManager.cancel(AlarmBroadcastReceiver.NOTIFICATION_ID);
         } else if (item.getItemId() == R.id.quizButton) {
             Intent intent = new Intent(this, QuizActivity.class);
             intent.putExtra(CIRCUIT, circuitName);
