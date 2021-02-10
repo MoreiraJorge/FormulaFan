@@ -41,6 +41,7 @@ public class StatisticFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_statistic, container, false);
         pager = view.findViewById(R.id.pager);
+        pager.setSaveEnabled(false);
 
         userMail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
 
