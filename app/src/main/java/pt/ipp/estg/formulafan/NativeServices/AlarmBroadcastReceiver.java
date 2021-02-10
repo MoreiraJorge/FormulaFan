@@ -18,8 +18,8 @@ import static pt.ipp.estg.formulafan.NativeServices.GeofenceBroadcastReceiver.CI
 
 public class AlarmBroadcastReceiver extends BroadcastReceiver {
 
+    public static final int NOTIFICATION_ID = 3;
     private static final String CHANNEL_ID = "1";
-    private static final int NOTIFICATION_ID = 3;
     private static String lastCircuitName = null;
     private Context context;
     private String circuitName;
