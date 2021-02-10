@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="@dimen/fragment_horizontal_margin"
+    android:layout_marginTop="@dimen/fragment_vertical_margin"
+    android:layout_marginRight="@dimen/fragment_horizontal_margin"
+    android:layout_marginBottom="@dimen/fragment_vertical_margin"
+    android:gravity="center_vertical"
+    android:orientation="vertical"
+    tools:context=".Fragments.RegisterFragment">
+
+    <TextView
+        android:id="@+id/RegistView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="50dp"
+        android:layout_weight="1"
+        android:fontFamily="@font/aldrich"
+        android:text="@string/registo_formulafan"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/registerCard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|center_vertical"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="50dp"
+        android:layout_weight="9"
+        android:focusable="true"
+        card_view:cardCornerRadius="15dp"
+        card_view:cardElevation="15dp">
+
+        <LinearLayout
+            android:id="@+id/center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:layout_margin="20dp"
+            android:gravity="center|center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/insertUserNameView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="1"
+                android:text="@string/nome_de_utilizador"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/registerName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:layout_weight="3"
+                android:ems="15"
+                android:hint="@string/nome"
+                android:importantForAutofill="no"
+                android:inputType="textPersonName" />
+
+            <TextView
+                android:id="@+id/insertEmailView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="1"
+                android:text="@string/o_seu_email"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/registerEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:layout_weight="3"
+                android:ems="15"
+                android:hint="@string/email"
+                android:importantForAutofill="no"
+                android:inputType="textEmailAddress" />
+
+            <TextView
+                android:id="@+id/insertPassView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="1"
+                android:text="@string/a_sua_password"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/registerPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:layout_weight="3"
+                android:ems="15"
+                android:hint="@string/password"
+                android:importantForAutofill="no"
+                android:inputType="textPassword" />
+
+            <TextView
+                android:id="@+id/verifyPassView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="1"
+                android:text="@string/verificar_password"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/insertVerifyPass"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:ems="15"
+                android:hint="@string/password"
+                android:importantForAutofill="no"
+                android:inputType="textPassword" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <Button
+        android:id="@+id/buttonAccountRegister"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:gravity="center|center_vertical"
+        android:text="@string/registar"
+        app:cornerRadius="@dimen/fragment_horizontal_margin" />
+
+</LinearLayout>

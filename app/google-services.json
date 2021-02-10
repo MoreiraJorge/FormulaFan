@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "25351590625",
+    "project_id": "formulafan-170a6",
+    "storage_bucket": "formulafan-170a6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:25351590625:android:fa837eb5e1c3d1ae459da0",
+        "android_client_info": {
+          "package_name": "pt.ipp.estg.formulafan"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "25351590625-rhdhr06f34nrlcvil3culvmpni1kq414.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "pt.ipp.estg.formulafan",
+            "certificate_hash": "3305748d043460785de2cf3381b0c43d3dc86882"
+          }
+        },
+        {
+          "client_id": "25351590625-vhqr1vckao4l01cqvu7tm428cq23ja6c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBjKB5F8Fp1om4YrODdGDMmthzGdlScl84"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "25351590625-vhqr1vckao4l01cqvu7tm428cq23ja6c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

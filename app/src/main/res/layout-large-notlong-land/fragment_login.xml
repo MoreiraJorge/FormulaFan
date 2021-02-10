@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_weight="3"
+    android:orientation="vertical"
+    tools:context=".Fragments.LoginFragment">
+
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="454dp"
+        android:layout_height="176dp"
+        android:layout_gravity="center"
+        android:layout_weight="6"
+        android:contentDescription="@string/formulafanlogo"
+        tools:src="@drawable/imageonline_co_whitebackgroundremoved" />
+
+    <TextView
+        android:id="@+id/welcomeView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|center_horizontal"
+        android:layout_marginTop="8dp"
+        android:layout_weight="1"
+        android:fontFamily="@font/aldrich"
+        android:text="@string/bem_vindo"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/materialCardView"
+        android:layout_width="642dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="32dp"
+        android:layout_weight="9"
+        android:focusable="true"
+        app:cardCornerRadius="15dp"
+        app:cardElevation="15dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center|top"
+            android:layout_margin="10dp"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/editTextEmailAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_weight="3"
+                android:ems="15"
+                android:hint="@string/email"
+                android:importantForAutofill="no"
+                android:inputType="textEmailAddress" />
+
+            <EditText
+                android:id="@+id/editTextPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:ems="15"
+                android:hint="@string/password"
+                android:importantForAutofill="no"
+                android:inputType="textPassword" />
+
+            <Button
+                android:id="@+id/logInButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:layout_weight="2"
+                android:text="@string/iniciar_sess_o"
+                app:cornerRadius="@dimen/fragment_horizontal_margin" />
+
+            <TextView
+                android:id="@+id/orView"
+                android:layout_width="82dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/aldrich"
+                android:text="@string/ou"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/buttonRegister"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="4dp"
+                android:layout_weight="2"
+                android:text="@string/registar"
+                app:cornerRadius="@dimen/fragment_horizontal_margin" />
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</LinearLayout>
