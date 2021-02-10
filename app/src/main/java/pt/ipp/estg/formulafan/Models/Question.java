@@ -1,6 +1,8 @@
 package pt.ipp.estg.formulafan.Models;
 
-public class Question {
+import java.io.Serializable;
+
+public class Question implements Serializable {
 
     public String title;
     public int answer;

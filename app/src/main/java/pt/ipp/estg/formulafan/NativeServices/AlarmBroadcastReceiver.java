@@ -20,10 +20,9 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver {
 
     private static final String CHANNEL_ID = "1";
     private static final int NOTIFICATION_ID = 3;
-
+    private static String lastCircuitName = null;
     private Context context;
     private String circuitName;
-    private static String lastCircuitName = null;
 
     @Override
     public void onReceive(Context context, Intent intent) {

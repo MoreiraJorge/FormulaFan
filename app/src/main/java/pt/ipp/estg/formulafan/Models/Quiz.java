@@ -1,8 +1,9 @@
 package pt.ipp.estg.formulafan.Models;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Quiz {
+public class Quiz implements Serializable {
 
     public String Title;
     public List<Question> questions;
