@@ -21,8 +21,8 @@ import retrofit2.Response;
 public class DriverPositionRepository {
 
     private final DriverPositionDAO driverPositionDAO;
-    private LiveData<List<DriverPosition>> allDriversPositions;
     private final Context toastContext;
+    private LiveData<List<DriverPosition>> allDriversPositions;
 
     public DriverPositionRepository(Application application) {
         toastContext = application.getApplicationContext();

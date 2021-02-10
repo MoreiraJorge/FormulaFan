@@ -3,10 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/quizButton"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_psychology_24"
+        android:title="@string/toolBarLogOut"
+        app:showAsAction="ifRoom" />
+
+    <item
         android:id="@+id/logoutButton"
         android:enabled="true"
         android:icon="@drawable/ic_baseline_exit_to_app_24"
-        android:title="@string/toolBarLogOut"
+        android:title="@string/quiz"
         app:showAsAction="ifRoom" />
 
 </menu>

@@ -17,9 +17,18 @@ import pt.ipp.estg.formulafan.Models.QuizDone;
 public abstract class QuizDoneDatabase extends RoomDatabase {
 
     private static final int NUMBER_OF_THREADS = 4;
-    private static volatile QuizDoneDatabase INSTANCE;
     public static final ExecutorService databaseWriteExecutor =
             Executors.newFixedThreadPool(NUMBER_OF_THREADS);
+    private static volatile QuizDoneDatabase INSTANCE;
+    private static RoomDatabase.Callback sRoomDatabaseCallBack = new RoomDatabase.Callback() {
+        @Override
+        public void onCreate(@NonNull SupportSQLiteDatabase db) {
+            super.onCreate(db);
+            databaseWriteExecutor.execute(() -> {
+                QuizDoneDatabaseDAO dao = INSTANCE.getQuizDoneDAO();
+            });
+        }
+    };
 
     public static QuizDoneDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {
@@ -35,14 +44,4 @@ public abstract class QuizDoneDatabase extends RoomDatabase {
     }
 
     public abstract QuizDoneDatabaseDAO getQuizDoneDAO();
-
-    private static RoomDatabase.Callback sRoomDatabaseCallBack = new RoomDatabase.Callback() {
-        @Override
-        public void onCreate(@NonNull SupportSQLiteDatabase db) {
-            super.onCreate(db);
-            databaseWriteExecutor.execute(() -> {
-                QuizDoneDatabaseDAO dao = INSTANCE.getQuizDoneDAO();
-            });
-        }
-    };
 }

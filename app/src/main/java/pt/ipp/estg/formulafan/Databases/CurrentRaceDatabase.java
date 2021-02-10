@@ -17,9 +17,18 @@ import pt.ipp.estg.formulafan.Models.Race;
 public abstract class CurrentRaceDatabase extends RoomDatabase {
 
     private static final int NUMBER_OF_THREADS = 4;
-    private static volatile CurrentRaceDatabase INSTANCE;
     public static final ExecutorService databaseWriteExecutor =
             Executors.newFixedThreadPool(NUMBER_OF_THREADS);
+    private static volatile CurrentRaceDatabase INSTANCE;
+    private static RoomDatabase.Callback sRoomDatabaseCallBack = new RoomDatabase.Callback() {
+        @Override
+        public void onCreate(@NonNull SupportSQLiteDatabase db) {
+            super.onCreate(db);
+            databaseWriteExecutor.execute(() -> {
+                RaceDAO dao = INSTANCE.getRaceDAO();
+            });
+        }
+    };
 
     public static CurrentRaceDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {
@@ -35,14 +44,4 @@ public abstract class CurrentRaceDatabase extends RoomDatabase {
     }
 
     public abstract RaceDAO getRaceDAO();
-
-    private static RoomDatabase.Callback sRoomDatabaseCallBack = new RoomDatabase.Callback() {
-        @Override
-        public void onCreate(@NonNull SupportSQLiteDatabase db) {
-            super.onCreate(db);
-            databaseWriteExecutor.execute(() -> {
-                RaceDAO dao = INSTANCE.getRaceDAO();
-            });
-        }
-    };
 }

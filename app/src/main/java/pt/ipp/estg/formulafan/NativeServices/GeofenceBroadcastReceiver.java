@@ -20,10 +20,9 @@ public class GeofenceBroadcastReceiver extends BroadcastReceiver {
 
     public static final String CIRCUIT = "pt.ipp.pt.estg.cmu.Circuit";
     private static final int NOTIFICATION_ID = 2;
-
+    private static String lastCircuitName = null;
     private Context context;
     private String circuitName;
-    private static String lastCircuitName = null;
 
     @Override
     public void onReceive(Context context, Intent intent) {

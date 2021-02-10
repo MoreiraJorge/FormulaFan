@@ -17,9 +17,18 @@ import pt.ipp.estg.formulafan.Models.TeamPosition;
 public abstract class TeamPositionDatabase extends RoomDatabase {
 
     private static final int NUMBER_OF_THREADS = 4;
-    private static volatile TeamPositionDatabase INSTANCE;
     public static final ExecutorService databaseWriteExecutor =
             Executors.newFixedThreadPool(NUMBER_OF_THREADS);
+    private static volatile TeamPositionDatabase INSTANCE;
+    private static RoomDatabase.Callback sRoomDatabaseCallBack = new RoomDatabase.Callback() {
+        @Override
+        public void onCreate(@NonNull SupportSQLiteDatabase db) {
+            super.onCreate(db);
+            databaseWriteExecutor.execute(() -> {
+                TeamPositionDAO dao = INSTANCE.getTeamPositionDAO();
+            });
+        }
+    };
 
     public static TeamPositionDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {
@@ -35,15 +44,5 @@ public abstract class TeamPositionDatabase extends RoomDatabase {
     }
 
     public abstract TeamPositionDAO getTeamPositionDAO();
-
-    private static RoomDatabase.Callback sRoomDatabaseCallBack = new RoomDatabase.Callback() {
-        @Override
-        public void onCreate(@NonNull SupportSQLiteDatabase db) {
-            super.onCreate(db);
-            databaseWriteExecutor.execute(() -> {
-                TeamPositionDAO dao = INSTANCE.getTeamPositionDAO();
-            });
-        }
-    };
 
 }

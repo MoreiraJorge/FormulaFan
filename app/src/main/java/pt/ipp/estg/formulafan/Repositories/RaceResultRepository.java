@@ -21,8 +21,8 @@ import retrofit2.Response;
 public class RaceResultRepository {
 
     private final RaceResultDAO raceResultDAO;
-    private LiveData<List<RaceResult>> allRacesResults;
     private final Context toastContext;
+    private LiveData<List<RaceResult>> allRacesResults;
 
     public RaceResultRepository(Application application) {
         toastContext = application.getApplicationContext();

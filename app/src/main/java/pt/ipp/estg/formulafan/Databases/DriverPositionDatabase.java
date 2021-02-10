@@ -17,9 +17,18 @@ import pt.ipp.estg.formulafan.Models.DriverPosition;
 public abstract class DriverPositionDatabase extends RoomDatabase {
 
     private static final int NUMBER_OF_THREADS = 4;
-    private static volatile DriverPositionDatabase INSTANCE;
     public static final ExecutorService databaseWriteExecutor =
             Executors.newFixedThreadPool(NUMBER_OF_THREADS);
+    private static volatile DriverPositionDatabase INSTANCE;
+    private static RoomDatabase.Callback sRoomDatabaseCallBack = new RoomDatabase.Callback() {
+        @Override
+        public void onCreate(@NonNull SupportSQLiteDatabase db) {
+            super.onCreate(db);
+            databaseWriteExecutor.execute(() -> {
+                DriverPositionDAO dao = INSTANCE.getDriverPositionDAO();
+            });
+        }
+    };
 
     public static DriverPositionDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {
@@ -35,14 +44,4 @@ public abstract class DriverPositionDatabase extends RoomDatabase {
     }
 
     public abstract DriverPositionDAO getDriverPositionDAO();
-
-    private static RoomDatabase.Callback sRoomDatabaseCallBack = new RoomDatabase.Callback() {
-        @Override
-        public void onCreate(@NonNull SupportSQLiteDatabase db) {
-            super.onCreate(db);
-            databaseWriteExecutor.execute(() -> {
-                DriverPositionDAO dao = INSTANCE.getDriverPositionDAO();
-            });
-        }
-    };
 }

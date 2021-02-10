@@ -31,6 +31,7 @@ import pt.ipp.estg.formulafan.R;
 
 public class RaceDetailsFragment extends Fragment implements OnMapReadyCallback {
 
+    private static SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy hh:mm aaa");
     private SupportMapFragment mapFragment;
     private GoogleMap googleMap;
     private FragmentActivity context;
@@ -42,7 +43,6 @@ public class RaceDetailsFragment extends Fragment implements OnMapReadyCallback 
     private TextView circuitView;
     private Toolbar toolbar;
     private Race currentRace;
-    private static SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy hh:mm aaa");
 
     public RaceDetailsFragment() {
     }
